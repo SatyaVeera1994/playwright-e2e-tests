@@ -1,0 +1,23 @@
+{
+  "name": "playwright-e2e-tests",
+  "version": "1.0.0",
+  "description": "playwright E2E Tests with AI Capabilities Incld MCP",
+  "keywords": [
+    "playwright",
+    "playwright-e2e-tests",
+    "playwright-mcp"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github-personal:SatyaVeera1994/playwright-e2e-tests.git"
+  },
+  "license": "ISC",
+  "author": "satya automation,",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {},
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.6.0"
+  }
+}
