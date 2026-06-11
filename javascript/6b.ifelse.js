@@ -16,7 +16,7 @@ let tennis ="Sania";
 
 if( game =="crcket"){
     console.log("my captain is ", captain)    
-}else if(tennis =="Sania"){
+}else if(tennis =="Saniza"){
     console.log("tennis player is ",tennis)
 
 }else{
