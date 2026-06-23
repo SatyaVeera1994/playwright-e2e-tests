@@ -15,7 +15,9 @@
   "author": "satya automation,",
   "type": "commonjs",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "inventory": "npx playwright test tests/functional/inventory.spec.ts --headed"
+  },
   "devDependencies": {
     "@playwright/test": "^1.59.1",
     "@types/node": "^25.6.0"
