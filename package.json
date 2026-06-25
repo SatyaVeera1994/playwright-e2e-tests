@@ -17,6 +17,7 @@
   "main": "index.js",
   "scripts": {
     "inventory": "npx playwright test tests/functional/inventory.spec.ts --headed",
+    "multi-window": "npx playwright test tests/functional/multi.window.spec.ts --headed",
     "debug": "npx playwright test tests/demo/debug_inventory.spec.ts --headed",
     "debug:ui": "npx playwright test tests/demo/debug_inventory.spec.ts --ui --headed",
     "debug:cli": "cross-env PWDEBUG=1 npx playwright test tests/demo/debug_inventory.spec.ts",
