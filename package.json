@@ -16,12 +16,15 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
+    "makeAptmnt": "npx playwright test tests/functional/make.aptmnt.spec.ts --headed",
+     "pw-basic-cap": "npx playwright test tests/demo/pw.basic.cap.make.aptmnt.spec.ts --headed",
     "inventory": "npx playwright test tests/functional/inventory.spec.ts --headed",
     "multi-window": "npx playwright test tests/functional/multi.window.spec.ts --headed",
     "debug": "npx playwright test tests/demo/debug_inventory.spec.ts --headed",
     "debug:ui": "npx playwright test tests/demo/debug_inventory.spec.ts --ui --headed",
     "debug:cli": "cross-env PWDEBUG=1 npx playwright test tests/demo/debug_inventory.spec.ts",
-    "debug:trace": "npx playwright test tests/demo/debug_inventory.spec.ts --trace on"
+    "debug:trace": "npx playwright test tests/demo/debug_inventory.spec.ts --trace on",
+    "myfirsttest": "npx playwright test tests/demo/myfirsttest.spec.ts --headed"
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",
