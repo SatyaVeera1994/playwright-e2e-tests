@@ -1,4 +1,28 @@
+How do you check environment variables in Playwright Config?
+A:
+
+"I use process.env to access environment variables in playwright.config.ts. For debugging, I print the values using console.log(process.env.VARIABLE_NAME) and I can also verify the loaded configuration during test execution using testInfo.config."
+
+
+
+**Question:** Why do you use `testInfo.config` or `console.log(JSON.stringify(testInfo.config))`?
+
+**Answer (Simple):**
+
+> "`testInfo.config` is used to access the Playwright configuration at runtime. It helps me verify whether the expected configuration values such as `baseURL`, `retries`, `workers`, and environment-specific settings are loaded correctly. I mainly use it for debugging and troubleshooting issues in local and CI/CD executions."
+
+**Short Version:**
+
+> "I use `testInfo.config` to inspect runtime configuration values and verify that the correct Playwright settings are being applied during test execution."
+
+**Real-time Example:**
+
+> "For example, if `baseURL` is coming from an environment variable and my test is failing to navigate, I can check `testInfo.config.use.baseURL` to confirm whether the value was loaded correctly."
+
+This answer sounds professional and interview-friendly. ✅
+
 ఖచ్చితంగా. Playwright లో **`playwright.config.ts`** అనేది మొత్తం టెస్ట్ ఫ్రేమ్‌వర్క్‌కు "కంట్రోల్ సెంటర్" లాంటిది. ఇందులో మీరు టెస్ట్‌లు ఎలా రన్ అవ్వాలి, ఎక్కడ రిపోర్ట్స్ సేవ్ కావాలి, ఎంత టైమ్ వెయిట్ చేయాలి, ఏ బ్రౌజర్‌లో రన్ చేయాలి వంటి సెట్టింగ్స్ ఇస్తారు.
+
 
 ***Simple ga cheppalante 😊
 
@@ -43,6 +67,84 @@ Output:
 ✅ Environment variables vachaya?  
 ✅ CI lo retries apply ayyaya?  
 ✅ Debugging kosam
+In Playwright, environment variables ని config లో check చేయడానికి `process.env` ఉపయోగిస్తారు.
+
+### 1. Config లో Check చేయడం
+
+```ts
+export default defineConfig({
+  use: {
+    baseURL: process.env.BASE_URL
+  },
+
+  retries: process.env.CI ? 2 : 0
+});
+```
+
+### 2. Value Print చేసి Verify చేయడం
+
+```ts
+console.log("BASE_URL:", process.env.BASE_URL);
+console.log("CI:", process.env.CI);
+```
+
+Output:
+
+```text
+BASE_URL: https://qa-app.com
+CI: true
+```
+
+***
+
+### 3. Runtime లో Config Value Check చేయడం
+
+```ts
+test('Verify Config', async ({ page }, testInfo) => {
+  console.log("Base URL:", testInfo.config.use.baseURL);
+  console.log("Retries:", testInfo.config.retries);
+});
+```
+
+***
+
+### 4. `.env` File Example
+
+```env
+BASE_URL=https://qa-app.com
+USERNAME=admin
+PASSWORD=admin123
+```
+
+Config:
+
+```ts
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+console.log(process.env.BASE_URL);
+```
+
+***
+
+### Interview Answer
+
+**Q: How do you check environment variables in Playwright Config?**
+
+**A:**
+
+> "I use `process.env` to access environment variables in `playwright.config.ts`. For debugging, I print the values using `console.log(process.env.VARIABLE_NAME)` and I can also verify the loaded configuration during test execution using `testInfo.config`."
+
+**Example:**
+
+```ts
+console.log(process.env.BASE_URL);
+console.log(process.env.CI);
+```
+
+This helps confirm that the correct environment-specific values are loaded in local execution or CI/CD pipelines. ✅
+
 
 ### Real Time Example
 

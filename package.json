@@ -16,8 +16,9 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
+    "pw-adv-debug-cap": "cross-env DEBUG=pw:api playwright test tests/functional/make.aptmnt.spec.ts --headed",
     "makeAptmnt": "npx playwright test tests/functional/make.aptmnt.spec.ts --headed",
-     "pw-basic-cap": "npx playwright test tests/demo/pw.basic.cap.make.aptmnt.spec.ts --headed",
+    "pw-basic-cap": "npx playwright test tests/demo/pw.basic.cap.make.aptmnt.spec.ts --headed",
     "inventory": "npx playwright test tests/functional/inventory.spec.ts --headed",
     "multi-window": "npx playwright test tests/functional/multi.window.spec.ts --headed",
     "debug": "npx playwright test tests/demo/debug_inventory.spec.ts --headed",

@@ -19,12 +19,12 @@ test.describe("Make Appointment", () => {
     await page.getByRole("checkbox", {name: "Apply for hospital readmission",}).check();
 
     await page.getByRole("radio", {name: "Medicaid",}).check();
-
-    await page
-      .getByRole("textbox", {
-        name: "Comment",
-      })
-      .fill("This is a sample appointment");
+    // await page.getByRole('textbox', { name: 'Visit Date (Required)' }).click();
+    // await page.getByRole('textbox', { name: 'Visit Date (Required)' }).fill('05/12/2027');
+    // await page.getByRole('textbox', { name: 'Visit Date (Required)' }).press('Enter');
+    await page.getByRole("textbox", {name: "Comment", }).click
+    await page.getByRole("textbox", {name: "Comment", }).fill("This is a sample appointment");
+      
 
 
     await page
