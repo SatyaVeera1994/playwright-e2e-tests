@@ -5,10 +5,16 @@
 “I integrate Playwright with CI pipelines to run tests automatically, generate reports, and upload artifacts.”
 
 ## 1. Telugu Concept
+"When developers push application code changes to the repository, the CI/CD pipeline automatically triggers and executes Playwright test suites. I then review the reports and analyze any failures."
+
+Telugu lo:
+
+"Developer application lo change chesi code push chesthe, CI/CD automatic ga start ayi Playwright tests run chestundi. Nenu reports check chesi failures ni analyze chestanu.
 
 ### CI/CD అంటే ఏమిటి?
 
-**CI (Continuous Integration)** మరియు **CD (Continuous Delivery/Deployment)** అనేవి Software Development Process ను Automate చేయడానికి ఉపయోగించే Practices.
+**CI (Continuous Integration)** మరియు **CD (Continuous Delivery/Deployment)** అనేవి Software Development Process ను Automate చేయడానికి 
+ఉపయోగించే Practices.
 
 Developer Code Commit చేసిన వెంటనే:
 

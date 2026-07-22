@@ -1,6 +1,24 @@
 Excellent notes. Continue with these **Architecture & Setup Interview Answers** in the same format.
 
 # Q1. Explain Playwright's Internal Architecture in Depth
+ 
+    
+“Playwright uses a persistent WebSocket connection for continuous communication with the browser, whereas Selenium uses HTTP requests for each command.  
+
+Because of this persistent connection, Playwright can listen to browser events in real time and provide advanced capabilities such as:
+
+Auto Waiting
+Network Interception
+Trace Viewer
+Video Recording
+Faster Test Execution
+Browser Event Monitoring
+Trace Viewer
+Event Listening
+
+
+These features make Playwright faster, more reliable, and easier to use for modern web application testing compared to traditional automation tools.
+
 
 ## 1. Telugu Concept
 

@@ -1,5 +1,16 @@
 # Q2. What is the difference between Browser, BrowserContext, and Page?
 
+## . Simple English Answer
+
+Browser is the actual browser instance.
+
+BrowserContext is an isolated session like an Incognito window.
+
+Page is a browser tab where we perform actions.
+
+One browser can contain multiple contexts, and one context can contain multiple pages.
+
+This helps us test multiple users with separate sessions.
 ## 1. Telugu Concept
 
 Playwright Architecture లో మూడు ముఖ్యమైన Components ఉంటాయి:

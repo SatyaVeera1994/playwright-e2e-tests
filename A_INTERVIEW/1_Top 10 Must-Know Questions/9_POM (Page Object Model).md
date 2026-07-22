@@ -2,6 +2,9 @@
 ### ✅ English Answer
 
 “I implement POM using TypeScript classes with reusable methods and inject them using fixtures.”
+Easy Interview Answer
+
+"Page Object Model is a design pattern where each web page is created as a separate class. The page class contains locators and reusable methods. Test cases call these methods instead of directly using locators. This improves readability, reusability, and maintenance. If a locator changes, I update it only in the page class, making the framework easy to maintain."
 
 ## 1. Telugu Concept
 
@@ -33,7 +36,24 @@ await page.locator('#login').click();
 
 ఇలా అన్ని Tests లో Repeat అవుతుంది.
 
----
+---Easy Steps to Remember - Page Object Model (POM)
+Create one class for each page
+LoginPage
+HomePage
+ProfilePage
+Store all locators inside the page class
+username textbox
+password textbox
+login button
+Create methods for actions
+login()
+logout()
+searchProduct()
+Call methods from test files
+Instead of writing locators in tests, use page methods.
+If locator changes
+Update only one page class.
+No need to change all test cases.
 
 ### With POM
 

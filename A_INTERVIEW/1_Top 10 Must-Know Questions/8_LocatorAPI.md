@@ -1,7 +1,38 @@
 # Q8. What is the Locator API and why is it better than Selenium's findElement()?
 ### ✅ English Answer
 
-“Locators are lazy and auto-retrying, which prevents stale element issues and improves test stability.”
+
+**English Answer:**
+
+
+"The Locator API is Playwright's recommended way to find and interact with web elements.
+
+A locator does not immediately find the element. It waits and searches for the latest element whenever an action like `click()` or `fill()` is performed.
+
+Playwright locators also provide built-in auto-waiting and auto-retry, which makes tests more stable and reliable.
+
+In my project, I use locators because they reduce synchronization issues and improve test stability."
+
+**Short Version (Easy to Remember):**
+
+* Locator API is the recommended way to find elements in Playwright.
+* Supports auto-waiting and auto-retry.
+* Finds the latest element before performing actions.
+* Makes tests stable and less flaky.
+* Improves automation reliability.
+
+**Real-Time Example:**
+
+```typescript
+await page.locator('#username').fill('admin');
+await page.locator('#password').fill('admin123');
+await page.locator('#loginBtn').click();
+```
+
+**Telugu Explanation:**
+
+"Locator API anedi Playwright lo elements ni identify cheyadaniki recommended method. Element ready ga unde varaku Playwright automatic ga wait chestundi. `click()`, `fill()` lantivi actions chese mundu element ni verify chestundi. Kabatti tests stable ga untayi mariyu failures thakkuva avutayi."
+
 
 
 ## 1. Telugu Concept

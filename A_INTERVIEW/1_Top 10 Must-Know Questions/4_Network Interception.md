@@ -3,7 +3,9 @@ Great! Let's continue with **Q4** in the same README format.
 ````markdown
 # Q4. How does Network Interception work in Playwright?
 ### ✅ English Answer
+### One-Line Summary
 
+**Playwright Network Interception allows us to capture, modify, mock, or block network requests before they reach the server.**
 “Using page.route(), we can intercept API calls and mock or modify responses.”
 
 ## 1. Telugu Concept

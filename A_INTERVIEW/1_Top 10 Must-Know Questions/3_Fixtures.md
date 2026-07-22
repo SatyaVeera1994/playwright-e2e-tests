@@ -2,13 +2,7 @@ Awesome! Let's continue with **Q3**.
 
 # Q3. What are Playwright Fixtures and why are they better than beforeEach()?
 
-### ✅ English Answer
 
-“Fixtures provide dependency injection and automatically handle setup and teardown, making tests reusable.”
-
-### One-Line Summary
-
-**Fixtures automatically create, manage, and clean up test dependencies, making tests cleaner, reusable, and easier to maintain than beforeEach().**
 
 ## 4. English Interview Answer
 
@@ -22,7 +16,13 @@ Playwright also supports worker-scoped fixtures, where expensive operations such
 
 In my project, we created custom fixtures for authenticated users and page objects. Tests simply requested the required fixture, which made the framework more modular, reusable, and easier to maintain compared to using `beforeEach()`.
 
----
+---### ✅ English Answer
+
+“Fixtures provide dependency injection and automatically handle setup and teardown, making tests reusable.”
+
+### One-Line Summary
+
+**Fixtures automatically create, manage, and clean up test dependencies, making tests cleaner, reusable, and easier to maintain than beforeEach().**
 
 ## 5. Real-Time Project Example
 

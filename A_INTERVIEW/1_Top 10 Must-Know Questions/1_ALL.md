@@ -1,4 +1,4 @@
-# Q1. What is Playwright and how does it fundamentally differ from Selenium?
+  # Q1. What is Playwright and how does it fundamentally differ from Selenium?
 
 ### ✅ English Answer
 Playwright is a modern end-to-end automation framework developed by Microsoft. It supports Chromium, Firefox, and WebKit using a single API.
