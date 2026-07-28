@@ -1,0 +1,25 @@
+export const packager = [
+  {
+    aliasId: "yotta_pkg_alias_default",
+    description: "packager default for content",
+    disabled: false,
+    enableFullLogging: true,
+    id: "yotta_pkg_default",
+    iv: "a9210beab28d5ea4cb7941652b687a69",
+    key: "a57cf38f25b7b3c6c910ea5207aa802606a2115ece9367abdf52a8dd0e476994",
+    orgName: "yotta_org_default",
+    packagerVendor: "Other",
+    notes: "notes",
+  },
+  {
+    aliasId: "yotta_pkg_alias_disabled",
+    description: "packager status is disabled",
+    disabled: true,
+    enableFullLogging: true,
+    id: "yotta_pkg_disabled",
+    iv: "b9d8eb6ac357ac9a67605aac8d9371d4",
+    key: "b5f7532e8ceff64a48e5254e68a855920af3f57a3ce136c81fabb132b2822aea",
+    orgName: "yotta_org_default",
+    packagerVendor: "Other",
+  },
+];

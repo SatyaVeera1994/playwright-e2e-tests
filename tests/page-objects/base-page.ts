@@ -7,11 +7,14 @@ export default class BasePage {
   constructor(page: Page) {
     this.page = page;
   }
+  //navigateTo()
 
   async navigateTo(url: string) {
-    await log("log", "navigateto url: ${url}");
+    await log("log", `Navigate to URL: ${url}`);
     await this.page.goto(url);
   }
+
+  //click()
 
   async click(element: Locator) {
     try {
@@ -27,18 +30,24 @@ export default class BasePage {
     }
   }
 
-  async typeinto(element: Locator, text: string): Promise<void> {
+  //typeInto()
+
+  async typeInto(element: Locator, text: string): Promise<void> {
     try {
       await expect(element).toBeVisible({ timeout: 5000 });
-      await log("log", "typing in to element;${element}, text:${text}");
+      await log("log", `Typing text: ${text}`);
+
+      await element.fill(text);
     } catch (error) {
       await log(
         "error",
-        "element not found:${element.toString()} , error:${error}",
+        `Element not found: ${element.toString()}, error: ${error}`,
       );
       throw error;
     }
   }
+  //fill
+
   async fill(element: Locator, text: string): Promise<void> {
     try {
       await expect(element).toBeVisible({ timeout: 5000 });
@@ -54,5 +63,33 @@ export default class BasePage {
       throw error;
     }
   }
+  // Scroll to an element--->scrollToElement()
+  async scrollToElement(element: Locator): Promise<void> {
+    await element.scrollIntoViewIfNeeded();
+  }
+
+  // Select an option from a Material UI/custom dropdown-->selectDropdownOption()
+
+  async selectDropdownOption(
+    dropdown: Locator,
+    optionName: string,
+  ): Promise<void> {
+    await dropdown.click();
+    await this.page.getByRole("option", { name: optionName }).click();
+  }
+  // Common expect method-->verifyVisible()
+  async verifyVisible(element: Locator): Promise<void> {
+    await expect(element).toBeVisible();
+  }
+
+  //waitForPageLoad()
+  async waitForPageLoad(): Promise<void> {
+    await this.page.waitForLoadState("networkidle");
+  }
+  // Checkbox helper-->checkCheckbox()
+  async checkCheckbox(element: Locator): Promise<void> {
+    if (!(await element.isChecked())) {
+      await element.check();
+    }
+  }
 }
-   
