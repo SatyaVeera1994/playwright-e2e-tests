@@ -2,7 +2,34 @@ Awesome! Let's continue with **Q3**.
 
 # Q3. What are Playwright Fixtures and why are they better than beforeEach()?
 
+Here is a **simple and interview-friendly** version that is easy to remember.
 
+### English Interview Answer
+
+Playwright Fixtures are a built-in dependency injection mechanism that automatically creates, manages, and cleans up test dependencies.
+
+> **Playwright Fixtures are used to provide reusable resources to test cases. They automatically set up the required objects before the test starts and clean them up after the test finishes. This helps reduce duplicate code and makes the framework easier to maintain.**
+>
+> **In my project, we created custom fixtures using `base.extend()` to store values like `appUrl`, `portalUrl`, and `envName`. We also used fixtures to initialize page objects. This allowed us to use the same test scripts across different environments without changing the test code, making our framework reusable and maintainable.**
+
+### Very Short Answer (30 seconds)
+
+> **Fixtures in Playwright are used to share common setup across tests. They automatically create and clean up resources. In my project, we used custom fixtures with `base.extend()` for URLs, environment configuration, and page objects, which reduced code duplication and improved reusability.**
+
+### Telugu Meaning
+
+**Fixtures అంటే:**
+
+- Common setup ను ఒకసారి create చేయడం.
+- అన్ని test cases లో reuse చేయడం.
+- Duplicate code తగ్గించడం.
+- Framework ను clean & maintainable గా ఉంచడం.
+
+**Real-Time Example:**
+
+> **మా Project లో DEV, QA, PROD environments ఉన్నాయి. ప్రతి test లో URL ని hardcode చేయకుండా, `base.extend()` ద్వారా `appUrl` మరియు `envName` fixtures create చేశాం. కాబట్టి environment మార్చాలంటే `playwright.config.ts` లో మాత్రమే URL మార్చితే సరిపోతుంది. అన్ని test cases అదే code తో run అవుతాయి.**
+
+This is the level of explanation most interviewers expect for a Playwright Automation Engineer role.
 
 ## 4. English Interview Answer
 
@@ -34,7 +61,6 @@ We later implemented a custom authenticated fixture. The fixture handled browser
 
 All test files simply requested the authenticated fixture, allowing us to remove duplicate setup code. This reduced execution time, improved code readability, and made the framework easier to maintain.
 
-
 ## 1. Telugu Concept
 
 ### Fixtures అంటే ఏమిటి?
@@ -57,10 +83,10 @@ Selenium లేదా Jest లో ఇలా రాస్తాం.
 
 ```typescript
 test.beforeEach(async ({ page }) => {
-    await page.goto('https://example.com');
-    await page.fill('#username', 'admin');
-    await page.fill('#password', 'admin123');
-    await page.click('#login');
+  await page.goto("https://example.com");
+  await page.fill("#username", "admin");
+  await page.fill("#password", "admin123");
+  await page.click("#login");
 });
 ```
 
@@ -70,9 +96,9 @@ test.beforeEach(async ({ page }) => {
 
 దీనివల్ల
 
-* Duplicate Code
-* Slow Execution
-* Difficult Maintenance
+- Duplicate Code
+- Slow Execution
+- Difficult Maintenance
 
 ---
 
@@ -83,17 +109,15 @@ Fixtures లో ఒకసారి Setup చేస్తాం.
 ఏ Test కి అవసరమో అది మాత్రమే Declare చేస్తాం.
 
 ```typescript
-test('Dashboard Test', async ({ authenticatedPage }) => {
-
-});
+test("Dashboard Test", async ({ authenticatedPage }) => {});
 ```
 
 Playwright
 
-* Browser Create చేస్తుంది
-* Context Create చేస్తుంది
-* Login చేస్తుంది
-* Dashboard Open చేస్తుంది
+- Browser Create చేస్తుంది
+- Context Create చేస్తుంది
+- Login చేస్తుంది
+- Dashboard Open చేస్తుంది
 
 అన్నీ Automatically చేస్తుంది.
 
@@ -214,37 +238,30 @@ All test files simply requested the authenticated fixture, allowing us to remove
 ### Custom Fixture
 
 ```typescript
-import { test as base } from '@playwright/test';
+import { test as base } from "@playwright/test";
 
 export const test = base.extend({
-
   authenticatedPage: async ({ page }, use) => {
+    await page.goto("https://example.com/login");
 
-    await page.goto('https://example.com/login');
+    await page.fill("#username", "admin");
 
-    await page.fill('#username', 'admin');
+    await page.fill("#password", "admin123");
 
-    await page.fill('#password', 'admin123');
-
-    await page.click('#login');
+    await page.click("#login");
 
     await use(page);
-
-  }
-
+  },
 });
 ```
 
 ### Using Fixture in Test
 
 ```typescript
-import { test, expect } from '../fixtures/auth.fixture';
+import { test, expect } from "../fixtures/auth.fixture";
 
-test('Dashboard Test', async ({ authenticatedPage }) => {
-
-  await expect(authenticatedPage.locator('h1'))
-    .toHaveText('Dashboard');
-
+test("Dashboard Test", async ({ authenticatedPage }) => {
+  await expect(authenticatedPage.locator("h1")).toHaveText("Dashboard");
 });
 ```
 

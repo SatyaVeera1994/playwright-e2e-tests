@@ -14,4 +14,5 @@ test("Add Multiple Automation Packager Access ", async ({ page }) => {
   await expect(login.homeLocator).toBeVisible({ timeout: 3000 });
 
   await addpackger.addPackgerdata(packager[0]);
+  await expect(addpackger.successMessageLocator).toBeVisible({ timeout: 2000 });
 });
