@@ -2,6 +2,29 @@ Awesome! Let's continue with **Q3**.
 
 # Q3. What are Playwright Fixtures and why are they better than beforeEach()?
 
+Playwright fixtures provide reusable setup and dependencies to tests. Playwright has built-in fixtures like page, context, and request, and we can create custom fixtures using base.extend(). Fixtures are useful for common setup such as authentication, page objects, and API clients. They also support different scopes like test and worker.
+
+---
+
+Playwright Fixtures are a built-in dependency injection mechanism that automatically creates, manages, and cleans up test dependencies.
+
+1. What is a Fixture?
+   English
+
+A fixture is a reusable setup provided to a Playwright test. It creates and manages the resources required by the test.
+
+Telugu
+
+Fixture అంటే test కి కావాల్సిన setup/resources ని automatically create చేసి provide చేసే Playwright feature.
+
+For UI testing, common built-in fixtures are:
+
+page
+context
+browser
+browserName
+request
+
 Here is a **simple and interview-friendly** version that is easy to remember.
 
 ### English Interview Answer

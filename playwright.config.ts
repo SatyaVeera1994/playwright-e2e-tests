@@ -36,6 +36,7 @@ export const baseConfig = defineConfig({
     ignoreHTTPSErrors: true,
     screenshot: "only-on-failure",
     video: "retain-on-failure",
+    navigationTimeout: 30000,
   },
 
   /* Configure projects for major browsers */
