@@ -16,21 +16,13 @@ Browser Event Monitoring
 
 These features make Playwright faster, more reliable, and easier to use for modern web application testing compared to traditional automation tools.  
 
+# Q2. What is Auto Waiting and why does it eliminate test flakiness?
 
-2.
+Auto Waiting is a built-in synchronization feature in Playwright. Before performing actions like click, fill, or selectOption, Playwright automatically waits until the element becomes visible, enabled, stable, and ready for interaction. This removes the need for most explicit waits and reduces test flakiness caused by timing issues, making tests more reliable and stable.
+
+ # Q3. What are Playwright Fixtures and why are they better than beforeEach()?
+
 Playwright fixtures provide reusable setup and dependencies to tests. Playwright has built-in fixtures like page, context, and request, and we can create custom fixtures using base.extend(). Fixtures are useful for common setup such as authentication, page objects, and API clients. They also support different scopes like test and worker.
-
-
-
-1. What is a Fixture?
-English
-
-A fixture is a reusable setup provided to a Playwright test. It creates and manages the resources required by the test.
-
-Telugu
-
-Fixture అంటే test కి కావాల్సిన setup/resources ని automatically create చేసి provide చేసే Playwright feature.
-
 For UI testing, common built-in fixtures are:
 
 page
@@ -38,3 +30,10 @@ context
 browser
 browserName
 request
+
+
+1. What is a Fixture?
+English
+A fixture is a reusable setup provided to a Playwright test. It creates and manages the resources required by the test.
+
+Telugu=Fixture అంటే test కి కావాల్సిన setup/resources ని automatically create చేసి provide చేసే Playwright feature.
