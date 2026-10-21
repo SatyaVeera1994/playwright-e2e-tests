@@ -3,7 +3,41 @@ Awesome! Let's continue with **Q3**.
 # Q3. What are Playwright Fixtures and why are they better than beforeEach()?
 
 Playwright fixtures provide reusable setup and dependencies to tests. Playwright has built-in fixtures like page, context, and request, and we can create custom fixtures using base.extend(). Fixtures are useful for common setup such as authentication, page objects, and API clients. They also support different scopes like test and worker.
+#
+# import { test as base, expect, Page } from '@playwright/test';
 
+type MyFixtures = {
+  loggedInPage: Page;
+};
+
+export const test = base.extend<MyFixtures>({
+  loggedInPage: async ({ page }, use) => {
+
+    await page.goto('https://example.com/login');
+
+    await page.fill('#username', 'admin');
+
+    await page.fill('#password', 'admin123');
+
+    await page.getByRole('button', { name: 'Login' }).click();
+
+    await use(page);
+  }
+});
+
+export { expect };
+
+  # dashboard.spec.ts
+  
+import { test, expect } from './fixtures';
+
+test('Dashboard Test', async ({ loggedInPage }) => {
+
+  await expect(
+    loggedInPage.getByText('Dashboard')
+  ).toBeVisible();
+
+});
 ---
 
 Playwright Fixtures are a built-in dependency injection mechanism that automatically creates, manages, and cleans up test dependencies.
@@ -290,4 +324,627 @@ test("Dashboard Test", async ({ authenticatedPage }) => {
 
 ---
 
-📘 **Next:** **Q4. How does Network Interception work in Playwright?** This is one of the most frequently asked Playwright interview questions, especially for engineers with 4–6 years of automation experience.
+c.
+
+# Custom Fixtures in Playwright — UI
+
+## 1. Why do we need Custom Fixtures?
+
+Suppose you have **50 tests** and every test needs to login.
+
+Without a fixture:
+
+```ts
+test("Test 1", async ({ page }) => {
+  await page.goto("/login");
+  await page.fill("#username", "admin");
+  await page.fill("#password", "password");
+  await page.click("#login");
+
+  // test
+});
+```
+
+You would repeat the login code in many tests.
+
+With a custom fixture:
+
+```ts
+test("Test 1", async ({ loggedInPage }) => {
+  // already logged in
+});
+```
+
+### Telugu
+
+**50 tests కి login అవసరం ఉంటే, ప్రతి test లో login code రాయడం unnecessary.**
+
+Custom fixture ఒకసారి login setup చేసి, test కి **ready-to-use page** ఇస్తుంది.
+
+---
+
+# 2. Simple Custom Fixture
+
+First import:
+
+```ts
+import { test as base, expect } from "@playwright/test";
+```
+
+Define our fixture type:
+
+```ts
+type MyFixtures = {
+  loggedInPage: Page;
+};
+```
+
+Then create fixture:
+
+```ts
+export const test = base.extend<MyFixtures>({
+  loggedInPage: async ({ page }, use) => {
+    await page.goto("/login");
+
+    await page.fill("#username", "admin");
+
+    await page.fill("#password", "password");
+
+    await page.click("#login");
+
+    await use(page);
+  },
+});
+```
+
+Now test:
+
+```ts
+test("Dashboard Test", async ({ loggedInPage }) => {
+  await expect(loggedInPage.getByText("Dashboard")).toBeVisible();
+});
+```
+
+---
+
+# 3. Understand this line carefully
+
+```ts
+loggedInPage: async ({ page }, use) => {
+```
+
+There are **two important things** here:
+
+### `{ page }`
+
+Playwright gives us the built-in `page` fixture.
+
+### `use`
+
+`use()` sends our prepared fixture to the test.
+
+So:
+
+```ts
+await use(page);
+```
+
+means:
+
+> "Give this logged-in page to the test."
+
+### Telugu
+
+```ts
+async({ page }, use);
+```
+
+- `page` → Playwright built-in fixture
+- `use` → custom fixture value ని test కి ఇవ్వడానికి
+
+```ts
+await use(page);
+```
+
+అంటే:
+
+> **"ఈ login చేసిన page ని test కి ఇవ్వు."**
+
+---
+
+# 4. Complete Example
+
+### `fixtures.ts`
+
+```ts
+import { test as base, expect, Page } from "@playwright/test";
+
+type MyFixtures = {
+  loggedInPage: Page;
+};
+
+export const test = base.extend<MyFixtures>({
+  loggedInPage: async ({ page }, use) => {
+    await page.goto("https://example.com/login");
+
+    await page.fill("#username", "admin");
+
+    await page.fill("#password", "admin123");
+
+    await page.getByRole("button", { name: "Login" }).click();
+
+    await use(page);
+  },
+});
+
+export { expect };
+```
+
+### `dashboard.spec.ts`
+
+```ts
+import { test, expect } from "./fixtures";
+
+test("Dashboard Test", async ({ loggedInPage }) => {
+  await expect(loggedInPage.getByText("Dashboard")).toBeVisible();
+});
+```
+
+Notice:
+
+**Test file లో login code లేదు.**
+
+---
+
+# 5. Real Framework Structure
+
+A real project might look like:
+
+```text
+tests/
+   login.spec.ts
+   dashboard.spec.ts
+   profile.spec.ts
+
+fixtures/
+   fixtures.ts
+
+pages/
+   LoginPage.ts
+   DashboardPage.ts
+   ProfilePage.ts
+```
+
+Even better, we can combine **Fixture + POM**.
+
+---
+
+# 6. Custom Fixture with POM
+
+Suppose we have:
+
+```ts
+class DashboardPage {
+  constructor(private page: Page) {}
+
+  async openProfile() {
+    await this.page
+      .getByRole("link", {
+        name: "Profile",
+      })
+      .click();
+  }
+}
+```
+
+Fixture:
+
+```ts
+type MyFixtures = {
+  dashboardPage: DashboardPage;
+};
+
+export const test = base.extend<MyFixtures>({
+  dashboardPage: async ({ page }, use) => {
+    const dashboardPage = new DashboardPage(page);
+
+    await use(dashboardPage);
+  },
+});
+```
+
+Test:
+
+```ts
+test("Profile Test", async ({ dashboardPage }) => {
+  await dashboardPage.openProfile();
+});
+```
+
+### Telugu
+
+ఇక్కడ fixture:
+
+1. `page` తీసుకుంటుంది
+2. `DashboardPage` object create చేస్తుంది
+3. Test కి `dashboardPage` ఇస్తుంది
+
+అందువల్ల test లో:
+
+```ts
+new DashboardPage(page);
+```
+
+రాయాల్సిన అవసరం లేదు.
+
+---
+
+# ⭐ Interview Question
+
+### "Why do you use custom fixtures?"
+
+### English
+
+> I use custom fixtures to centralize reusable setup and dependencies. For example, I can create an authenticated page or Page Object once and inject it directly into my tests. This reduces duplicate code and makes the framework more maintainable.
+
+### Telugu
+
+> **Reusable setup మరియు dependencies ని ఒకే చోట maintain చేయడానికి custom fixtures ఉపయోగిస్తాను. ఉదాహరణకు authenticated page లేదా Page Object ని fixture లో create చేసి tests కి directly inject చేయవచ్చు. దీనివల్ల duplicate code తగ్గుతుంది మరియు framework maintain చేయడం easy అవుతుంది.**
+
+---
+
+# ⭐ Most Important `use()` Concept
+
+Remember this:
+
+```ts
+await use(value);
+```
+
+### Meaning:
+
+**English:**
+
+> Pass the prepared fixture value to the test.
+
+**Telugu:**
+
+> **Prepared fixture value ని test కి provide చేయడం.**
+
+---
+
+# ⭐ Custom Fixture Flow
+
+```text
+Test
+  ↓
+loggedInPage
+  ↓
+Custom Fixture
+  ↓
+page
+  ↓
+Login
+  ↓
+use(page)
+  ↓
+Test receives loggedInPage
+```
+
+### Easy Telugu
+
+**Test → Fixture → Login → Ready Page → Test**
+
+---
+
+# 🎯 Interview One-Minute Answer
+
+> **"In my Playwright framework, I use custom fixtures to handle reusable setup. For example, I created an `authenticatedPage` fixture that uses the built-in `page` fixture, performs login, and then passes the logged-in page using `use()`. Tests simply request `authenticatedPage`, so they don't need to repeat login logic. I also use custom fixtures to inject Page Objects, which keeps the tests clean and maintainable."**
+
+### Telugu
+
+> **"నా Playwright framework లో reusable setup కోసం custom fixtures ఉపయోగిస్తాను. ఉదాహరణకు `authenticatedPage` fixture లో built-in `page` fixture తీసుకుని login perform చేసి, `use()` ద్వారా logged-in page ని test కి ఇస్తాను. Tests లో login logic repeat చేయాల్సిన అవసరం ఉండదు. Page Objects ని కూడా fixtures ద్వారా inject చేస్తాను. దీని వల్ల tests clean మరియు maintainable గా ఉంటాయి."**
+
+### ⭐ Remember these 4 words:
+
+**`base.extend()` → Create fixture**  
+**`page` → Built-in UI fixture**  
+**`use()` → Give fixture to test**  
+**`scope` → Control fixture lifetime**
+
+# Playwright Fixtures — UI Testing
+
+Fixtures are **very important for Playwright interviews**. Let's learn them simply.
+
+## 1. What is a Fixture?
+
+### English
+
+> A fixture is a reusable setup provided to a Playwright test. It creates and manages the resources required by the test.
+
+### Telugu
+
+> **Fixture అంటే test కి కావాల్సిన setup/resources ని automatically create చేసి provide చేసే Playwright feature.**
+
+For UI testing, common built-in fixtures are:
+
+```text
+page
+context
+browser
+browserName
+request
+```
+
+---
+
+# 2. `page` Fixture
+
+This is the most commonly used UI fixture.
+
+### English
+
+> `page` represents a browser tab or page where we perform UI actions.
+
+### Telugu
+
+> **`page` అంటే browser లో ఒక tab/page. దానిపై click, fill, navigation, assertions చేస్తాము.**
+
+Example:
+
+```typescript
+import { test, expect } from "@playwright/test";
+
+test("Login test", async ({ page }) => {
+  await page.goto("https://example.com");
+
+  await page.getByLabel("Username").fill("admin");
+
+  await page.getByLabel("Password").fill("admin123");
+
+  await page.getByRole("button", { name: "Login" }).click();
+
+  await expect(page.getByText("Dashboard")).toBeVisible();
+});
+```
+
+Here:
+
+```typescript
+async ({ page }) =>
+```
+
+Playwright automatically provides the `page` fixture.
+
+---
+
+# 3. `context` Fixture
+
+### English
+
+> Browser context is an isolated browser session containing its own cookies, local storage, and session data.
+
+### Telugu
+
+> **Browser Context అంటే separate browser session. దానికి separate cookies, local storage, session data ఉంటాయి.**
+
+Example:
+
+```typescript
+test("Context example", async ({ context }) => {
+  const page = await context.newPage();
+
+  await page.goto("https://example.com");
+});
+```
+
+---
+
+# 4. Why Fixtures are Better Than `beforeEach`?
+
+### Without Fixture
+
+We may repeatedly write:
+
+```typescript
+test.beforeEach(async ({ page }) => {
+  await page.goto("/login");
+  await page.fill("#username", "admin");
+  await page.fill("#password", "password");
+  await page.click("#login");
+});
+```
+
+### With Custom Fixture
+
+We can create:
+
+```typescript
+authenticatedPage;
+```
+
+Then test:
+
+```typescript
+test("Dashboard test", async ({ authenticatedPage }) => {
+  await authenticatedPage.getByText("Dashboard").click();
+});
+```
+
+### English
+
+> Fixtures provide reusable setup and dependency injection, making tests cleaner and reducing duplicate code.
+
+### Telugu
+
+> **Fixtures reusable setup మరియు dependency injection ఇస్తాయి. దీని వల్ల duplicate code తగ్గి tests clean గా ఉంటాయి.**
+
+---
+
+# 5. What is Custom Fixture?
+
+Suppose every test needs a logged-in user.
+
+We can create:
+
+```typescript
+import { test as base } from "@playwright/test";
+
+type MyFixtures = {
+  authenticatedPage: Page;
+};
+
+export const test = base.extend<MyFixtures>({
+  authenticatedPage: async ({ page }, use) => {
+    await page.goto("/login");
+
+    await page.getByLabel("Username").fill("admin");
+
+    await page.getByLabel("Password").fill("admin123");
+
+    await page.getByRole("button", { name: "Login" }).click();
+
+    await use(page);
+  },
+});
+```
+
+Then:
+
+```typescript
+test("Dashboard", async ({ authenticatedPage }) => {
+  await authenticatedPage.getByText("Dashboard").click();
+});
+```
+
+### Telugu
+
+ఇక్కడ:
+
+```text
+test
+ ↓
+authenticatedPage fixture
+ ↓
+Login automatically
+ ↓
+Test starts
+```
+
+అంటే ప్రతి test లో login code మళ్లీ రాయాల్సిన అవసరం లేదు.
+
+---
+
+# 6. Fixture Dependency Injection
+
+This is a **very important interview point**.
+
+If you write:
+
+```typescript
+test('Test', async ({ page }) => {
+```
+
+Playwright automatically gives you the `page`.
+
+If you write:
+
+```typescript
+test('Test', async ({ context }) => {
+```
+
+Playwright automatically gives you the `context`.
+
+### English
+
+> Playwright uses dependency injection to provide the fixtures requested by the test.
+
+### Telugu
+
+> **Test ఏ fixture కావాలో parameter లో declare చేస్తే Playwright దాన్ని automatically provide చేస్తుంది. దీనినే Dependency Injection అంటారు.**
+
+---
+
+# 7. Fixture Scope
+
+Two important scopes:
+
+### Test Scope
+
+```typescript
+{
+  scope: "test";
+}
+```
+
+### English
+
+> Created separately for each test.
+
+### Telugu
+
+> **ప్రతి test కి కొత్త fixture create అవుతుంది.**
+
+---
+
+### Worker Scope
+
+```typescript
+{
+  scope: "worker";
+}
+```
+
+### English
+
+> Created once per worker and reused by tests in that worker.
+
+### Telugu
+
+> **ఒక worker కి ఒకసారి create చేసి, ఆ worker లోని tests కి reuse చేస్తుంది.**
+
+---
+
+# ⭐ Interview Question
+
+### Q: Why do you use worker-scoped fixtures?
+
+### English
+
+> I use worker-scoped fixtures for expensive setup that can be safely shared across tests, such as authentication or test data setup.
+
+### Telugu
+
+> **Authentication లాంటి expensive setup ని ఒక worker కి ఒకసారి చేసి, అదే worker లోని tests కి reuse చేయడానికి worker-scoped fixture ఉపయోగిస్తాను.**
+
+---
+
+# ⭐ Most Important Difference
+
+| `beforeEach`               | Fixture                               |
+| -------------------------- | ------------------------------------- |
+| Setup hook                 | Reusable dependency                   |
+| Runs before each test      | Lifecycle managed by Playwright       |
+| Can lead to repeated setup | Better reuse                          |
+| Less composable            | Fixtures can depend on other fixtures |
+| Shared setup logic         | Dependency injection                  |
+
+---
+
+# 🎯 Interview Answer: "Explain Fixtures"
+
+### English
+
+> **Playwright fixtures provide reusable setup and dependencies to tests. Playwright has built-in fixtures like `page`, `context`, and `request`, and we can create custom fixtures using `base.extend()`. Fixtures are useful for common setup such as authentication, page objects, and API clients. They also support different scopes like test and worker.**
+
+### Telugu
+
+> **Playwright fixtures tests కి reusable setup మరియు dependencies provide చేస్తాయి. `page`, `context`, `request` వంటి built-in fixtures ఉన్నాయి. `base.extend()` ఉపయోగించి custom fixtures కూడా create చేయవచ్చు. Authentication, Page Objects, API clients వంటి common setup కోసం fixtures ఉపయోగిస్తాము. Test scope మరియు worker scope కూడా support చేస్తాయి.**
+
+## ⭐ One-line answer to remember
+
+> **"Fixtures are reusable dependencies that manage test setup and cleanup automatically."**
+
+**Telugu:**
+
+> **"Fixtures అంటే test కి కావాల్సిన reusable setup/dependencies ని automatically manage చేసే Playwright feature."**

@@ -1,0 +1,353 @@
+Excellent! 👏 Now we'll start **Playwright Assertions**, one of the **Top 5 Interview Topics**.
+
+---
+
+# ⭐⭐⭐⭐⭐ Q1. What are Assertions in Playwright?
+
+## 👨‍💼 Interview Question
+
+**What are Assertions?**
+
+---
+
+# 🧠 Telugu Explanation
+
+**Assertions** అంటే **Expected Result** మరియు **Actual Result** ఒకేలా ఉన్నాయా లేదా అని verify చేయడం.
+
+**Simple Example:**
+
+మనం Login చేశాం.
+
+Expected:
+
+```text
+Dashboard Page Open కావాలి
+```
+
+Actual:
+
+```text
+Dashboard Open అయింది
+```
+
+✅ Test Pass
+
+లేదంటే
+
+❌ Test Fail
+
+---
+
+# ✅ Interview Answer (English)
+
+> Assertions are used to verify that the actual application behavior matches the expected result. They determine whether a test passes or fails.
+
+---
+
+# ✅ Interview Answer (Telugu)
+
+> **Assertions అంటే Application యొక్క Actual Result, Expected Result తో match అవుతుందో లేదో verify చేయడం. Match అయితే Test Pass, లేకపోతే Test Fail అవుతుంది.**
+
+---
+
+# 💻 Code Example
+
+```typescript
+await expect(page).toHaveTitle("Dashboard");
+```
+
+---
+
+# 💼 Real-Time Example (Coverfox)
+
+```typescript
+await expect(page.getByText("Get Quotes")).toBeVisible();
+```
+
+Login అయిన తర్వాత **"Get Quotes"** button కనిపిస్తే Test Pass.
+
+---
+
+# ⭐⭐⭐⭐⭐ Q2. Why do we use Assertions?
+
+## 👨‍💼 Interview Question
+
+**Why are Assertions important?**
+
+---
+
+# 🧠 Telugu Explanation
+
+మనం Click చేశామంటే Action complete అయిందని కాదు.
+
+Result correct గా వచ్చిందా అని verify చేయాలి.
+
+Example
+
+```text
+Click Login
+
+↓
+
+Dashboard వచ్చింది?
+
+↓
+
+Assertion
+```
+
+---
+
+# ✅ Interview Answer (English)
+
+> Assertions verify that the application behaves as expected after performing an action.
+
+---
+
+# ✅ Interview Answer (Telugu)
+
+> **Action చేసిన తర్వాత Expected Result వచ్చిందా లేదా అని verify చేయడానికి Assertions ఉపయోగిస్తాము.**
+
+---
+
+# ⭐⭐⭐⭐⭐ Q3. What are Web-First Assertions?
+
+## 👨‍💼 Interview Question
+
+**What are Web-First Assertions?**
+
+---
+
+# 🧠 Telugu Explanation
+
+Playwright Assertions **automatically wait** చేస్తాయి.
+
+ఉదాహరణకు
+
+```typescript
+await expect(button).toBeVisible();
+```
+
+Button వెంటనే కనిపించకపోతే
+
+Playwright wait చేస్తుంది.
+
+Visible అయిన తర్వాత Pass అవుతుంది.
+
+---
+
+# ✅ Interview Answer (English)
+
+> Web-First Assertions automatically wait until the expected condition becomes true before failing the test.
+
+---
+
+# ✅ Interview Answer (Telugu)
+
+> **Web-First Assertions Expected Condition true అయ్యే వరకు automatically wait చేస్తాయి. అందువల్ల flaky tests తగ్గుతాయి.**
+
+---
+
+# ⭐⭐⭐⭐⭐ Q4. Most Important Assertions
+
+## 1. `toBeVisible()`
+
+### English
+
+Checks whether an element is visible.
+
+### Telugu
+
+**Element screen పై కనిపిస్తుందా లేదా check చేస్తుంది.**
+
+```typescript
+await expect(page.getByText("Login")).toBeVisible();
+```
+
+---
+
+## 2. `toHaveText()`
+
+### English
+
+Checks the exact text of an element.
+
+### Telugu
+
+**Element text correct గా ఉందో లేదో verify చేస్తుంది.**
+
+```typescript
+await expect(page.locator("h1")).toHaveText("Dashboard");
+```
+
+---
+
+## 3. `toHaveURL()`
+
+### English
+
+Verifies the current page URL.
+
+### Telugu
+
+**Current Page URL ని verify చేస్తుంది.**
+
+```typescript
+await expect(page).toHaveURL(/dashboard/);
+```
+
+---
+
+## 4. `toHaveTitle()`
+
+### English
+
+Verifies the page title.
+
+### Telugu
+
+**Browser Page Title ని verify చేస్తుంది.**
+
+```typescript
+await expect(page).toHaveTitle(/Dashboard/);
+```
+
+---
+
+## 5. `toBeEnabled()`
+
+### English
+
+Checks whether the element is enabled.
+
+### Telugu
+
+**Button లేదా Element Enabled లో ఉందో లేదో verify చేస్తుంది.**
+
+```typescript
+await expect(button).toBeEnabled();
+```
+
+---
+
+## 6. `toBeDisabled()`
+
+### English
+
+Checks whether the element is disabled.
+
+### Telugu
+
+**Element Disabled లో ఉందో లేదో verify చేస్తుంది.**
+
+```typescript
+await expect(button).toBeDisabled();
+```
+
+---
+
+## 7. `toBeChecked()`
+
+### English
+
+Checks whether a checkbox or radio button is selected.
+
+### Telugu
+
+**Checkbox లేదా Radio Button select అయ్యిందో లేదో verify చేస్తుంది.**
+
+```typescript
+await expect(checkbox).toBeChecked();
+```
+
+---
+
+## 8. `toHaveCount()`
+
+### English
+
+Checks the number of matching elements.
+
+### Telugu
+
+**Locator కి match అయిన elements count ని verify చేస్తుంది.**
+
+```typescript
+await expect(page.locator(".card")).toHaveCount(5);
+```
+
+---
+
+# ⭐ Interview Question
+
+## Which Assertions do you use most?
+
+### ✅ English
+
+> I frequently use `toBeVisible()`, `toHaveText()`, `toHaveURL()`, `toHaveTitle()`, `toBeEnabled()`, and `toHaveCount()`.
+
+### ✅ Telugu
+
+> **నేను ఎక్కువగా `toBeVisible()`, `toHaveText()`, `toHaveURL()`, `toHaveTitle()`, `toBeEnabled()`, మరియు `toHaveCount()` Assertions ఉపయోగిస్తాను.**
+
+---
+
+# 💼 Real-Time Coverfox Example
+
+```typescript
+await page
+  .getByRole("button", {
+    name: "Get Quotes",
+  })
+  .click();
+
+await expect(page.locator(".quote-card")).toHaveCount(4);
+
+await expect(page).toHaveURL(/quotes/);
+```
+
+---
+
+# ⭐ Easy Memory Trick
+
+Remember:
+
+**"VTUEC"**
+
+- **V** → `toBeVisible()`
+- **T** → `toHaveText()`
+- **U** → `toHaveURL()`
+- **E** → `toBeEnabled()`
+- **C** → `toHaveCount()`
+
+---
+
+# ⭐ One-Line Interview Answers
+
+| Question                           | English                                             | Telugu                                                   |
+| ---------------------------------- | --------------------------------------------------- | -------------------------------------------------------- |
+| What are Assertions?               | Assertions verify expected results.                 | **Assertions అంటే Expected Result ని verify చేయడం.**     |
+| Why do we use Assertions?          | To validate application behavior.                   | **Application behavior ని verify చేయడానికి.**            |
+| What are Web-First Assertions?     | They automatically wait for the expected condition. | **Expected condition కోసం automatically wait చేస్తాయి.** |
+| Which assertion checks visibility? | `toBeVisible()`                                     | **`toBeVisible()`**                                      |
+| Which assertion verifies text?     | `toHaveText()`                                      | **`toHaveText()`**                                       |
+| Which assertion verifies URL?      | `toHaveURL()`                                       | **`toHaveURL()`**                                        |
+| Which assertion verifies title?    | `toHaveTitle()`                                     | **`toHaveTitle()`**                                      |
+| Which assertion verifies count?    | `toHaveCount()`                                     | **`toHaveCount()`**                                      |
+
+---
+
+## 🎯 Next Session (Advanced Assertions)
+
+We'll cover:
+
+- ✅ Hard Assertions vs Soft Assertions
+- ✅ `expect.soft()`
+- ✅ `expect.poll()`
+- ✅ `expect.toPass()`
+- ✅ Custom Matchers
+- ✅ Real interview coding questions
+- ✅ Common mistakes
+- ✅ Senior-level Playwright interview answers
+
+These advanced assertion topics are commonly asked in interviews for experienced Playwright automation engineers.

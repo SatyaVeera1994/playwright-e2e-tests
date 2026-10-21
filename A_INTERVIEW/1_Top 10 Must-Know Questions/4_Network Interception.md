@@ -1,9 +1,45 @@
-Great! Let's continue with **Q4** in the same README format.
-
-````markdown
 # Q4. How does Network Interception work in Playwright?
-### ✅ English Answer
-### One-Line Summary
+
+## 1.English:
+
+“In Playwright, I use page.route() to intercept network requests. With route.fulfill() I can mock the response, route.continue() allows the original request to proceed, route.abort() blocks the request, and route.fallback() passes the request to the next matching route handler.”
+
+## 1.Telugu:
+
+“Playwright lo page.route() use chesi network requests ni intercept chestham. fulfill() tho mana own mock response istam, continue() tho original request continue chestham, abort() tho request ni block chestham, fallback() tho next matching handler ki pass chestham.”
+
+## import { test, expect } from "@playwright/test";
+
+test("network interception", async ({ page }) => {
+
+await page.route("\*\*/api/v1/fruits", async (route) => {
+
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+
+      body: JSON.stringify([
+        {
+          name: "Strawberry",
+          id: 3,
+        },
+        {
+          name: "Banana",
+          id: 1,
+        },
+      ]),
+    });
+
+});
+
+await page.goto("https://demo.playwright.dev/api-mocking/");
+
+await expect(page.getByText("Strawberry")).toBeVisible();
+await expect(page.getByText("Banana")).toBeVisible();
+
+## });
+
+## 1.English:
 
 **Playwright Network Interception allows us to capture, modify, mock, or block network requests before they reach the server.**
 “Using page.route(), we can intercept API calls and mock or modify responses.”
@@ -215,72 +251,175 @@ This allowed our UI automation to run independently of backend availability and 
 ### Mock API Response
 
 ```typescript
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test('Mock Customer API', async ({ page }) => {
-
-  await page.route('**/api/customers', async route => {
-
+test("Mock Customer API", async ({ page }) => {
+  await page.route("**/api/customers", async (route) => {
     await route.fulfill({
       status: 200,
-      contentType: 'application/json',
+      contentType: "application/json",
       body: JSON.stringify([
         {
           id: 1,
-          name: 'Satya'
+          name: "Satya",
         },
         {
           id: 2,
-          name: 'Durga'
-        }
-      ])
+          name: "Durga",
+        },
+      ]),
     });
-
   });
 
-  await page.goto('https://example.com/customers');
+  await page.goto("https://example.com/customers");
 
-  await expect(page.locator('text=Satya')).toBeVisible();
-
+  await expect(page.locator("text=Satya")).toBeVisible();
 });
 ```
 
 ### Block Analytics Request
 
 ```typescript
-await page.route('**/analytics/**', route => {
-    route.abort();
+await page.route("**/analytics/**", (route) => {
+  route.abort();
 });
 ```
 
 ### Continue Original Request
 
 ```typescript
-await page.route('**/api/**', route => {
-    route.continue();
+await page.route("**/api/**", (route) => {
+  route.continue();
 });
 ```
 
 ### Modify Response using route.fetch()
 
 ```typescript
-await page.route('**/api/user', async route => {
+await page.route("**/api/user", async (route) => {
+  const response = await route.fetch();
 
-    const response = await route.fetch();
+  const json = await response.json();
 
-    const json = await response.json();
+  json.name = "Playwright User";
 
-    json.name = 'Playwright User';
-
-    await route.fulfill({
-        response,
-        json
-    });
-
+  await route.fulfill({
+    response,
+    json,
+  });
 });
 ```
-````
+
+```
 
 ---
 
 ✅ **Next:** **Q5. What is `storageState` and how does it save authentication time?** This is another very common Playwright interview question, and we'll follow the same detailed README format.
+```
+
+route.fallback()--->real time examples
+
+Absolutely. route.fallback() is easiest to understand with real-time situations.
+Method Real-time example Simple meaning
+route.fulfill() Login API ni mock chesi fake success response ivvadam Mana own response
+route.continue() Request ni modify cheyyakunda actual server ki pampadam Original request continue
+route.abort() Analytics/ads request ni block cheyyadam Request block
+route.fallback() First handler request ni handle cheyyakapothe, next matching handler ki pampadam Next handler ki pass
+
+route.fallback() — Real-time example
+Suppose application lo 2 route handlers unnayi.
+First handler:
+await page.route("**/api/**", async (route) => {
+console.log("API request received");
+
+await route.fallback();
+});
+
+Second handler:
+await page.route("\*\*/api/v1/products", async (route) => {
+await route.fulfill({
+status: 200,
+body: JSON.stringify([
+{ id: 1, name: "Laptop" }
+]),
+});
+});
+
+Now application /api/v1/products call chesthe:
+Request
+↓
+First route handler
+↓
+route.fallback()
+↓
+Next matching route handler
+↓
+route.fulfill()
+↓
+Mock response
+
+🧠 Easy Telugu
+fallback() ante:
+“Nenu ee request ni handle cheyyanu. Next matching route handler ki pampinchu.”
+
+🎤 Interview Answer
+English:
+"route.fallback() is used when we want the current route handler to pass the request to the next matching route handler instead of handling it completely."
+
+Telugu:
+"route.fallback() ante current handler request ni handle cheyyakunda, next matching route handler ki pass cheyyadam."
+
+One-line memory trick
+fulfill = own | continue = original | abort = block | fallback = next handler
+
+in telugu
+
+ఖచ్చితంగా 👍 route.fallback() ని చాలా simple Teluguలో real-time exampleతో చూద్దాం.
+route.fallback() అంటే ఏమిటి?
+route.fallback() అంటే:
+“ఈ route handler ఈ request ని handle చేయదు. తర్వాత match అయ్యే route handler కి request ని పంపించు.”
+
+Real-time Example
+మన applicationలో రెండు route handlers ఉన్నాయని అనుకుందాం:
+await page.route("**/api/**", async (route) => {
+console.log("First handler");
+
+await route.fallback();
+});
+
+ఇంకొక handler:
+await page.route("\*\*/api/v1/products", async (route) => {
+await route.fulfill({
+status: 200,
+body: JSON.stringify([
+{ id: 1, name: "Laptop" }
+])
+});
+});
+
+Application /api/v1/products request పంపినప్పుడు:
+Request
+↓
+First route handler
+↓
+route.fallback()
+↓
+Next matching route handler
+↓
+route.fulfill()
+↓
+Mock Response
+
+Teluguలో simpleగా
+మొదటి handler చెప్తుంది:
+“ఈ request నా పని కాదు. Next matching handler దగ్గరికి పంపిస్తాను.”
+
+అదే route.fallback().
+🧠 Easy Memory Trick
+
+- fulfill() → మన response ఇవ్వు
+- continue() → original request పంపు
+- abort() → request block చెయ్యి
+- fallback() → next handlerకి పంపు
+  🎤 Interviewలో ఇలా చెప్పండి
+  "route.fallback() అంటే current route handler request ని handle చేయకుండా, next matching route handler కి pass చేయడం."

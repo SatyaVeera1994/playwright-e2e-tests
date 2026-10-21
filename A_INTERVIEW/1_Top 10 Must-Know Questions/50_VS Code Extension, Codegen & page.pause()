@@ -1,0 +1,206 @@
+# Playwright VS Code Extension, Codegen & `page.pause()` — Telugu Tutorial
+
+ఈ మూడు features Playwright SDET interviews‌లో చాలా ముఖ్యమైనవి. ఒక్కొక్కటి simple Telugu + English examples‌తో చూద్దాం.
+
+## 1. Record Tests using Playwright VS Code Extension
+
+[Test generator | Playwright](https://images.openai.com/static-rsc-4/9CNb229K9GT2RQKwIZpLIN03n7xTVBrwHh2Onib4M4sJ_0paEK8mywiyoOYbB3ePxji2X9umf3Bc6RlZbn3txORG8vkeHGUlyjkxP5sfAa8G38m_m37Ct5f5MIjXx4QeFtFk1BTK87egSduKwVoYxno6oTTJKok8aAVfms9kNo0?purpose=inline)
+
+[Getting Started with Website Test Automation Using VSCode and Playwright: A Complete Beginner's Guide](https://images.openai.com/static-rsc-4/c34MXG_h0Q3ZVat9s2FT6d_YHWJQP9tFTltSFeZtsTagh-pD9dNkkxbxgxWrJBbzQeK6onHmsCGsCKoN69Zo386igtaaos5LB7C6kyGk3iQbT30cK29UfnOamnepdvCvNikQcWFQmwDMScj8Huhhdb7tJSq7QAPnl-tzAaIeAng?purpose=inline)
+
+ఏమిటి?
+
+Playwright VS Code Extension ద్వారా browser‌లో మనం చేసే actions‌ను record చేసి, వాటికి సంబంధించిన Playwright test code generate చేసుకోవచ్చు.
+
+Steps:
+
+1. VS Code open చేయండి.
+2. Extensions‌లో `Playwright Test for VSCode` search చేసి install చేయండి.
+3. Command Palette open చేయడానికి `Ctrl + Shift + P` నొక్కండి.
+4. `Test: Record new` command select చేయండి.
+5. Browser‌లో application open చేసి login, click, fill వంటి actions చేయండి.
+6. Generated test code‌ను review చేసి అవసరమైన assertions add చేయండి.
+
+ఉదాహరణకు, browser‌లో email field fill చేసి Login button click చేస్తే, extension సంబంధిత locator/action code generate చేయగలదు.
+
+## 2. Playwright Codegen
+
+[Test generator | Playwright](https://images.openai.com/static-rsc-4/wHeBDMHvR_1IlNEZ781LJWtHBMeMxkBuvegjWBSX-Vh1-v6W8WEQfh5sqN9K-QXT6-B2QlniS-Qa9DxzjUyqglD5Jy2zGVGfJfYXEF8oOuDHUra2yc2M8CJ_myycWrIe6HavsnJ14irDaISZmiyMVnjlUNi9uNKsQz-_g7hAS0g?purpose=inline)
+
+[playwright.dev](https://playwright.dev/docs/codegen)
+
+ఏమిటి?
+
+`codegen` అనేది browser interactions‌ను record చేసి Playwright code generate చేసే command-line tool.
+
+Run చేయండి:
+
+```
+npx playwright codegen https://example.com
+```
+
+Browser మరియు Playwright Inspector open అవుతాయి. మీరు browser‌లో actions చేసినప్పుడు generated code కనిపిస్తుంది.
+
+ఉదాహరణ:
+
+```
+import { test, expect } from '@playwright/test';
+
+test('login page test', async ({ page }) => {
+  await page.goto('https://example.com/login');
+
+  await page.getByLabel('Email').fill('test@example.com');
+
+  await page.getByRole('button', {
+    name: 'Login'
+  }).click();
+});
+```
+
+ఇది illustrative example మాత్రమే; generated code application DOM మీద ఆధారపడి ఉంటుంది.
+
+Codegen ఎప్పుడు ఉపయోగిస్తాం?
+
+- Locators త్వరగా identify చేయడానికి
+- Initial test scripts generate చేయడానికి
+- కొత్త application‌ను explore చేయడానికి
+- Beginner‌గా Playwright syntax నేర్చుకోవడానికి
+
+గుర్తుంచుకోండి: Codegen output‌ను review చేయాలి. Generated code‌ను blindly use చేయకూడదు.
+
+## 3. `page.pause()` — Debugging
+
+ఏమిటి?
+
+`page.pause()` test execution‌ను pause చేసి, browser మరియు locators‌ను inspect చేయడానికి ఉపయోగపడుతుంది.
+
+```
+import { test } from '@playwright/test';
+
+test('debug login', async ({ page }) => {
+  await page.goto('https://example.com/login');
+
+  await page.pause();
+
+  await page.getByRole('button', {
+    name: 'Login'
+  }).click();
+});
+```
+
+Run చేయండి:
+
+```
+npx playwright test --debug
+```
+
+Execution `page.pause()` దగ్గర ఆగుతుంది. Playwright Inspector ద్వారా locators inspect చేసి, steps‌ను ఒక్కొక్కటిగా execute చేయవచ్చు.
+
+తెలుగులో: మన test ఎందుకు fail అవుతోంది, locator correct‌గా ఉందా, button visible‌గా ఉందా వంటి విషయాలు manually check చేయడానికి ఉపయోగిస్తాం.
+
+## 4. ముఖ్యమైన differences
+
+| Feature           | Main purpose                              |
+| ----------------- | ----------------------------------------- |
+| VS Code Extension | VS Code లో tests create, run, debug చేయడం |
+| Codegen           | Browser actions నుంచి code generate చేయడం |
+| `page.pause()`    | Test execution ఆపి debug చేయడం            |
+
+## 5. SDET interview answer
+
+> Playwright provides a VS Code extension and Codegen to help create tests and identify locators by recording browser interactions. I use `page.pause()` with Playwright Inspector to debug tests, inspect elements, and troubleshoot locator issues. I review the generated code and add meaningful assertions before integrating it into the automation framework.
+
+తెలుగులో గుర్తుంచుకోవాల్సింది:
+
+- Record → Test code generate చేయడం
+- Codegen → Browser actions నుంచి code generate చేయడం
+- Pause → Test execution ఆపి debug చేయడం
+# Playwright: Record Tests, Codegen & Debugging
+
+## 1. Record Tests Using the Playwright VS Code Extension
+
+The Playwright Test for VS Code extension helps us create, run, and debug Playwright tests directly inside Visual Studio Code.
+
+Steps:
+
+1. Open VS Code.
+2. Go to Extensions (`Ctrl + Shift + X`).
+3. Search for Playwright Test for VS Code and install it.
+4. Open the Command Palette (`Ctrl + Shift + P`).
+5. Select Test: Record new.
+6. Choose a browser and interact with the application.
+7. Playwright generates test code based on your actions.
+
+Example: If you open a login page, enter your email and password, and click Sign In, Playwright can generate the corresponding locator and action code.
+
+## 2. Playwright Codegen
+
+Codegen is a Playwright tool that records browser interactions and generates automation code automatically.
+
+Run this command in the terminal:
+
+```
+npx playwright codegen https://example.com
+```
+
+A browser window and the Playwright Inspector will open. Perform actions in the browser, and Playwright will generate code based on those interactions.
+
+Example generated code:
+
+```
+import { test, expect } from '@playwright/test';
+
+test('verify page title', async ({ page }) => {
+  await page.goto('https://example.com');
+
+  await expect(page).toHaveTitle(/Example Domain/);
+});
+```
+
+Real-time use case: Codegen is useful when starting automation for a new application or identifying suitable locators for web elements.
+
+Note: Always review and improve the generated code before using it in your framework.
+
+## 3. Debug Tests Using `page.pause()`
+
+`page.pause()` pauses test execution at a specific point so that we can inspect the browser, check locators, and debug the test.
+
+Example:
+
+```
+import { test, expect } from '@playwright/test';
+
+test('login test', async ({ page }) => {
+  await page.goto('https://example.com');
+
+  await page.pause();
+
+  await expect(page).toHaveTitle(/Example Domain/);
+});
+```
+
+Run the test in debug mode:
+
+```
+npx playwright test --debug
+```
+
+The Playwright Inspector opens, allowing you to step through the test and inspect elements.
+
+Important: Remove `page.pause()` before running tests in CI/CD pipelines.
+
+## 4. Difference Between the Three
+
+| Feature           | Purpose                                            |
+| ----------------- | -------------------------------------------------- |
+| VS Code Extension | Create, run, and debug tests within VS Code        |
+| Codegen           | Generate automation code from browser interactions |
+| `page.pause()`    | Pause test execution to inspect and debug          |
+
+## 5. Interview Answer
+
+Question: How do you use Codegen and `page.pause()` in Playwright?
+
+Answer:
+
+“I use Playwright Codegen to record browser interactions and generate automation code with locators and actions. I review the generated code and add appropriate assertions. When debugging a test, I use `page.pause()` to stop execution and inspect elements through the Playwright Inspector. These tools help me develop and debug tests more efficiently.”

@@ -1,10 +1,167 @@
 # Q9. How do you implement POM (Page Object Model) in Playwright TypeScript?
+
 ### ✅ English Answer
 
 “I implement POM using TypeScript classes with reusable methods and inject them using fixtures.”
 Easy Interview Answer
 
 "Page Object Model is a design pattern where each web page is created as a separate class. The page class contains locators and reusable methods. Test cases call these methods instead of directly using locators. This improves readability, reusability, and maintenance. If a locator changes, I update it only in the page class, making the framework easy to maintain."
+
+````typescript LoginPortalDashboard.ts
+
+import { Locator, Page } from "@playwright/test";
+
+export class LoginPortalDashboard {
+  readonly page: Page;
+
+  readonly emailLocator: Locator;
+  readonly passwordLocator: Locator;
+  readonly signInButtonLocator: Locator;
+  readonly homeLocator: Locator;
+
+  constructor(page: Page) {
+    this.page = page;
+
+    this.emailLocator = page.getByLabel("Enter your email");
+
+    this.passwordLocator = page.getByLabel("Enter your password");
+
+    this.signInButtonLocator = page.getByRole("button", {
+      name: "SIGN IN",
+    });
+
+    this.homeLocator = page.getByRole("link", {
+      name: "Home",
+    });
+  }
+
+  async enterEmail(email: string) {
+    await this.emailLocator.fill(email);
+  }
+
+  async enterPassword(password: string) {
+    await this.passwordLocator.fill(password);
+  }
+
+  async clickSignIn() {
+    await this.signInButtonLocator.click();
+  }
+
+  async login(email: string, password: string) {
+    await this.enterEmail(email);
+    await this.enterPassword(password);
+    await this.clickSignIn();
+  }
+
+  async clickHome() {
+    await this.homeLocator.click();
+  }
+}
+Test file
+
+import { test, expect } from "@playwright/test";
+import { LoginPortalDashboard } from "./LoginPortalDashboard";
+
+test("Login Portal", async ({ page }) => {
+
+  const loginPage = new LoginPortalDashboard(page);
+
+  await page.goto("https://example.com/login");
+
+  await loginPage.login(
+    "test@example.com",
+    "Password123"
+  );
+
+  await expect(loginPage.homeLocator).toBeVisible();
+});
+
+LoginPortalDashboard
+       ↓
+constructor(page)
+       ↓
+Locators
+       ↓
+Methods
+       ↓
+Test case
+
+1.BasePage.ts
+import { Page } from "@playwright/test";
+
+export class BasePage {
+  protected readonly page: Page;
+
+  constructor(page: Page) {
+    this.page = page;
+  }
+}
+2. LoginPortalDashboard.ts
+import { Locator, Page } from "@playwright/test";
+import { BasePage } from "./BasePage";
+
+export class LoginPortalDashboard extends BasePage {
+  readonly emailLocator: Locator;
+  readonly passwordLocator: Locator;
+  readonly signInButtonLocator: Locator;
+  readonly homeLocator: Locator;
+
+  constructor(page: Page) {
+    super(page);
+
+    this.emailLocator = page.getByLabel("Enter your email");
+
+    this.passwordLocator = page.getByLabel("Enter your password");
+
+    this.signInButtonLocator = page.getByRole("button", {
+      name: "SIGN IN",
+    });
+
+    this.homeLocator = page.getByRole("link", {
+      name: "Home",
+    });
+  }
+
+  async enterEmail(email: string) {
+    await this.emailLocator.fill(email);
+  }
+
+  async enterPassword(password: string) {
+    await this.passwordLocator.fill(password);
+  }
+
+  async clickSignIn() {
+    await this.signInButtonLocator.click();
+  }
+
+  async login(email: string, password: string) {
+    await this.enterEmail(email);
+    await this.enterPassword(password);
+    await this.clickSignIn();
+  }
+
+  async clickHome() {
+    await this.homeLocator.click();
+  }
+}
+
+3. Test file
+import { test, expect } from "@playwright/test";
+import { LoginPortalDashboard } from "./pages/LoginPortalDashboard";
+
+test("Login Portal", async ({ page }) => {
+
+  const loginPage = new LoginPortalDashboard(page);
+
+  await page.goto("https://example.com/login");
+
+  await loginPage.login(
+    "test@example.com",
+    "Password123"
+  );
+
+  await expect(loginPage.homeLocator).toBeVisible();
+});
 
 ## 1. Telugu Concept
 
@@ -32,7 +189,7 @@ await page.locator('#username').fill('admin');
 await page.locator('#password').fill('admin123');
 
 await page.locator('#login').click();
-```
+````
 
 ఇలా అన్ని Tests లో Repeat అవుతుంది.
 
@@ -58,7 +215,7 @@ No need to change all test cases.
 ### With POM
 
 ```typescript
-await loginPage.login('admin', 'admin123');
+await loginPage.login("admin", "admin123");
 ```
 
 Simple మరియు Clean Code.
@@ -81,8 +238,8 @@ fixtures/
 
 Contains:
 
-* Locators
-* Actions
+- Locators
+- Actions
 
 ```text
 Login Page
@@ -190,9 +347,9 @@ Initially, login steps were duplicated across many test files.
 
 After implementing POM:
 
-* Login functionality moved to LoginPage.
-* Dashboard actions moved to DashboardPage.
-* Policy operations moved to PolicyPage.
+- Login functionality moved to LoginPage.
+- Dashboard actions moved to DashboardPage.
+- Policy operations moved to PolicyPage.
 
 Tests became much cleaner:
 
@@ -213,66 +370,54 @@ This significantly reduced maintenance effort.
 ### LoginPage.ts
 
 ```typescript
-import { Page } from '@playwright/test';
+import { Page } from "@playwright/test";
 
 export class LoginPage {
+  constructor(private page: Page) {}
 
-    constructor(private page: Page) {}
+  username = this.page.locator("#username");
 
-    username = this.page.locator('#username');
+  password = this.page.locator("#password");
 
-    password = this.page.locator('#password');
+  loginButton = this.page.locator("#login");
 
-    loginButton = this.page.locator('#login');
+  async login(user: string, pass: string) {
+    await this.username.fill(user);
 
-    async login(user: string, pass: string) {
+    await this.password.fill(pass);
 
-        await this.username.fill(user);
-
-        await this.password.fill(pass);
-
-        await this.loginButton.click();
-
-    }
+    await this.loginButton.click();
+  }
 }
 ```
 
 ### Login Test
 
 ```typescript
-import { test } from '@playwright/test';
+import { test } from "@playwright/test";
 
-import { LoginPage } from '../pages/LoginPage';
+import { LoginPage } from "../pages/LoginPage";
 
-test('Login Test', async ({ page }) => {
+test("Login Test", async ({ page }) => {
+  const loginPage = new LoginPage(page);
 
-    const loginPage = new LoginPage(page);
+  await page.goto("https://example.com/login");
 
-    await page.goto('https://example.com/login');
-
-    await loginPage.login(
-        'admin',
-        'admin123'
-    );
-
+  await loginPage.login("admin", "admin123");
 });
 ```
 
 ### Advanced POM with Fixtures
 
 ```typescript
-import { test as base } from '@playwright/test';
+import { test as base } from "@playwright/test";
 
-import { LoginPage } from '../pages/LoginPage';
+import { LoginPage } from "../pages/LoginPage";
 
 export const test = base.extend({
-
-    loginPage: async ({ page }, use) => {
-
-        await use(new LoginPage(page));
-
-    }
-
+  loginPage: async ({ page }, use) => {
+    await use(new LoginPage(page));
+  },
 });
 ```
 
