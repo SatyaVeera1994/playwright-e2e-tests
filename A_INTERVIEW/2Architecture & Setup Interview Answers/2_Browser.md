@@ -11,6 +11,7 @@ Page is a browser tab where we perform actions.
 One browser can contain multiple contexts, and one context can contain multiple pages.
 
 This helps us test multiple users with separate sessions.
+
 ## 1. Telugu Concept
 
 Playwright Architecture లో మూడు ముఖ్యమైన Components ఉంటాయి:
@@ -21,10 +22,10 @@ Browser అనేది Actual Browser Process.
 
 ఉదాహరణలు:
 
-* Chromium
-* Chrome
-* Firefox
-* WebKit
+- Chromium
+- Chrome
+- Firefox
+- WebKit
 
 Browser Launch చేయడం Costly Operation.
 
@@ -42,9 +43,9 @@ Incognito Window లాగా పని చేస్తుంది.
 
 ప్రతి Context కి:
 
-* Separate Cookies
-* Separate Local Storage
-* Separate Session Storage
+- Separate Cookies
+- Separate Local Storage
+- Separate Session Storage
 
 ఉంటాయి.
 
@@ -231,10 +232,9 @@ This accurately simulated real-world business scenarios.
 ## 7. Code Example (TypeScript)
 
 ```typescript
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test('Multi User Workflow', async ({ browser }) => {
-
+test("Multi User Workflow", async ({ browser }) => {
   const adminContext = await browser.newContext();
 
   const userContext = await browser.newContext();
@@ -243,19 +243,17 @@ test('Multi User Workflow', async ({ browser }) => {
 
   const userPage = await userContext.newPage();
 
-  await adminPage.goto('https://example.com/admin');
+  await adminPage.goto("https://example.com/admin");
 
-  await userPage.goto('https://example.com/user');
+  await userPage.goto("https://example.com/user");
 
-  await adminPage.locator('#approve').click();
+  await adminPage.locator("#approve").click();
 
-  await expect(userPage.locator('#status'))
-      .toHaveText('Approved');
+  await expect(userPage.locator("#status")).toHaveText("Approved");
 
   await adminContext.close();
 
   await userContext.close();
-
 });
 ```
 
@@ -264,3 +262,17 @@ test('Multi User Workflow', async ({ browser }) => {
 ✅ **Next Question: Q3. Walk through a production-grade `playwright.config.ts`.**
 
 This is one of the most frequently asked Playwright framework interview questions for 3+ years experienced candidates.
+తెలుగులో ప్రశ్న: Browser, BrowserContext, Page మధ్య తేడా ఏమిటి?
+
+1. Browser
+   ఇది Chrome, Firefox లేదా WebKit వంటి browser instance. Browser launch చేయడానికి ఎక్కువ resources అవసరం కావచ్చు.
+2. BrowserContext
+   ఇది browser లోపల ఒక ప్రత్యేకమైన, isolated session. దీంట్లో cookies, localStorage వంటి session data వేరుగా ఉంటాయి.3. Page
+   ఇది ఒక browser tab. ఒక BrowserContextలో ఒకటి లేదా అంతకంటే ఎక్కువ Pages ఉండవచ్చు.
+
+సులభంగా గుర్తుంచుకోండి: Browser = Browser application, Context = Separate session, Page = Tab.
+const browser = await chromium.launch();
+const context = await browser.newContext();
+const page = await context.newPage();
+
+Real-time example: ఒకే browserలో Admin, User అనే ఇద్దరు వేర్వేరు usersతో test చేయాలంటే, ఒక్కొక్కరికి వేర్వేరు BrowserContexts సృష్టించవచ్చు.

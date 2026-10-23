@@ -1,5 +1,92 @@
 # Q4. How does Global Setup work and what should you put in it?
 
+## 4. Simple English Answer
+
+Global Setup runs once before all tests.
+
+It is mainly used for:
+
+- Login
+- Storage State Creation
+- Environment Checks
+- Test Data Setup
+
+Instead of performing these actions in every test, we do them once and reuse the results.
+
+This makes execution faster and more efficient.
+
+## 5. English Interview Answer
+
+Global Setup is a Playwright feature that runs once before the entire test suite starts.
+
+It is commonly used for suite-level initialization tasks such as authentication, environment validation, test data creation, and health checks.
+
+One of the most common use cases is generating storage state files. Instead of logging in before every test, we perform login once in Global Setup and reuse the saved authentication state across all tests.
+
+In my project, I implemented Global Setup to generate authentication states for multiple user roles and perform environment health checks before test execution. This reduced execution time significantly and prevented unnecessary test failures when environments were unavailable.
+
+Global Setup should contain only shared initialization logic and should not contain test-specific validations or assertions
+
+## code
+
+## const { chromium } = require("@playwright/test");
+
+async function globalSetup() {
+const browser = await chromium.launch({ headless: true });
+const context = await browser.newContext();
+const page = await context.newPage();
+
+const platform = process.env.PLATFORM;
+let tld = "net";
+
+let email;
+let password;
+if (platform === "yotta-int") {
+email = "yotta-int.admin@yotta.work";
+password = "YH6GPHv@/TCPM";
+} else if (platform === "priya-qa") {
+email = "priya-qa.admin@yotta.work";
+password = "5$YzH2Hl252Ut";
+
+}
+
+try {
+await page.goto(`https://portal.${platform}.yottacloud.${tld}/login`, {
+timeout: 60000,
+});
+await page.getByLabel("Enter your email").fill(email);
+await page.getByLabel("Enter your password").fill(password);
+await page.getByRole("button", { name: "SIGN IN" }).click();
+
+    // Wait until the home page loads successfully
+    await page.waitForURL(`https://portal.${platform}.yottacloud.${tld}/home`, {
+      timeout: 60000,
+    });
+    await page.context().storageState({ path: "./LoginAuth.json" });
+
+} catch (error) {
+console.error("Error during global setup:", error);
+} finally {
+await browser.close();
+}
+}
+
+module.exports = globalSetup;
+
+## playwright.config.js
+
+## export default defineConfig({
+
+timeout: 900000,
+globalSetup: "./global-setup.js",
+
+use: {
+baseURL: config.endpoints.portal,
+trace: "on-first-retry",
+storageState: "./LoginAuth.json",
+},
+)}
+
 ## 1. Telugu Concept
 
 ### Global Setup అంటే ఏమిటి?
@@ -151,10 +238,10 @@ Global Setup runs once before all tests.
 
 It is mainly used for:
 
-* Login
-* Storage State Creation
-* Environment Checks
-* Test Data Setup
+- Login
+- Storage State Creation
+- Environment Checks
+- Test Data Setup
 
 Instead of performing these actions in every test, we do them once and reuse the results.
 
@@ -218,62 +305,50 @@ Using Global Setup reduced overall execution time and improved CI performance.
 ### globalSetup.ts
 
 ```typescript
-import { chromium, FullConfig } from '@playwright/test';
+import { chromium, FullConfig } from "@playwright/test";
 
-export default async function globalSetup(
-  config: FullConfig
-) {
-
+export default async function globalSetup(config: FullConfig) {
   const browser = await chromium.launch();
 
   const page = await browser.newPage();
 
   await page.goto(`${config.projects[0].use.baseURL}/login`);
 
-  await page.fill('#username', 'admin');
+  await page.fill("#username", "admin");
 
-  await page.fill('#password', 'admin123');
+  await page.fill("#password", "admin123");
 
-  await page.click('#login');
+  await page.click("#login");
 
   await page.context().storageState({
-    path: 'auth/admin.json'
+    path: "auth/admin.json",
   });
 
   await browser.close();
-
 }
 ```
 
 ### playwright.config.ts
 
 ```typescript
-import { defineConfig } from '@playwright/test';
+import { defineConfig } from "@playwright/test";
 
 export default defineConfig({
-
-  globalSetup: './globalSetup.ts',
+  globalSetup: "./globalSetup.ts",
 
   use: {
-    storageState: 'auth/admin.json'
-  }
-
+    storageState: "auth/admin.json",
+  },
 });
 ```
 
 ### Environment Health Check Example
 
 ```typescript
-const response = await fetch(
-  'https://example.com/health'
-);
+const response = await fetch("https://example.com/health");
 
 if (!response.ok) {
-
-  throw new Error(
-    'Environment is not healthy'
-  );
-
+  throw new Error("Environment is not healthy");
 }
 ```
 

@@ -17,6 +17,113 @@ Browser Event Monitoring
 
 These features make Playwright faster, more reliable, and easier to use for modern web application testing compared to traditional automation tools.
 
+Playwright interview questions — Simple English + Telugu explanations.
+
+## 1. Auto-Waiting
+
+English: Playwright automatically waits until an element is ready before performing an action like click or fill.
+Auto-waiting reduces flaky tests and eliminates many unnecessary explicit waits.
+
+Telugu: Element click లేదా fill చేయడానికి ready అయ్యే వరకు Playwright automatically wait చేస్తుంది.
+
+```
+await page.getByRole("button", { name: "Login" }).click();
+```
+
+## 2. Network Interception
+
+English: We use `page.route()` to intercept network requests and mock API responses, block requests, or modify responses.
+
+Telugu: API requests ని intercept చేసి, mock response ఇవ్వడానికి లేదా requests ని block చేయడానికి ఉపయోగిస్తాం.
+
+```
+await page.route("**/api/users", async (route) => {
+  await route.fulfill({
+    status: 200,
+    contentType: "application/json",
+    body: JSON.stringify([{ id: 1, name: "Ravi" }]),
+  });
+});
+```
+
+Real-time example: Backend API unavailable అయినప్పుడు mock data ఉపయోగించి UI testing చేయవచ్చు.
+
+## 3. Trace Viewer
+
+English: Trace Viewer helps debug failed tests by showing actions, screenshots, DOM snapshots, and network activity.
+
+Telugu: Test fail అయినప్పుడు ఏ step దగ్గర error వచ్చింది, ఆ సమయంలో page ఎలా ఉంది అనేది Trace Viewer ద్వారా తెలుసుకోవచ్చు.
+
+```
+npx playwright test --trace on
+```
+
+Real-time example: CI pipeline లో test fail అయితే trace open చేసి failure reason తెలుసుకోవచ్చు.
+
+## 4. Video Recording
+
+English: Playwright can record videos of test execution, which helps us investigate failures.
+
+Telugu: Test execution సమయంలో browser actions ని video రూపంలో record చేసి, failures ని analyze చేయవచ్చు.
+
+```
+// playwright.config.ts
+use: {
+  video: "retain-on-failure",
+},
+```
+
+Real-time example: Login test CI లో fail అయితే recorded video చూసి problem identify చేయవచ్చు.
+
+## 5. Faster Test Execution
+
+English: Playwright improves execution speed through parallel execution, reusable authentication state, and avoiding unnecessary waits.
+
+Telugu: Parallel execution, authentication state reuse, unnecessary waits తొలగించడం ద్వారా test execution time తగ్గించవచ్చు.
+
+```
+// playwright.config.ts
+export default defineConfig({
+  workers: 4,
+  fullyParallel: true,
+});
+```
+
+Real-time example: 400 tests ని multiple workers లేదా CI shards లో run చేసి regression execution time తగ్గించవచ్చు. Actual time tests మీద ఆధారపడి ఉంటుంది.
+
+## 6. Browser Event Monitoring
+
+English: Playwright allows us to listen to browser events such as console messages, failed requests, dialogs, and page errors.
+
+Telugu: Browser లో console errors, failed requests, alerts వంటి events ని monitor చేయవచ్చు.
+
+```
+page.on("console", (msg) => {
+  console.log("Console:", msg.text());
+});
+
+page.on("requestfailed", (request) => {
+  console.log("Failed request:", request.url());
+});
+
+page.on("pageerror", (error) => {
+  console.log("Page error:", error.message);
+});
+```
+
+Real-time example: Application లో API request fail అయినా లేదా JavaScript error వచ్చినా, దాన్ని identify చేసి debugging చేయవచ్చు.
+
+### Quick interview revision
+
+| Topic                    | Remember this                             |
+| ------------------------ | ----------------------------------------- |
+| Auto-Waiting             | Automatically waits for actionability     |
+| Network Interception     | Mock or control API requests              |
+| Trace Viewer             | Debug failed tests                        |
+| Video Recording          | Review test execution                     |
+| Faster Execution         | Parallel workers and sharding             |
+| Browser Event Monitoring | Monitor console, network, and page errors |
+
 # Q2. What is Auto Waiting and why does it eliminate test flakiness?
 
 Auto Waiting is a built-in synchronization feature in Playwright. Before performing actions like click, fill, or selectOption, Playwright automatically waits until the element becomes visible, enabled, stable, and ready for interaction. This removes the need for most explicit waits and reduces test flakiness caused by timing issues, making tests more reliable and stable.
@@ -32,6 +139,44 @@ browser
 browserName
 request
 
+# import { test as base, expect, Page } from '@playwright/test';
+
+type MyFixtures = {
+loggedInPage: Page;
+};
+
+export const test = base.extend<MyFixtures>({
+loggedInPage: async ({ page }, use) => {
+
+    await page.goto('https://example.com/login');
+
+    await page.fill('#username', 'admin');
+
+    await page.fill('#password', 'admin123');
+
+    await page.getByRole('button', { name: 'Login' }).click();
+
+    await use(page);
+
+}
+});
+
+export { expect };
+
+# dashboard.spec.ts
+
+import { test, expect } from './fixtures';
+
+test('Dashboard Test', async ({ loggedInPage }) => {
+
+await expect(
+loggedInPage.getByText('Dashboard')
+).toBeVisible();
+
+});
+
+---
+
 1. What is a Fixture?
    English
    A fixture is a reusable setup provided to a Playwright test. It creates and manages the resources required by the test.
@@ -40,24 +185,22 @@ Telugu=Fixture అంటే test కి కావాల్సిన setup/resour
 
 # Q4. What is the difference between Browser, Context, and Page?
 
-తెలుగులో ప్రశ్న: Browser, BrowserContext, Page మధ్య తేడా ఏమిటి?
+## . Simple English Answer
 
-1. Browser
-   ఇది Chrome, Firefox లేదా WebKit వంటి browser instance. Browser launch చేయడానికి ఎక్కువ resources అవసరం కావచ్చు.
-2. BrowserContext
-   ఇది browser లోపల ఒక ప్రత్యేకమైన, isolated session. దీంట్లో cookies, localStorage వంటి session data వేరుగా ఉంటాయి.3. Page
-   ఇది ఒక browser tab. ఒక BrowserContextలో ఒకటి లేదా అంతకంటే ఎక్కువ Pages ఉండవచ్చు.
+Browser is the actual browser instance.
 
-సులభంగా గుర్తుంచుకోండి: Browser = Browser application, Context = Separate session, Page = Tab.
-const browser = await chromium.launch();
-const context = await browser.newContext();
-const page = await context.newPage();
+BrowserContext is an isolated session like an Incognito window.
 
-Real-time example: ఒకే browserలో Admin, User అనే ఇద్దరు వేర్వేరు usersతో test చేయాలంటే, ఒక్కొక్కరికి వేర్వేరు BrowserContexts సృష్టించవచ్చు.
+Page is a browser tab where we perform actions.
+
+One browser can contain multiple contexts, and one context can contain multiple pages.
+
+This helps us test multiple users with separate sessions.
+
 Interview English answer:
 Browser is the running browser instance. BrowserContext provides an isolated session with separate cookies and local storage. Page represents a single tab inside a context. Playwright reuses the browser while keeping test sessions isolated.
 
-# Q4.. What is storageState() in Playwright?
+# Q5.. What is storageState() in Playwright?
 
 👨‍💼 Interview Question
 What is storageState()? Why do we use it?
@@ -70,7 +213,96 @@ storageState() అనేది Playwright లో Browser Login Session ని JS
 ప్రతి test లో login చేయకుండా, ఒకసారి login చేసి session ని save చేసి, అన్ని tests లో అదే session ని reuse చేస్తాం.
 దీని వల్ల execution time తగ్గుతుంది మరియు tests వేగంగా run అవుతాయి.
 
-# Q4. What is Network Interception in Playwright?
+# Q6. How does Global Setup work and what should you put in it?
+
+## 4. Simple English Answer
+
+Global Setup runs once before all tests.
+
+It is mainly used for:
+
+- Login
+- Storage State Creation
+- Environment Checks
+- Test Data Setup
+
+Instead of performing these actions in every test, we do them once and reuse the results.
+
+This makes execution faster and more efficient.
+
+## 5. English Interview Answer
+
+Global Setup is a Playwright feature that runs once before the entire test suite starts.
+
+It is commonly used for suite-level initialization tasks such as authentication, environment validation, test data creation, and health checks.
+
+One of the most common use cases is generating storage state files. Instead of logging in before every test, we perform login once in Global Setup and reuse the saved authentication state across all tests.
+
+In my project, I implemented Global Setup to generate authentication states for multiple user roles and perform environment health checks before test execution. This reduced execution time significantly and prevented unnecessary test failures when environments were unavailable.
+
+Global Setup should contain only shared initialization logic and should not contain test-specific validations or assertions
+
+## code
+
+## const { chromium } = require("@playwright/test");
+
+async function globalSetup() {
+const browser = await chromium.launch({ headless: true });
+const context = await browser.newContext();
+const page = await context.newPage();
+
+const platform = process.env.PLATFORM;
+let tld = "net";
+
+let email;
+let password;
+if (platform === "yotta-int") {
+email = "yotta-int.admin@yotta.work";
+password = "YH6GPHv@/TCPM";
+} else if (platform === "priya-qa") {
+email = "priya-qa.admin@yotta.work";
+password = "5$YzH2Hl252Ut";
+
+}
+
+try {
+await page.goto(`https://portal.${platform}.yottacloud.${tld}/login`, {
+timeout: 60000,
+});
+await page.getByLabel("Enter your email").fill(email);
+await page.getByLabel("Enter your password").fill(password);
+await page.getByRole("button", { name: "SIGN IN" }).click();
+
+    // Wait until the home page loads successfully
+    await page.waitForURL(`https://portal.${platform}.yottacloud.${tld}/home`, {
+      timeout: 60000,
+    });
+    await page.context().storageState({ path: "./LoginAuth.json" });
+
+} catch (error) {
+console.error("Error during global setup:", error);
+} finally {
+await browser.close();
+}
+}
+
+module.exports = globalSetup;
+
+## playwright.config.js
+
+## export default defineConfig({
+
+timeout: 900000,
+globalSetup: "./global-setup.js",
+
+use: {
+baseURL: config.endpoints.portal,
+trace: "on-first-retry",
+storageState: "./LoginAuth.json",
+},
+)}
+
+# Q7 . What is Network Interception in Playwright?
 
 👨‍💼 Interview Question
 Can you explain Network Interception in Playwright?
@@ -94,45 +326,17 @@ page.route() ఉపయోగించి Request ని modify చేయవచ�
 
 # Playwright Interview Questions — తెలుగులో
 
-## Q1. What is the difference between Browser, Context, and Page?
-
-తెలుగులో ప్రశ్న: Browser, BrowserContext, Page మధ్య తేడా ఏమిటి?
-
-[ファイル:Chromium Logo.svg - ウィキニュース](https://images.openai.com/static-rsc-4/FM_wWpDjT9FQNlEtKQ9Xt52mo25ct-0dCgE5qR89xqM2BaJAgRHNIXB4yoGkDJJflh7I0KVAPbndSTPEU7CpvysmUPaM4lzo23YJgNHGPbwOQ8iQGWKWy6MfiCO6APIq9yl05gOYhgw03-V_sLujnkIQqb-nwv6nrMJkV7nfwak?purpose=inline)
-
-1\. Browser
-
-ఇది Chrome, Firefox లేదా WebKit వంటి browser instance. Browser launch చేయడానికి ఎక్కువ resources అవసరం కావచ్చు.
-
-[Private browser window flat icon, vector sign, browser incognito window colorful pictogram isolated on white. Symbol, logo illustration. Flat style design](https://images.openai.com/static-rsc-4/7fOjlpt4Nbrlq4g5-8yxp1fPRMWbqkWQK5wCHPMBGJ5YagT9oD2M7F6BTzJZCwQ2tcd939o9aK4YeuVzn8oEo1rRrBklvbzccLp9sC3-VO5x1_YCqZDj7RuJeCl46wIjJVhrjoXPiHVcxxqS-SZTzSxdVyE1ZZa2Onkhze2UmKUAiO4QvRDVWBEyJqbYad93?purpose=inline)
-
-2\. BrowserContext
-
-ఇది browser లోపల ఒక ప్రత్యేకమైన, isolated session. దీంట్లో cookies, localStorage వంటి session data వేరుగా ఉంటాయి.
-
-[Tabs - Free web icons](https://images.openai.com/static-rsc-4/uk6YWBKkgnjhm4fLAzdjo3I637DEhEeMlIkUGFcJL-LabHEX19OUr6XNbrQ5cvRuD8yXWTbD0mn22CZgit0Ntyzsh7RU_l2v31P87Yffa7gYHw7tbp3P6c2AWBDXDkt88VNbZ3SK4A0L_zX-i0WW-QeCiFGmZzFr4lfx9cUO-Lw?purpose=inline)
-
-3\. Page
-
-ఇది ఒక browser tab. ఒక BrowserContextలో ఒకటి లేదా అంతకంటే ఎక్కువ Pages ఉండవచ్చు.
-
-సులభంగా గుర్తుంచుకోండి: Browser = Browser application, Context = Separate session, Page = Tab.
-
-```
-const browser = await chromium.launch();
-
-const context = await browser.newContext();
-
-const page = await context.newPage();
-```
-
-Real-time example: ఒకే browserలో Admin, User అనే ఇద్దరు వేర్వేరు usersతో test చేయాలంటే, ఒక్కొక్కరికి వేర్వేరు BrowserContexts సృష్టించవచ్చు.
+## Q8. What is the difference between Browser, Context, and Page?
 
 Interview English answer:
 
 Browser is the running browser instance. BrowserContext provides an isolated session with separate cookies and local storage. Page represents a single tab inside a context. Playwright reuses the browser while keeping test sessions isolated.
 
-## Q2. What are the different timeout types in Playwright, and how are they configured?
+## Q9. What are the different timeout types in Playwright, and how are they configured?
+
+Interview English answer:
+
+Playwright has five timeout types: test timeout, action timeout, navigation timeout, assertion timeout, and global timeout. We can configure them in the Playwright configuration file or set a timeout for a specific operation. They help control how long tests wait before failing.
 
 తెలుగులో ప్రశ్న: Playwrightలో ఎన్ని రకాల timeouts ఉంటాయి? వాటిని ఎలా configure చేస్తాము?
 
@@ -173,11 +377,12 @@ export default defineConfig({
 
 Real-time example: Login button click చేసినప్పుడు 10 secondsలో action పూర్తి కాకపోతే, action timeout error రావచ్చు.
 
-Interview English answer:
+## Q10. How does Playwright achieve auto-waiting, and what makes locators resilient?
 
-Playwright has five timeout types: test timeout, action timeout, navigation timeout, assertion timeout, and global timeout. We can configure them in the Playwright configuration file or set a timeout for a specific operation. They help control how long tests wait before failing.
+## Interview English answer:
 
-## Q3. How does Playwright achieve auto-waiting, and what makes locators resilient?
+Playwright provides auto-waiting before actions. It checks whether an element is attached, visible, stable, enabled, and able to receive events. Locators are resilient because they locate elements when actions are performed .
+and can handle DOM re-renders more reliably.
 
 తెలుగులో ప్రశ్న: Playwrightలో Auto-waiting ఎలా పనిచేస్తుంది? Locators ఎందుకు reliableగా ఉంటాయి?
 
@@ -201,11 +406,15 @@ Resilient locator అంటే: UI మళ్లీ render అయినప్ప�
 
 Real-time example: React applicationలో Submit button మళ్లీ render అయినా, సరైన locator ద్వారా Playwright buttonను మళ్లీ గుర్తించగలదు.
 
+## Q11 . How do you run tests in parallel, and how do you control the number of workers?
+
 Interview English answer:
 
-Playwright provides auto-waiting before actions. It checks whether an element is attached, visible, stable, enabled, and able to receive events. Locators are resilient because they locate elements when actions are performed and can handle DOM re-renders more reliably.
+Playwright runs test files in parallel using worker processes by default. We can control the number of workers using the workers option in the configuration file or the --workers command-line option. Parallel execution can reduce test execution time, provided the tests are independent.
 
-## Q4. How do you run tests in parallel, and how do you control the number of workers?
+## npx playwright test --workers=4
+
+Real-time example: 20 independent test files ఉంటే, 4 workers వాటిని విభజించుకుని run చేయగలవు. అయితే ఒకేసారి ఎన్ని files run అవుతాయో workers సంఖ్యపై ఆధారపడి ఉంటుంది.
 
 తెలుగులో ప్రశ్న: Testsను parallelగా ఎలా run చేస్తాము? Workers సంఖ్యను ఎలా control చేస్తాము?
 
@@ -235,15 +444,42 @@ Default configurationలో సాధారణంగా వేర్వేరు
 
 Real-time example: 20 independent test files ఉంటే, 4 workers వాటిని విభజించుకుని run చేయగలవు. అయితే ఒకేసారి ఎన్ని files run అవుతాయో workers సంఖ్యపై ఆధారపడి ఉంటుంది.
 
-Interview English answer:
+## Q11. How do you handle multiple tabs or popup windows?
 
-Playwright runs test files in parallel using worker processes by default. We can control the number of workers using the workers option in the configuration file or the --workers command-line option. Parallel execution can reduce test execution time, provided the tests are independent.
+Interview English Answer:
 
-## Q5. How do you handle multiple tabs or popup windows?
-Interview English answer:
+“I handle multiple tabs using the page event on the BrowserContext and popup windows using the popup event on the current page. I wait for the event and capture the new Page object, then perform actions and assertions on the new page.”
 
-I handle multiple tabs using the page event on BrowserContext and popup windows using the popup event on the current page. I wait for the event and capture the new Page object, then perform actions and assertions on the new page.
+## interview point
 
+Multiple tabs కోసం:
+const newPagePromise = context.waitForEvent("page");
+await page1.getByText("Blogs").first().click();
+const newPage = await newPagePromise;
+
+Popup కోసం:
+const popupPromise = page1.waitForEvent("popup");
+await page1.getByText("Blogs").first().click();
+const popup = await popupPromise;
+
+## test.only("handle multiplle windows2", async ({}) => {
+
+const browser = await chromium.launch();
+const context = await browser.newContext();
+const page1 = await context.newPage();
+
+await page1.goto("https://www.hdfc.com/");
+
+const pagePromise = context.waitForEvent("page");
+await page1.getByText("Blogs").first().click();
+const newpage = await pagePromise;
+await newpage.getByRole("button", { name: "CONTINUE" }).click();
+//<button class="btn btn-default disclaimer-btn" id="close-disclaimer" type="button"> CONTINUE </button>
+//<a href="/blog" target="_blank">Blogs</a>
+await page1.close();
+await context.close();
+await browser.close();
+});
 
 తెలుగులో ప్రశ్న: ఒకేసారి అనేక browser tabs లేదా popup windowsను ఎలా handle చేస్తాము?
 
@@ -275,6 +511,45 @@ I handle multiple tabs using the page event on BrowserContext and popup windows 
 
 ## Q6. How do you interact with elements inside an iframe?
 
+How do you handle iframes in Playwright?
+
+“In Playwright, I handle iframes using `frameLocator()`, `page.frame()`, and `contentFrame()`. These methods help us locate and interact with elements inside an iframe.”
+
+### 1. Using `frameLocator()` (Most commonly used)
+
+```
+await page.frameLocator('iframe#myframe')
+    .locator('button').click();
+```
+
+- It locates the iframe using its selector.
+- It finds the button inside the iframe and clicks it.
+- It automatically handles waiting for the element.
+
+### 2. Using `page.frame()`
+
+```
+const frame = page.frame({ name: 'frameName' });
+await frame.locator('button').click();
+```
+
+- It locates a frame using its name.
+- We can interact with elements inside that frame.
+
+### 3. Using `contentFrame()`
+
+```
+const iframeElement = page.locator('iframe#myframe');
+const frame = await iframeElement.contentFrame();
+
+await frame.locator('button').click();
+```
+
+- It gets the frame associated with an iframe element.
+- We can then locate and interact with elements inside it.
+
+Interview tip: I generally prefer `frameLocator()` because it is simple, readable, and supports Playwright's auto-waiting.
+
 తెలుగులో ప్రశ్న: Iframe లోపల ఉన్న elementsతో ఎలా interact చేస్తాము?
 
 Iframe అంటే ఒక webpageలో మరో webpageను చూపించే ప్రాంతం.
@@ -296,13 +571,15 @@ await page
 - `getByRole()` — iframeలోని buttonను గుర్తిస్తుంది.
 - `click()` — ఆ buttonను click చేస్తుంది.
 
-Seleniumలో సాధారణంగా `switchTo().frame()` ఉపయోగిస్తారు. Playwrightలో `frameLocator()` ద్వారా నేరుగా iframeలోని elementను target చేయవచ్చు.
-
 Interview English answer:
 
 I use frameLocator() to interact with elements inside an iframe. It allows me to locate and perform actions on elements within the frame without manually switching the frame context.
 
 ## Q7. What is the difference between `toBeAttached()` and `toBeVisible()`?
+
+Interview English answer:
+
+toBeAttached() checks whether an element exists in the DOM. toBeVisible() checks whether the element is visible to the user. An element can be attached to the DOM but still be hidden.
 
 తెలుగులో ప్రశ్న: `toBeAttached()` మరియు `toBeVisible()` మధ్య తేడా ఏమిటి?
 
