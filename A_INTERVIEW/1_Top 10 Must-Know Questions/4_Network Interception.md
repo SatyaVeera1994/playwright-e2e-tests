@@ -7,6 +7,8 @@
 ## 1.Telugu:
 
 “Playwright lo page.route() use chesi network requests ni intercept chestham. fulfill() tho mana own mock response istam, continue() tho original request continue chestham, abort() tho request ni block chestham, fallback() tho next matching handler ki pass chestham.”
+## How does Playwright support API testing 
+## Playwright supports API testing through APIRequestContext, which allows us to send HTTP requests and validate responses without opening a browser.
 
 ## import { test, expect } from "@playwright/test";
 

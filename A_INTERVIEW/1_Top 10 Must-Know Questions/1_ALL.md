@@ -21,7 +21,9 @@ Playwright interview questions — Simple English + Telugu explanations.
 
 ## 1. Auto-Waiting
 
-English: Playwright automatically waits until an element is ready before performing an action like click or fill.
+## Auto Waiting is a built-in synchronization feature in Playwright. Before performing actions like click, fill, or selectOption, Playwright automatically waits until the element becomes visible, enabled, stable, and ready for interaction. This removes the need for most explicit waits and reduces test flakiness caused by timing issues, making tests more reliable and stable.
+
+** Playwright automatically waits until an element is ready before performing an action like click or fill.
 Auto-waiting reduces flaky tests and eliminates many unnecessary explicit waits.
 
 Telugu: Element click లేదా fill చేయడానికి ready అయ్యే వరకు Playwright automatically wait చేస్తుంది.
@@ -578,8 +580,7 @@ I use frameLocator() to interact with elements inside an iframe. It allows me to
 ## Q7. What is the difference between `toBeAttached()` and `toBeVisible()`?
 
 Interview English answer:
-
-toBeAttached() checks whether an element exists in the DOM. toBeVisible() checks whether the element is visible to the user. An element can be attached to the DOM but still be hidden.
+## toBeAttached() checks whether an element exists in the DOM. toBeVisible() checks whether the element is visible to the user. An element can be attached to the DOM but still be hidden.
 
 తెలుగులో ప్రశ్న: `toBeAttached()` మరియు `toBeVisible()` మధ్య తేడా ఏమిటి?
 
@@ -606,90 +607,14 @@ Interview English answer:
 
 toBeAttached() checks whether an element exists in the DOM. toBeVisible() checks whether the element is visible to the user. An element can be attached to the DOM but still be hidden.
 
-## Q8. How does Playwright support API testing and network interception?
-
-తెలుగులో ప్రశ్న: Playwrightలో API testing మరియు network interception ఎలా చేస్తాము?
-
-ఇందులో రెండు ముఖ్యమైన concepts ఉన్నాయి.
-
-1\. APIRequestContext
-
-Browser UIను open చేయకుండా నేరుగా API requests పంపి response verify చేయవచ్చు.
-
-```
-const response = await request.get(
-  'https://api.example.com/users/1'
-);
-
-console.log(response.status());
-```
-
-2\. `page.route()`
-
-UI test సమయంలో browser పంపే network requestsను intercept చేయవచ్చు. వాటిని mock చేయవచ్చు, మార్చవచ్చు లేదా block చేయవచ్చు.
-
-```
-await page.route('**/api/users', route =>
-  route.fulfill({
-    json: [{ id: 1, name: 'Rahul' }]
-  })
-);
-```
-
-ఇక్కడ నిజమైన API responseకు బదులుగా mock response ఇస్తున్నాము.
-
-Real-time example: Backend API అందుబాటులో లేకపోయినా, mock users dataతో Users page సరిగ్గా render అవుతుందో test చేయవచ్చు.
-
-Interview English answer:
-
-Playwright supports API testing through APIRequestContext, which allows us to send HTTP requests and validate responses without opening a browser. We use page.route() to intercept, modify, or mock network requests during UI testing.
 
 ## Q9. What is the Page Object Model (POM), and why is it recommended?
 
-తెలుగులో ప్రశ్న: Page Object Model అంటే ఏమిటి? దీన్ని ఎందుకు ఉపయోగిస్తాము?
-
-POM అనేది automation frameworkలో ప్రతి pageకు సంబంధించిన locators, actionsను ఒక classలో ఉంచే design pattern.
-
-ఉదాహరణకు, Login pageకు సంబంధించిన email, password, login buttonలను `LoginPage` classలో ఉంచవచ్చు.
-
-Code:
-
-```
-import { type Page } from '@playwright/test';
-
-export class LoginPage {
-  constructor(private page: Page) {}
-
-  async login(username: string, password: string) {
-    await this.page
-      .getByLabel('Username')
-      .fill(username);
-
-    await this.page
-      .getByLabel('Password')
-      .fill(password);
-
-    await this.page
-      .getByRole('button', { name: 'Login' })
-      .click();
-  }
-}
-```
-
-POM ప్రయోజనాలు:
-
-- Code reuse పెరుగుతుంది.
-- Code maintenance సులభమవుతుంది.
-- Locators ఒకే చోట నిర్వహించవచ్చు.
-- Test cases చదవడానికి సులభంగా ఉంటాయి.
-
-Real-time example: Login button locator మారితే, ప్రతి test fileలో మార్పులు చేయకుండా `LoginPage` classలో ఒక్కసారి మార్చవచ్చు.
-
-Interview English answer:
-
-Page Object Model is a design pattern in which page locators and actions are encapsulated inside classes. It improves code reusability, readability, and maintainability. If a locator changes, we can update it in one place instead of modifying multiple test files.
+### "Page Object Model is a design pattern where each web page is created as a separate class. The page class contains locators and reusable methods. Test cases call these methods instead of directly using locators. This improves readability, reusability, and maintenance. If a locator changes, I update it only in the page class, making the framework easy to maintain."
 
 ## Q10. How do you run a specific test file, test, or tag from the command line?
+
+## I use command-line options to execute specific tests. I can specify a test file, use -g to filter by test name, use --grep to run tagged tests, and use --project to run tests on a specific browser.
 
 తెలుగులో ప్రశ్న: ఒక నిర్దిష్ట test file, test name లేదా tagను మాత్రమే ఎలా run చేస్తాము?
 
@@ -743,4 +668,6 @@ Q9. POM
 
 Q10. Specific tests
 
-తర్వాతి భాగంలో Q11–Q21 వరకు Debug mode, HTML reports, retries, browser projects, authentication, assertions, visual testing, fixtures, file upload/download, JavaScript dialogs గురించి ఇదే విధంగా తెలుగులో నేర్చుకోవచ్చు. Q22లో Workers, Parallel Execution, Fixture Scopes గురించి లోతుగా వివరిస్తాం.
+## Q8. How does Playwright support API testing and network interception?
+
+Playwright supports API testing through APIRequestContext, which allows us to send HTTP requests and validate responses without opening a browser. We use page.route() to intercept, modify, or mock network requests during UI testing.
