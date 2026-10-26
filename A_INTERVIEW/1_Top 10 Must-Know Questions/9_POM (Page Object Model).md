@@ -1,7 +1,5 @@
 # Q9. How do you implement POM (Page Object Model) in Playwright TypeScript?
 
-### "Page Object Model is a design pattern where each web page is created as a separate class. The page class contains locators and reusable methods. Test cases call these methods instead of directly using locators. This improves readability, reusability, and maintenance. If a locator changes, I update it only in the page class, making the framework easy to maintain."
-
 ````typescript LoginPortalDashboard.ts
 
 import { Locator, Page } from "@playwright/test";

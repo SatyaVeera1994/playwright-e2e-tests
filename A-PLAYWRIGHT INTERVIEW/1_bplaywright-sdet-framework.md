@@ -19,3 +19,55 @@ If the interviewer asks about code review:
 15. Manual Review: Verify the code manually before approving it.
 
 “In my project, we follow a code review checklist. I check whether the code is readable, variable and method names are meaningful, coding standards are followed, duplicate code is avoided, and the Page Object Model is implemented properly. I also verify that there is no hardcoding, methods are reusable, and positive and negative scenarios are covered. We can also use GitHub Copilot to assist with code reviews, but I manually verify the suggestions before approving the code.”
+
+### 2playwright-sdet-framework/
+
+## Playwright SDET Framework – Simple Points
+
+- playwright-sdet-framework/ – Main project folder.
+- tests/ – Contains test cases.
+- pages/ – Contains Page Object Model (POM) files.
+- fixtures/ – Contains custom fixtures.
+- utils/ – Contains reusable functions.
+- test-data/ – Stores test data.
+- config/ – Stores environment configurations.
+- tests/API/ – Contains API test cases.
+- playwright.config.js – Playwright configuration.
+- package.json – Contains dependencies and scripts.
+- reports/ – Stores test execution reports.
+- allure-results/ – Stores Allure test results.
+- .env – Stores environment variables.
+- global-setup.js – Runs before all tests.
+- global-teardown.js – Runs after all tests.
+  │
+  ├── tests/
+  │ ├── login.spec.ts
+  │ ├── users.spec.ts
+  │ └── api/
+  │ └── users-api.spec.ts
+  │
+  ├── pages/
+  │ ├── LoginPage.ts
+  │ ├── HomePage.ts
+  │ └── UsersPage.ts
+  │
+  ├── fixtures/
+  │ └── test-fixtures.ts
+  │
+  ├── utils/
+  │ ├── api-helper.ts
+  │ └── test-data-helper.ts
+  │
+  ├── test-data/
+  │ └── users.json
+  │
+  ├── config/
+  │ └── environments.ts
+  │
+  ├── global-setup.js
+  ├── global-teardown.js
+  ├── playwright.config.ts
+  ├── .env
+  ├── .gitignore
+  ├── package.json
+  └── README.md
