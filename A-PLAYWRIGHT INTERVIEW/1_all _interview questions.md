@@ -4,6 +4,8 @@
 
 > **Playwright లో Multiple Tabs handle చేయడానికి `context.waitForEvent('page')` ఉపయోగిస్తాను. కొత్త Tab open అయిన తర్వాత దానికి switch అయి actions perform చేసి, అవసరమైతే Parent Page కి తిరిగి వస్తాను.**
 
+“I handle multiple tabs using the page event on the BrowserContext and popup windows using the popup event on the current page. I wait for the event and capture the new Page object, then perform actions and assertions on the new page.
+
 ## Q1. How do you switch to a new tab?
 
 > I use `context.waitForEvent('page')` to capture the new tab and then perform actions on it.

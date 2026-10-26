@@ -21,12 +21,9 @@ Playwright interview questions — Simple English + Telugu explanations.
 
 ## 1. Auto-Waiting
 
-## Auto Waiting is a built-in synchronization feature in Playwright. Before performing actions like click, fill, or selectOption, Playwright automatically waits until the element becomes visible, enabled, stable, and ready for interaction. This removes the need for most explicit waits and reduces test flakiness caused by timing issues, making tests more reliable and stable.
+## Auto Waiting is a built-in synchronization feature in Playwright. Before performing actions like click, fill, or selectOption, Playwright automatically waits until the element attached, visible, enabled, stable, and ready for interaction. This removes the need for most explicit waits and reduces test flakiness caused by timing issues, making tests more reliable and stable.
 
-** Playwright automatically waits until an element is ready before performing an action like click or fill.
 Auto-waiting reduces flaky tests and eliminates many unnecessary explicit waits.
-
-Telugu: Element click లేదా fill చేయడానికి ready అయ్యే వరకు Playwright automatically wait చేస్తుంది.
 
 ```
 await page.getByRole("button", { name: "Login" }).click();
@@ -191,7 +188,7 @@ Telugu=Fixture అంటే test కి కావాల్సిన setup/resour
 
 Browser is the actual browser instance.
 
-BrowserContext is an isolated session like an Incognito window.
+BrowserContext is an isolated session with separate cookies and local storage like an Incognito window.
 
 Page is a browser tab where we perform actions.
 
@@ -329,8 +326,6 @@ page.route() ఉపయోగించి Request ని modify చేయవచ�
 # Playwright Interview Questions — తెలుగులో
 
 ## Q8. What is the difference between Browser, Context, and Page?
-
-Interview English answer:
 
 Browser is the running browser instance. BrowserContext provides an isolated session with separate cookies and local storage. Page represents a single tab inside a context. Playwright reuses the browser while keeping test sessions isolated.
 
@@ -580,6 +575,7 @@ I use frameLocator() to interact with elements inside an iframe. It allows me to
 ## Q7. What is the difference between `toBeAttached()` and `toBeVisible()`?
 
 Interview English answer:
+
 ## toBeAttached() checks whether an element exists in the DOM. toBeVisible() checks whether the element is visible to the user. An element can be attached to the DOM but still be hidden.
 
 తెలుగులో ప్రశ్న: `toBeAttached()` మరియు `toBeVisible()` మధ్య తేడా ఏమిటి?
@@ -606,7 +602,6 @@ Real-time example: ఒక accordion panel DOMలో ఉంది కానీ �
 Interview English answer:
 
 toBeAttached() checks whether an element exists in the DOM. toBeVisible() checks whether the element is visible to the user. An element can be attached to the DOM but still be hidden.
-
 
 ## Q9. What is the Page Object Model (POM), and why is it recommended?
 
