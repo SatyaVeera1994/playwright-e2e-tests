@@ -31,19 +31,52 @@ await page.getByRole("button", { name: "Login" }).click();
 
 ## 2. Network Interception
 
-English: We use `page.route()` to intercept network requests and mock API responses, block requests, or modify responses.
+# Q4. How does Network Interception work in Playwright?
 
-Telugu: API requests ని intercept చేసి, mock response ఇవ్వడానికి లేదా requests ని block చేయడానికి ఉపయోగిస్తాం.
+## Intercept - to stop or catch somebody/something that is moving from one place to another.
 
-```
-await page.route("**/api/users", async (route) => {
-  await route.fulfill({
-    status: 200,
-    contentType: "application/json",
-    body: JSON.stringify([{ id: 1, name: "Ravi" }]),
-  });
+Network Interception in Playwright means capturing and controlling HTTP network requests and responses made by your application.
+This is especially useful for API mocking, negative testing, modifying API responses, and testing UI behavior without depending on the real backend.I use page.route() to intercept network requests
+page.route()
+Whenever a request is made, intercept it.
+route.fulfill(); = Don't call the real server. Return my own response
+route.continue() = Let the original request go to the server.
+route.abort(); = Sometimes we don't want a request to go to the server at all.
+✅ page.route() → Intercepts Network Requests
+✅ route.continue() → Send Original Request
+✅ route.fulfill() → Return Mock Response
+✅ route.abort() → Block Request
+✅ route.fetch() → Modify Original Response
+✅ Used for API Mocking and Error Testing
+
+## import { test, expect } from "@playwright/test";
+
+test("network interception", async ({ page }) => {
+
+await page.route("\*\*/api/v1/fruits", async (route) => {
+
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+
+      body: JSON.stringify([
+        {
+          name: "Strawberry",
+          id: 3,
+        },
+        {
+          name: "Banana",
+          id: 1,
+        },
+      ]),
+    });
+
 });
-```
+
+await page.goto("https://demo.playwright.dev/api-mocking/");
+
+await expect(page.getByText("Strawberry")).toBeVisible();
+await expect(page.getByText("Banana")).toBeVisible();
 
 Real-time example: Backend API unavailable అయినప్పుడు mock data ఉపయోగించి UI testing చేయవచ్చు.
 
@@ -125,7 +158,7 @@ Real-time example: Application లో API request fail అయినా లేద
 
 # Q2. What is Auto Waiting and why does it eliminate test flakiness?
 
-Auto Waiting is a built-in synchronization feature in Playwright. Before performing actions like click, fill, or selectOption, Playwright automatically waits until the element becomes visible, enabled, stable, and ready for interaction. This removes the need for most explicit waits and reduces test flakiness caused by timing issues, making tests more reliable and stable.
+Auto Waiting is a built-in synchronization feature in Playwright. Before performing actions like click, fill, or selectOption, Playwright automatically waits until the element attached,visible, enabled, stable, and ready for interaction. This removes the need for most explicit waits and reduces test flakiness caused by timing issues, making tests more reliable and stable.
 
 # Q3. What are Playwright Fixtures and why are they better than beforeEach()?
 
@@ -175,12 +208,6 @@ loggedInPage.getByText('Dashboard')
 });
 
 ---
-
-1. What is a Fixture?
-   English
-   A fixture is a reusable setup provided to a Playwright test. It creates and manages the resources required by the test.
-
-Telugu=Fixture అంటే test కి కావాల్సిన setup/resources ని automatically create చేసి provide చేసే Playwright feature.
 
 # Q4. What is the difference between Browser, Context, and Page?
 
@@ -255,12 +282,12 @@ let tld = "net";
 
 let email;
 let password;
-if (platform === "yotta-int") {
-email = "yotta-int.admin@yotta.work";
-password = "YH6GPHv@/TCPM";
+if (platform === "yotta-qqa") {
+email = "yotta-qa@gmail";
+password = "jikmkii";
 } else if (platform === "priya-qa") {
-email = "priya-qa.admin@yotta.work";
-password = "5$YzH2Hl252Ut";
+email = "priya-qa@gmail.com";
+password = "5mijijijt";
 
 }
 
@@ -300,28 +327,6 @@ trace: "on-first-retry",
 storageState: "./LoginAuth.json",
 },
 )}
-
-# Q7 . What is Network Interception in Playwright?
-
-👨‍💼 Interview Question
-Can you explain Network Interception in Playwright?
-✅ Interview Answer (English)
-Network Interception is a Playwright feature that allows us to intercept HTTP requests before they reach the server. Using page.route(), we can mock responses, modify requests, block requests, or allow them to continue. It helps us test UI independently of the backend and simulate different server responses like 200, 401, 404, and 500.
-
-✅ Interview Answer (Telugu)
-Network Interception అంటే, Browser నుండి Server కి వెళ్లే HTTP Request ని మధ్యలో Playwright intercept (ఆపడం) చేయడం.
-page.route() ఉపయోగించి Request ని modify చేయవచ్చు, mock response ఇవ్వవచ్చు, block చేయవచ్చు లేదా server కి continue చేయవచ్చు.
-దీని వల్ల Backend అందుబాటులో లేకపోయినా UI Testing చేయవచ్చు. అలాగే 401 Unauthorized, 404 Not Found, 500 Internal Server Error వంటి scenarios ని కూడా సులభంగా test చేయవచ్చు.
-
-మీరు పంపిన Playwright interview questions ఫైల్‌లో ఉన్న ప్రతి ప్రశ్నను తెలుగులో సులభంగా అర్థమయ్యేలా వివరిస్తాను. ప్రతి ప్రశ్నకు ఈ విధంగా నేర్చుకుందాం:
-
-1. Question in English
-2. తెలుగులో ప్రశ్న అర్థం
-3. సులభమైన వివరణ
-4. Interviewలో చెప్పాల్సిన English answer
-5. Real-time example / code అవసరమైన చోట
-
-మొత్తం 22 ప్రశ్నలు ఉన్నాయి. Q22లో Workers, Parallel Execution, Fixtures గురించి అదనపు వివరాలు కూడా ఉన్నాయి. ముందుగా Q1–Q10 చూద్దాం.
 
 # Playwright Interview Questions — తెలుగులో
 

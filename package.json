@@ -34,7 +34,8 @@
     "myfirsttest": "npx playwright test tests/demo/1_myfirsttest.spec.ts --headed",
     "amazonsearch": "npx playwright test tests/functional/amazonSearch.spec.ts --headed",
     "addpacakger:cli": "npx playwright test tests/e2e/portaldhaboard/add.packager.spec.ts --trace on",
-    "addpacakger": "npx playwright test tests/e2e/portaldhaboard/add.packager.spec.ts --headed"
+    "addpacakger": "npx playwright test tests/e2e/portaldhaboard/add.packager.spec.ts --headed",
+    "cicd":"npx playwright test tests/api/test-7-handle_frames46.spec.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.0",

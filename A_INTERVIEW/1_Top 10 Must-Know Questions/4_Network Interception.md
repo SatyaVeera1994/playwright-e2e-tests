@@ -1,14 +1,22 @@
+https://chatgpt.com/c/6ac6157b-ef50-83ee-9d4e-f9ef46177c15
+
 # Q4. How does Network Interception work in Playwright?
 
-## 1.English:
+## Intercept - to stop or catch somebody/something that is moving from one place to another.
 
-“In Playwright, I use page.route() to intercept network requests. With route.fulfill() I can mock the response, route.continue() allows the original request to proceed, route.abort() blocks the request, and route.fallback() passes the request to the next matching route handler.”
-
-## 1.Telugu:
-
-“Playwright lo page.route() use chesi network requests ni intercept chestham. fulfill() tho mana own mock response istam, continue() tho original request continue chestham, abort() tho request ni block chestham, fallback() tho next matching handler ki pass chestham.”
-## How does Playwright support API testing 
-## Playwright supports API testing through APIRequestContext, which allows us to send HTTP requests and validate responses without opening a browser.
+Network Interception in Playwright means capturing and controlling HTTP network requests and responses made by your application.
+This is especially useful for API mocking, negative testing, modifying API responses, and testing UI behavior without depending on the real backend.I use page.route() to intercept network requests
+page.route()
+Whenever a request is made, intercept it.
+route.fulfill(); = Don't call the real server. Return my own response
+route.continue() = Let the original request go to the server.
+route.abort(); = Sometimes we don't want a request to go to the server at all.
+✅ page.route() → Intercepts Network Requests
+✅ route.continue() → Send Original Request
+✅ route.fulfill() → Return Mock Response
+✅ route.abort() → Block Request
+✅ route.fetch() → Modify Original Response
+✅ Used for API Mocking and Error Testing
 
 ## import { test, expect } from "@playwright/test";
 
@@ -40,6 +48,27 @@ await expect(page.getByText("Strawberry")).toBeVisible();
 await expect(page.getByText("Banana")).toBeVisible();
 
 ## });
+
+ఇంటర్‌సెప్ట్ (Intercept): ఒక ప్రదేశం నుండి మరొక ప్రదేశానికి వెళ్తున్న ఎవరినైనా లేదా దేన్నైనా మధ్యలోనే ఆపడం లేదా పట్టుకోవడం.
+ప్లేరైట్ (Playwright)లో నెట్‌వర్క్ ఇంటర్‌సెప్షన్ అంటే మీ అప్లికేషన్ చేసే HTTP నెట్‌వర్క్ రిక్వెస్ట్‌లను (requests) మరియు రెస్పాన్స్‌లను (responses) క్యాప్చర్ చేయడం మరియు వాటిని మన నియంత్రణలోకి తెచ్చుకోవడం.
+ఇది ముఖ్యంగా API మాకింగ్ (mocking), నెగటివ్ టెస్టింగ్, API రెస్పాన్స్‌లను మార్చడం మరియు అసలైన బ్యాకెండ్‌పై ఆధారపడకుండా UI పనితీరును పరీక్షించడానికి ఉపయోగపడుతుంది.
+page.route()
+ఏదైనా రిక్వెస్ట్ (request) వచ్చినప్పుడు, దాన్ని మధ్యలోనే అడ్డుకోండి (intercept).
+• route.fulfill(); = అసలైన సర్వర్‌ను పిలవద్దు. నా స్వంత రెస్పాన్స్‌ను తిరిగి పంపించు.
+• route.continue(); = అసలైన రిక్వెస్ట్‌ను సర్వర్‌కు వెళ్లనివ్వు.
+• route.abort(); = కొన్నిసార్లు రిక్వెస్ట్ అస్సలు సర్వర్‌కు వెళ్లడం మనకు ఇష్టం ఉండదు (అలాంటి సమయాల్లో దీన్ని వాడతాం).
+
+## 1.English:
+
+“In Playwright, I use page.route() to intercept network requests. With route.fulfill() I can mock the response, route.continue() allows the original request to proceed, route.abort() blocks the request, and route.fallback() passes the request to the next matching route handler.”
+
+## 1.Telugu:
+
+“Playwright lo page.route() use chesi network requests ni intercept chestham. fulfill() tho mana own mock response istam, continue() tho original request continue chestham, abort() tho request ni block chestham, fallback() tho next matching handler ki pass chestham.”
+
+## How does Playwright support API testing
+
+## Playwright supports API testing through APIRequestContext, which allows us to send HTTP requests and validate responses without opening a browser.
 
 ## 1.English:
 
@@ -423,5 +452,16 @@ Teluguలో simpleగా
 - continue() → original request పంపు
 - abort() → request block చెయ్యి
 - fallback() → next handlerకి పంపు
+
   🎤 Interviewలో ఇలా చెప్పండి
+
   "route.fallback() అంటే current route handler request ని handle చేయకుండా, next matching route handler కి pass చేయడం."
+
+ఇంటర్‌సెప్ట్ (Intercept): ఒక ప్రదేశం నుండి మరొక ప్రదేశానికి వెళ్తున్న ఎవరినైనా లేదా దేన్నైనా మధ్యలోనే ఆపడం లేదా పట్టుకోవడం.
+ప్లేరైట్ (Playwright)లో నెట్‌వర్క్ ఇంటర్‌సెప్షన్ అంటే మీ అప్లికేషన్ చేసే HTTP నెట్‌వర్క్ రిక్వెస్ట్‌లను (requests) మరియు రెస్పాన్స్‌లను (responses) క్యాప్చర్ చేయడం మరియు వాటిని మన నియంత్రణలోకి తెచ్చుకోవడం.
+ఇది ముఖ్యంగా API మాకింగ్ (mocking), నెగటివ్ టెస్టింగ్, API రెస్పాన్స్‌లను మార్చడం మరియు అసలైన బ్యాకెండ్‌పై ఆధారపడకుండా UI పనితీరును పరీక్షించడానికి ఉపయోగపడుతుంది.
+page.route()
+ఏదైనా రిక్వెస్ట్ (request) వచ్చినప్పుడు, దాన్ని మధ్యలోనే అడ్డుకోండి (intercept).
+• route.fulfill(); = అసలైన సర్వర్‌ను పిలవద్దు. నా స్వంత రెస్పాన్స్‌ను తిరిగి పంపించు.
+• route.continue(); = అసలైన రిక్వెస్ట్‌ను సర్వర్‌కు వెళ్లనివ్వు.
+• route.abort(); = కొన్నిసార్లు రిక్వెస్ట్ అస్సలు సర్వర్‌కు వెళ్లడం మనకు ఇష్టం ఉండదు (అలాంటి సమయాల్లో దీన్ని వాడతాం).

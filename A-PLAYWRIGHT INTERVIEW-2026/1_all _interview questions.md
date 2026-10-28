@@ -1,10 +1,41 @@
 ## 1 How do you handle Multiple Tabs in Playwright?\*\*
 
+## “I handle multiple tabs using the page event on the BrowserContext and popup windows using the popup event on the current page. I wait for the event and capture the new Page object, then perform actions and assertions on the new page.
+
 > In Playwright, I handle multiple tabs using `context.waitForEvent('page')`. It waits for the new tab to open, then I switch to the new page, perform the required actions, and return to the parent page if needed.
 
 > **Playwright లో Multiple Tabs handle చేయడానికి `context.waitForEvent('page')` ఉపయోగిస్తాను. కొత్త Tab open అయిన తర్వాత దానికి switch అయి actions perform చేసి, అవసరమైతే Parent Page కి తిరిగి వస్తాను.**
 
-“I handle multiple tabs using the page event on the BrowserContext and popup windows using the popup event on the current page. I wait for the event and capture the new Page object, then perform actions and assertions on the new page.
+## interview point
+
+Multiple tabs కోసం:
+const newPagePromise = context.waitForEvent("page");
+await page1.getByText("Blogs").first().click();
+const newPage = await newPagePromise;
+
+Popup కోసం:
+const popupPromise = page1.waitForEvent("popup");
+await page1.getByText("Blogs").first().click();
+const popup = await popupPromise;
+
+## test.only("handle multiplle windows2", async ({}) => {
+
+const browser = await chromium.launch();
+const context = await browser.newContext();
+const page1 = await context.newPage();
+
+await page1.goto("https://www.hdfc.com/");
+
+const pagePromise = context.waitForEvent("page");
+await page1.getByText("Blogs").first().click();
+const newpage = await pagePromise;
+await newpage.getByRole("button", { name: "CONTINUE" }).click();
+//<button class="btn btn-default disclaimer-btn" id="close-disclaimer" type="button"> CONTINUE </button>
+//<a href="/blog" target="_blank">Blogs</a>
+await page1.close();
+await context.close();
+await browser.close();
+});
 
 ## Q1. How do you switch to a new tab?
 

@@ -3,15 +3,24 @@ Awesome! Let's continue with **Q3**.
 # Q3. What are Playwright Fixtures and why are they better than beforeEach()?
 
 Playwright fixtures provide reusable setup and dependencies to tests. Playwright has built-in fixtures like page, context, and request, and we can create custom fixtures using base.extend(). Fixtures are useful for common setup such as authentication, page objects, and API clients. They also support different scopes like test and worker.
+For UI testing, common built-in fixtures are:
+
+page
+context
+browser
+browserName
+request
+
 #
+
 # import { test as base, expect, Page } from '@playwright/test';
 
 type MyFixtures = {
-  loggedInPage: Page;
+loggedInPage: Page;
 };
 
 export const test = base.extend<MyFixtures>({
-  loggedInPage: async ({ page }, use) => {
+loggedInPage: async ({ page }, use) => {
 
     await page.goto('https://example.com/login');
 
@@ -22,23 +31,23 @@ export const test = base.extend<MyFixtures>({
     await page.getByRole('button', { name: 'Login' }).click();
 
     await use(page);
-  }
+
+}
 });
 
 export { expect };
 
-  # dashboard.spec.ts
-  
+# dashboard.spec.ts
+
 import { test, expect } from './fixtures';
 
 test('Dashboard Test', async ({ loggedInPage }) => {
 
-  await expect(
-    loggedInPage.getByText('Dashboard')
-  ).toBeVisible();
+await expect(
+loggedInPage.getByText('Dashboard')
+).toBeVisible();
 
-});
----
+## });
 
 Playwright Fixtures are a built-in dependency injection mechanism that automatically creates, manages, and cleans up test dependencies.
 

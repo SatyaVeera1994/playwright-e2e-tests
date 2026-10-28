@@ -41,12 +41,12 @@ let tld = "net";
 
 let email;
 let password;
-if (platform === "yotta-int") {
-email = "yotta-int.admin@yotta.work";
-password = "YH6GPHv@/TCPM";
+if (platform === "qa") {
+email = "satya@.work";
+password = "bjhjbjn";
 } else if (platform === "priya-qa") {
-email = "priya-qa.admin@yotta.work";
-password = "5$YzH2Hl252Ut";
+email = "knkmkm.com";
+password = "5$bgbgbgt";
 
 }
 

@@ -1,6 +1,6 @@
 https://chatgpt.com/c/6adb9090-1180-83e8-aafc-9629c2f18918
 
-## Hi, I'm Satya. I'm a QA Engineer with over 4 years of experience in manual and automation testing.
+    Hi, I'm Satya. I'm a QA Engineer with over 4 years of experience in manual and automation testing.
 
 I have hands-on experience in UI automation using Playwright with TypeScript and API testing using Postman. I also have experience in backend validation and performance testing.
 

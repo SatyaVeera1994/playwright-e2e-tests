@@ -4,11 +4,11 @@ import { defineConfig, devices } from "@playwright/test";
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-import dotenv from "dotenv";
-import path from "path";
-dotenv.config({ path: path.resolve(__dirname, ".env") });
+// import dotenv from "dotenv";
+// import path from "path";
+// dotenv.config({ path: path.resolve(__dirname, ".env") });
 
-console.log(`hello from cofig  `);
+// console.log(`hello from cofig  `);
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -32,7 +32,7 @@ export const baseConfig = defineConfig({
     // baseURL: 'http://localhost:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: "on-first-retry",
+    trace: "on",
     ignoreHTTPSErrors: true,
     screenshot: "only-on-failure",
     video: "retain-on-failure",
