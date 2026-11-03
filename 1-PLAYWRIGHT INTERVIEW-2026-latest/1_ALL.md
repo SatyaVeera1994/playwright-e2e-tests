@@ -102,7 +102,7 @@ Telugu: Test execution సమయంలో browser actions ని video రూప
 // playwright.config.ts
 use: {
   video: "retain-on-failure",
-},
+},    
 ```
 
 Real-time example: Login test CI లో fail అయితే recorded video చూసి problem identify చేయవచ్చు.

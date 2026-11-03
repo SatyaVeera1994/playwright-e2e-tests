@@ -2,6 +2,8 @@
 
 ### ✅ English Answer
 
+**Parallel Execution runs tests simultaneously using multiple workers, while Sharding distributes tests across multiple machines to reduce execution time.**
+
 “Playwright runs tests in parallel using workers, and sharding splits tests across multiple machines to reduce execution time.”
 
 ✅ Best for CI/CD Pipelines

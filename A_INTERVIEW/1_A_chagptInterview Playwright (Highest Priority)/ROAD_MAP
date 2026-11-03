@@ -1,0 +1,661 @@
+This looks like an **Infosys Playwright Technical Interview** invitation. Based on the Job Description, here are the **most important topics** you should prepare. Since you've been preparing for **Playwright + JavaScript** interviews, these are likely to be asked.
+
+## 1. Playwright (Highest Priority) ⭐⭐⭐⭐⭐
+
+Prepare these questions:
+
+- What is Playwright?
+- Why Playwright over Selenium?
+- Playwright Architecture
+- Auto Waiting
+- Locators
+  - getByRole()
+  - getByText()
+  - getByLabel()
+  - locator()
+
+- Assertions
+- Browser Context
+- Multiple Tabs
+- Frames & iFrames
+- File Upload & Download
+- Handle Alerts
+- Network Interception (`page.route()`)
+- APIRequestContext
+- Fixtures
+- Hooks (`beforeEach`, `afterEach`)
+- Parallel Execution
+- Tags
+- Retries
+- Trace Viewer
+- Screenshots & Videos
+- Playwright Config
+- POM (Page Object Model)
+- Playwright Test Framework
+
+---
+
+## 2. JavaScript / TypeScript ⭐⭐⭐⭐⭐
+
+Prepare:
+
+- var vs let vs const
+- == vs ===
+- Data Types
+- Functions
+- Arrow Functions
+- Async & Await
+- Promise
+- Callbacks
+- Objects & Arrays
+- Destructuring
+- Spread Operator
+- Template Literals
+- Closures (basic)
+- Modules (import/export)
+
+---
+
+## 3. API Testing ⭐⭐⭐⭐
+
+Questions:
+
+- GET vs POST
+- PUT vs PATCH
+- DELETE
+- Status Codes
+- Headers
+- Authorization
+- Bearer Token
+- JSON Validation
+- Response Validation
+- API Chaining
+- API Testing using Playwright
+
+---
+
+## 4. Automation Framework ⭐⭐⭐⭐⭐
+
+They may ask:
+
+- Explain your framework.
+- Folder Structure
+- Page Object Model
+- Utility Classes
+- Test Data
+- Config File
+- Environment Handling
+- Reusable Functions
+- Reporting
+- Logging
+
+---
+
+## 5. Git ⭐⭐⭐⭐
+
+Commands:
+
+```bash
+git clone
+git pull
+git push
+git add
+git commit
+git checkout
+git merge
+git branch
+git status
+```
+
+---
+
+## 6. CI/CD ⭐⭐⭐⭐
+
+Know:
+
+- What is CI/CD?
+- Jenkins
+- GitHub Actions
+- Pipeline
+- Run Playwright from Pipeline
+- Generate Reports
+
+---
+
+## 7. SDLC & STLC ⭐⭐⭐⭐
+
+Prepare:
+
+- SDLC Phases
+- STLC Phases
+- Test Plan
+- Test Strategy
+- Test Case
+- Bug Life Cycle
+- Regression Testing
+- Smoke Testing
+- Sanity Testing
+- Retesting
+
+---
+
+## 8. Agile ⭐⭐⭐⭐
+
+Questions:
+
+- Scrum
+- Sprint
+- Daily Stand-up
+- Sprint Planning
+- Sprint Review
+- Retrospective
+- Story
+- Epic
+- Acceptance Criteria
+
+---
+
+## 9. Browser Debugging ⭐⭐⭐
+
+Know:
+
+- DevTools
+- Network Tab
+- Console
+- Elements
+- Performance
+- Trace Viewer
+
+---
+
+## 10. Project Questions ⭐⭐⭐⭐⭐
+
+Expect:
+
+- Explain your project.
+- Your role.
+- Team size.
+- Automation percentage.
+- Challenges.
+- Critical bug found.
+- Why Playwright?
+- How many scripts?
+- Framework architecture.
+- API testing.
+- CI/CD integration.
+- Reporting.
+
+---
+
+# Coding Questions
+
+Practice writing:
+
+```ts
+await page.goto(url);
+await page.fill();
+await page.click();
+await expect(locator).toBeVisible();
+```
+
+Also:
+
+- Loops
+- Arrays
+- Functions
+- Async/Await
+- Promise
+- JSON Parsing
+
+---
+
+# HR Questions
+
+Prepare answers for:
+
+- Tell me about yourself.
+- Explain your project.
+- Why do you want to join Infosys?
+- Biggest challenge?
+- Strengths?
+- Weaknesses?
+- Why should we hire you?
+- Notice period?
+- Expected salary?
+
+---
+
+# 30-Minute Revision Before the Interview
+
+1. Playwright Locators
+2. Auto Waiting
+3. Assertions
+4. API Testing
+5. JavaScript (`let`, `const`, `async/await`, `Promise`)
+6. POM Framework
+7. Git Commands
+8. CI/CD Basics
+9. Agile Scrum
+10. Your Project Explanation
+
+### Interview Tips
+
+- Speak confidently and explain your thought process.
+- Use **real project examples** wherever possible.
+- If asked to compare tools (e.g., Playwright vs Selenium), focus on practical differences you've experienced.
+- If you don't know an answer, say so honestly and explain how you would find or debug the solution.
+- Keep your project explanation concise (2–3 minutes), then expand if the interviewer asks follow-up questions.
+
+This job description aligns very closely with a **4+ years Playwright Automation Engineer** role, so expect most questions to revolve around **Playwright, JavaScript/TypeScript, API testing, framework design, Git, CI/CD, Agile, and your real project experience**.
+ఈ **Infosys Playwright Automation QA** Job Description ఆధారంగా ఇంటర్వ్యూలో ఎక్కువగా అడిగే టాపిక్స్ ఇవే. మీరు తెలుగు లో సులభంగా గుర్తుపెట్టుకునేలా ఇస్తున్నాను.
+
+---
+
+# ⭐ 1. Playwright (అత్యంత ముఖ్యమైనది) ⭐⭐⭐⭐⭐
+
+ఇవి తప్పకుండా ప్రిపేర్ చేయండి.
+
+✅ Playwright అంటే ఏమిటి?
+
+✅ Playwright ఎందుకు ఉపయోగిస్తారు?
+
+✅ Playwright Architecture
+
+✅ Playwright vs Selenium
+
+✅ Auto Waiting
+
+✅ Locators
+
+- getByRole()
+- getByText()
+- getByLabel()
+- locator()
+- CSS Selector
+- XPath
+
+✅ Assertions
+
+```ts
+expect(locator).toBeVisible();
+expect(locator).toHaveText();
+```
+
+✅ Browser Context
+
+✅ Multiple Tabs
+
+✅ Multiple Windows
+
+✅ Frames & iFrames
+
+✅ File Upload
+
+✅ File Download
+
+✅ Alert Handling
+
+✅ Network Interception
+
+```ts
+page.route();
+```
+
+✅ APIRequestContext
+
+✅ Fixtures
+
+✅ Hooks
+
+- beforeAll
+- beforeEach
+- afterEach
+- afterAll
+
+✅ Parallel Execution
+
+✅ Retry
+
+✅ Tags
+
+✅ Trace Viewer
+
+✅ Screenshot
+
+✅ Video Recording
+
+✅ Playwright Config
+
+✅ Page Object Model (POM)
+
+---
+
+# ⭐ 2. JavaScript / TypeScript ⭐⭐⭐⭐⭐
+
+ఇవి చాలా ముఖ్యమైనవి.
+
+✅ var vs let vs const
+
+✅ Data Types
+
+✅ == vs ===
+
+✅ Functions
+
+✅ Arrow Functions
+
+✅ Objects
+
+✅ Arrays
+
+✅ Loops
+
+✅ Async / Await
+
+✅ Promise
+
+✅ Callback
+
+✅ Spread Operator (...)
+
+✅ Rest Operator
+
+✅ Destructuring
+
+✅ Template Literals
+
+✅ Import / Export
+
+---
+
+# ⭐ 3. API Testing ⭐⭐⭐⭐
+
+ఇవి అడిగే అవకాశాలు ఎక్కువ.
+
+✅ GET
+
+✅ POST
+
+✅ PUT
+
+✅ PATCH
+
+✅ DELETE
+
+✅ Status Codes
+
+- 200
+- 201
+- 400
+- 401
+- 403
+- 404
+- 500
+
+✅ Headers
+
+✅ Authorization
+
+✅ Bearer Token
+
+✅ JSON Response Validation
+
+✅ API Chaining
+
+✅ Playwright API Testing
+
+---
+
+# ⭐ 4. Automation Framework ⭐⭐⭐⭐⭐
+
+మీ Project గురించి తప్పకుండా అడుగుతారు.
+
+తెలుసుకోవాల్సినవి:
+
+✅ Framework Structure
+
+✅ Page Object Model
+
+✅ Utility Classes
+
+✅ Base Page
+
+✅ Test Data
+
+✅ Config File
+
+✅ Environment
+
+✅ Reusable Methods
+
+✅ Reporting
+
+✅ Logging
+
+---
+
+# ⭐ 5. Git ⭐⭐⭐⭐
+
+Commands
+
+```bash
+git clone
+git pull
+git push
+git add
+git commit
+git status
+git branch
+git checkout
+git merge
+```
+
+---
+
+# ⭐ 6. CI/CD ⭐⭐⭐⭐
+
+ఇవి తెలుసుకోండి.
+
+✅ CI అంటే ఏమిటి?
+
+✅ CD అంటే ఏమిటి?
+
+✅ Jenkins
+
+✅ GitHub Actions
+
+✅ Pipeline
+
+✅ Playwright ను Pipeline లో ఎలా Run చేస్తారు?
+
+---
+
+# ⭐ 7. SDLC & STLC ⭐⭐⭐⭐
+
+తెలుసుకోవాల్సినవి
+
+### SDLC
+
+- Requirement
+- Design
+- Development
+- Testing
+- Deployment
+- Maintenance
+
+### STLC
+
+- Requirement Analysis
+- Test Planning
+- Test Case Design
+- Test Execution
+- Defect Reporting
+- Test Closure
+
+---
+
+# ⭐ 8. Testing Concepts ⭐⭐⭐⭐⭐
+
+ఇవి చాలా ముఖ్యమైనవి.
+
+✅ Smoke Testing
+
+✅ Sanity Testing
+
+✅ Regression Testing
+
+✅ Retesting
+
+✅ Functional Testing
+
+✅ Integration Testing
+
+✅ End-to-End Testing
+
+✅ System Testing
+
+✅ UAT
+
+---
+
+# ⭐ 9. Agile ⭐⭐⭐⭐
+
+ఇవి కూడా అడుగుతారు.
+
+✅ Agile అంటే ఏమిటి?
+
+✅ Scrum
+
+✅ Sprint
+
+✅ Daily Stand-up
+
+✅ Sprint Planning
+
+✅ Sprint Review
+
+✅ Retrospective
+
+✅ User Story
+
+✅ Epic
+
+✅ Acceptance Criteria
+
+---
+
+# ⭐ 10. Browser Debugging ⭐⭐⭐
+
+తెలుసుకోవాల్సినవి
+
+✅ Chrome DevTools
+
+✅ Console
+
+✅ Network Tab
+
+✅ Elements Tab
+
+✅ Performance Tab
+
+---
+
+# ⭐ 11. Project Questions ⭐⭐⭐⭐⭐
+
+ఇవి తప్పకుండా వస్తాయి.
+
+✅ మీ Project Explain చేయండి.
+
+✅ మీ Role ఏమిటి?
+
+✅ Team Size ఎంత?
+
+✅ ఎంత Automation చేశారు?
+
+✅ ఎంత మంది QA ఉన్నారు?
+
+✅ ఎంత మంది Developers ఉన్నారు?
+
+✅ Framework ఎలా Design చేశారు?
+
+✅ API Testing చేశారా?
+
+✅ CI/CD ఉపయోగించారా?
+
+✅ Reporting ఎలా చేస్తున్నారు?
+
+✅ Critical Bug ఏదైనా కనుగొన్నారా?
+
+✅ Biggest Challenge ఏమిటి?
+
+---
+
+# ⭐ 12. Coding Questions ⭐⭐⭐⭐
+
+సింపుల్ Coding కూడా అడగొచ్చు.
+
+```ts
+await page.goto();
+await page.click();
+await page.fill();
+await expect().toBeVisible();
+```
+
+ఇవి Practice చేయండి.
+
+- Functions
+- Loops
+- Arrays
+- Objects
+- Async/Await
+- Promise
+
+---
+
+# ⭐ 13. HR Questions ⭐⭐⭐⭐
+
+ఇవి కూడా సిద్ధం చేసుకోండి.
+
+✅ Tell me about yourself.
+
+✅ Explain your project.
+
+✅ Why Infosys?
+
+✅ Why are you changing your job?
+
+✅ Your Strengths?
+
+✅ Your Weaknesses?
+
+✅ Why should we hire you?
+
+✅ Notice Period?
+
+✅ Expected Salary?
+
+---
+
+# ⭐ Interview ముందు 30 నిమిషాల్లో Revision
+
+1. ✅ Playwright Locators
+2. ✅ Auto Waiting
+3. ✅ Assertions
+4. ✅ Page Object Model (POM)
+5. ✅ JavaScript (`let`, `const`, `async/await`, `Promise`)
+6. ✅ API Testing
+7. ✅ Git Commands
+8. ✅ CI/CD Basics
+9. ✅ Agile Scrum
+10. ✅ మీ Project Explanation (2–3 నిమిషాల్లో చెప్పేలా Practice చేయండి)
+
+---
+
+# 🎯 ముఖ్యమైన Interview Tip (తెలుగులో)
+
+- **కేవలం Definition చెప్పకండి**, మీ Project లో ఎలా ఉపయోగించారో కూడా చెప్పండి.
+- **Real-time Example** ఇస్తే Interviewer పై మంచి Impression పడుతుంది.
+- Answer తెలియకపోతే తప్పుగా చెప్పకండి. "దీనిపై పూర్తి అనుభవం లేదు, కానీ నేర్చుకోవడానికి సిద్ధంగా ఉన్నాను" అని చెప్పడం మంచిది.
+- మీరు చెప్పే ప్రతి సమాధానం **Playwright Project Experience** కి సంబంధించి ఉండాలి.
+
+ఈ Job Description ప్రకారం చూస్తే, ఇంటర్వ్యూలో **80% ప్రశ్నలు Playwright, JavaScript/TypeScript, API Testing, Framework Design, Git, CI/CD, Agile మరియు మీ Project Experience** మీదే వచ్చే అవకాశం ఉంది.

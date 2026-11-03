@@ -1,6 +1,6 @@
 ## 1 How do you handle Multiple Tabs in Playwright?\*\*
 
-## “I handle multiple tabs using the page event on the BrowserContext and popup windows using the popup event on the current page. I wait for the event and capture the new Page object, then perform actions and assertions on the new page.
+> “I handle multiple tabs using the page event on the BrowserContext and popup windows using the popup event on the current page. I wait for the event and capture the new Page object, then perform actions and assertions on the new page.
 
 > In Playwright, I handle multiple tabs using `context.waitForEvent('page')`. It waits for the new tab to open, then I switch to the new page, perform the required actions, and return to the parent page if needed.
 
@@ -92,10 +92,23 @@ Frames & iFrames** is another **frequently asked Playwright interview topic.
 ## Q1. What are Frames and iFrames in Playwright?
 > An iFrame is an embedded web page inside another web page. In Playwright, we use `frameLocator()` to interact with elements inside an iFrame.
 
+
 # Q2. How do you handle iFrames in Playwright?
 
 > In Playwright, I handle iframes using `frameLocator()`, `page.frame()`, and `contentFrame()`. These methods help us locate and interact with elements inside an iframe.”
 # 💻 Code Example
+
+import { test, expect } from "@playwright/test";
+
+test("handle frames1", async ({ page }) => {
+  await page.goto("https://jqueryui.com/tooltip/");
+
+  await page.pause();
+  const frame1 = page.frameLocator(".demo-frame");
+  await frame1.locator("#age").fill("25");
+
+  await page.close();
+});
 ```typescript
 await page
   .frameLocator('#payment-frame')

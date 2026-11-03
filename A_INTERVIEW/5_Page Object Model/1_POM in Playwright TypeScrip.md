@@ -1,14 +1,16 @@
 # Q1. How do you implement production-grade POM in Playwright TypeScript?
 
+Our framework follows the Page Object Model. We have separate folders for Pages, Tests, Utilities, Test Data, Config, Reports, and Helpers. Test data is stored in JSON files, and reports are generated after execution.
+
 ## 1. Telugu Concept
 
 POM (Page Object Model) అంటే Application లోని ప్రతి Page కి ఒక Separate Class Create చేయడం.
 
 Page లో ఉన్న:
 
-* Locators
-* Actions
-* Methods
+- Locators
+- Actions
+- Methods
 
 అన్నీ ఒకే Class లో ఉంచుతాము.
 
@@ -26,10 +28,10 @@ UsersPage
 
 ### Benefits
 
-* Reusable Code
-* Easy Maintenance
-* Better Readability
-* Less Duplication
+- Reusable Code
+- Easy Maintenance
+- Better Readability
+- Less Duplication
 
 Playwright లో Locators Lazy గా ఉంటాయి కాబట్టి Constructor లో Define చేస్తాము.
 
@@ -65,9 +67,9 @@ Page Class లో Locators మరియు Business Actions ఉంచుతా�
 
 ఉదాహరణకు Login Page లో:
 
-* Email Field
-* Password Field
-* Login Button
+- Email Field
+- Password Field
+- Login Button
 
 వాటికి సంబంధించిన Actions LoginPage Class లో ఉంటాయి.
 
@@ -120,8 +122,8 @@ CarInsurancePage
 Instead of writing:
 
 ```typescript id="f1z4k8"
-page.locator('#email')
-page.locator('#password')
+page.locator("#email");
+page.locator("#password");
 ```
 
 in every test,
@@ -129,7 +131,7 @@ in every test,
 I created a reusable:
 
 ```typescript id="vk39ci"
-login()
+login();
 ```
 
 method inside LoginPage.
@@ -143,55 +145,39 @@ All tests use the same method.
 ### LoginPage.ts
 
 ```typescript id="qkgtib"
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator } from "@playwright/test";
 
 export class LoginPage {
-
   readonly emailInput: Locator;
   readonly passwordInput: Locator;
   readonly loginButton: Locator;
 
   constructor(readonly page: Page) {
+    this.emailInput = page.getByLabel("Email");
 
-    this.emailInput =
-      page.getByLabel('Email');
+    this.passwordInput = page.getByLabel("Password");
 
-    this.passwordInput =
-      page.getByLabel('Password');
-
-    this.loginButton =
-      page.getByRole('button', {
-        name: 'Sign in'
-      });
-
+    this.loginButton = page.getByRole("button", {
+      name: "Sign in",
+    });
   }
 
-  async login(
-    email: string,
-    password: string
-  ): Promise<void> {
-
+  async login(email: string, password: string): Promise<void> {
     await this.emailInput.fill(email);
 
     await this.passwordInput.fill(password);
 
     await this.loginButton.click();
-
   }
-
 }
 ```
 
 ### Test File
 
 ```typescript id="9ww1fh"
-const loginPage =
-  new LoginPage(page);
+const loginPage = new LoginPage(page);
 
-await loginPage.login(
-  'admin@test.com',
-  'Admin123'
-);
+await loginPage.login("admin@test.com", "Admin123");
 ```
 
 ---
@@ -213,7 +199,7 @@ Page Objects ని Test Files కి Automatically Provide చేస్తా�
 Test File లో:
 
 ```typescript id="8oztw7"
-new LoginPage(page)
+new LoginPage(page);
 ```
 
 అనే Code రాయకుండా Fixture Create చేస్తాము.
@@ -301,38 +287,24 @@ This reduced duplicated setup code significantly.
 ### pages.fixture.ts
 
 ```typescript id="5c6thw"
-import { test as base } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
+import { test as base } from "@playwright/test";
+import { LoginPage } from "../pages/LoginPage";
 
 export const test = base.extend({
-
   loginPage: async ({ page }, use) => {
-
-    await use(
-      new LoginPage(page)
-    );
-
-  }
-
+    await use(new LoginPage(page));
+  },
 });
 ```
 
 ### Test File
 
 ```typescript id="4xb7sj"
-import { test } from '../fixtures/pages.fixture';
+import { test } from "../fixtures/pages.fixture";
 
-test(
-  'Login Test',
-  async ({ loginPage }) => {
-
-    await loginPage.login(
-      'admin@test.com',
-      'Admin123'
-    );
-
-  }
-);
+test("Login Test", async ({ loginPage }) => {
+  await loginPage.login("admin@test.com", "Admin123");
+});
 ```
 
 ---
