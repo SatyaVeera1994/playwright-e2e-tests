@@ -6,6 +6,20 @@ pipeline {
         nodejs 'node22'
         allure 'allure'
     }
+    parameters {
+        choice(
+            name: 'PLATFORM',
+            choices: [
+                'yotta-int',
+                'dev',
+                'qa',
+                'qa2',
+                'dvb-i',
+                'ops'
+            ],
+            description: 'Select environment for Playwright execution'
+        )
+    }
 
     options {
         timeout(time: 20, unit: 'MINUTES')
