@@ -1,4 +1,11 @@
 # Q2. How do you authenticate API requests in Playwright?
+I authenticate API requests using storageState or Authorization headers.
+
+Usually, I reuse the authentication state generated during login.
+
+This allows API and UI tests to share the same session.
+
+For token-based authentication, I pass the Bearer token in the Authorization header.
 
 ## 1. Telugu Concept
 

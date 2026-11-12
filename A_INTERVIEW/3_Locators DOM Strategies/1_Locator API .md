@@ -1,27 +1,36 @@
 # Q1. What is the Locator API and how is it fundamentally different from Selenium's findElement?
 
 ## 1. Telugu Concept
-
 Locator API అనేది Playwright లో Elements ని Identify చేసి Interact చేయడానికి ఉపయోగించే Mechanism.
 
-Selenium లో:
+## 1. Simple English Answer
 
-```java
-WebElement button =
-driver.findElement(By.id("submit"));
-```
+The Locator API is Playwright's way of finding elements.
+Playwright locators are lazy.
+The element is searched only when an action is performed.
+Locators also support:
+* Auto Waiting
+* Auto Retry
+* Strict Mode
 
-ఈ Line Execute అయిన వెంటనే DOM Query జరుగుతుంది.
-
-DOM Change అయితే:
-
-```text
-StaleElementReferenceException
-```
-
-వస్తుంది.
+This makes Playwright tests more reliable.
 
 ---
+
+## 5. English Interview Answer
+
+The Locator API is Playwright's recommended mechanism for interacting with web elements.
+Playwright locators are lazy and auto-retrying
+
+In Playwright, a locator is not an element reference. It is a description of how to find an element. The actual DOM lookup happens when an action such as click() or fill() is executed.
+
+Additionally, locators automatically retry until the element becomes actionable, reducing synchronization issues and eliminating stale element problems.
+
+In my projects, Locator API significantly improved test stability and reduced flaky failures compared to traditional Selenium frameworks.
+
+
+
+
 
 Playwright లో:
 
@@ -60,20 +69,6 @@ Find Element Later
 ```
 
 ---
-
-### Selenium
-
-```text
-findElement()
-      │
-      ▼
-WebElement Reference
-```
-
-DOM Change అయితే Broken Reference.
-
----
-
 ### Playwright
 
 ```text
@@ -190,25 +185,7 @@ In my projects, Locator API significantly improved test stability and reduced fl
 
 ---
 
-## 6. Real-Time Project Example
-
-In my Insurance Automation Project:
-
-Old Selenium Code:
-
-```java
-WebElement submitBtn =
-driver.findElement(By.id("submit"));
-```
-
-Sometimes the page refreshed and caused:
-
-```text
-StaleElementReferenceException
-```
-
-After migrating to Playwright:
-
+#
 ```typescript
 const submitBtn =
 page.locator('#submit');

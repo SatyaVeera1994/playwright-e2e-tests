@@ -1,8 +1,12 @@
 https://chatgpt.com/c/6add5f85-f6d4-83e8-8a1f-a40ed90e93a2
 
-## Question: Why do we use async and await in Playwright?
+## 1 Why do we use async and await in Playwright?
 
 ## “We use async and await in Playwright to handle asynchronous operations. The async keyword allows us to write asynchronous test functions, and await waits for an operation to complete before executing the next statement.”
+
+## 2 What is async and await in JavaScript?
+
+"Async and await are used to handle asynchronous operations in JavaScript. The async keyword makes a function return a Promise, and the await keyword waits for the operation to complete before moving to the next line of code."
 
 తెలుగు అర్థం: Playwright‌లో asynchronous operations‌ను handle చేయడానికి async మరియు await ఉపయోగిస్తాము. async test function ముందు రాస్తాము. await ఒక operation పూర్తయ్యాక తదుపరి statement execute అయ్యేలా చేస్తుంది.
 

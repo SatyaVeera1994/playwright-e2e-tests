@@ -1,5 +1,10 @@
 # Q1. How do you use Playwright's APIRequestContext for API Testing?
 
+I use Playwright's built-in request fixture for API testing.
+It allows me to send GET, POST, PUT, and DELETE requests without using external libraries like Axios.
+I validate status codes, response bodies, and headers using Playwright assertions.
+This helps maintain both UI and API tests in the same framework.
+
 ## 1. Telugu Concept
 
 Playwright లో API Testing కోసం `APIRequestContext` ఉపయోగిస్తాము.

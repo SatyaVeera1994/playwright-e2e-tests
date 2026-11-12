@@ -1,5 +1,31 @@
 # Q1. What are all the web-first assertions in Playwright?
 
+> "Web-first assertions are Playwright assertions that automatically retry until the expected condition is met. Common assertions include 
+## 2. Easy to Remember
+
+✅ toBeVisible()
+
+✅ toBeHidden()
+
+✅ toBeEnabled()
+
+✅ toBeDisabled()
+
+✅ toHaveText()
+
+✅ toContainText()
+
+✅ toHaveValue()
+
+✅ toHaveCount()
+
+✅ toHaveAttribute()
+
+✅ toHaveURL()
+
+✅ toHaveTitle() 
+They improve test stability and reduce flaky failures. I also use expect.soft() when I want multiple validations to run in a single test execution."
+
 ## 1. Telugu Concept
 
 Playwright లో **Web-First Assertions** అనేవి Auto-Retry అయ్యే Assertions.

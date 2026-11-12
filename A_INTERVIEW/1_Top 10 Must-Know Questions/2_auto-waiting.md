@@ -1,23 +1,4 @@
-Excellent! 🎉
-
-We'll continue with **Q2** in your final format.
-
 # Q2. What is Auto Waiting and why does it eliminate test flakiness?
-
-### ✅ English Answer
-
-“Playwright auto-waiting ensures elements are visible, enabled, and stable before performing actions, reducing flaky tests.”
-Auto Waiting is one of the most powerful built-in synchronization features in Playwright.
-
-Before performing actions such as `click()`, `fill()`, `check()`, or `selectOption()`, Playwright automatically verifies that the element is ready for interaction.
-
-It performs several actionability checks, including whether the element is visible, stable, enabled, editable when required, attached to the DOM, and capable of receiving pointer events.
-
-Only after these checks pass does Playwright execute the action.
-## 1. Telugu Concept
-
-### Auto Waiting అంటే ఏమిటి?
-✅ Interview Answer (Easy to Remember)
 
 Auto Waiting is a built-in synchronization feature in Playwright. Before performing actions like click, fill, or selectOption, Playwright automatically waits until the element becomes visible, enabled, stable, and ready for interaction. This removes the need for most explicit waits and reduces test flakiness caused by timing issues, making tests more reliable and stable.
 
@@ -31,16 +12,31 @@ Playwright లో **Auto Waiting** అనేది ఒక **Built-in Synchroniza
 
 Playwright ఈ క్రింది Conditions ను Verify చేస్తుంది.
 
-* ✅ Element Visible గా ఉండాలి.
-* ✅ Element Stable గా ఉండాలి (Animation పూర్తవ్వాలి).
-* ✅ Element Enabled గా ఉండాలి.
-* ✅ Element Editable అయి ఉండాలి (`fill()` కోసం).
-* ✅ Element DOM లో ఉండాలి.
-* ✅ Element Pointer Events Receive చేయగలగాలి (Overlay ఉండకూడదు).
+- ✅ Element Visible గా ఉండాలి.
+- ✅ Element Stable గా ఉండాలి (Animation పూర్తవ్వాలి).
+- ✅ Element Enabled గా ఉండాలి.
+- ✅ Element Editable అయి ఉండాలి (`fill()` కోసం).
+- ✅ Element DOM లో ఉండాలి.
+- ✅ Element Pointer Events Receive చేయగలగాలి (Overlay ఉండకూడదు).
 
 ఈ Conditions అన్నీ Pass అయిన తర్వాత మాత్రమే Playwright Action Perform చేస్తుంది.
 
----
+### ✅ English Answer
+
+“Playwright auto-waiting ensures elements are visible, enabled, and stable before performing actions, reducing flaky tests.”
+Auto Waiting is one of the most powerful built-in synchronization features in Playwright.
+
+Before performing actions such as `click()`, `fill()`, `check()`, or `selectOption()`, Playwright automatically verifies that the element is ready for interaction.
+
+It performs several actionability checks, including whether the element is visible, stable, enabled, editable when required, attached to the DOM, and capable of receiving pointer events.
+
+Only after these checks pass does Playwright execute the action.
+
+## 1. Telugu Concept
+
+### Auto Waiting అంటే ఏమిటి?
+
+## ✅ Interview Answer (Easy to Remember)
 
 ### Selenium లో ఎలా?
 
@@ -63,7 +59,7 @@ Wait సరిగ్గా లేకపోతే Test Fail అవుతుంద
 ### Playwright లో
 
 ```typescript
-await page.locator('#login').click();
+await page.locator("#login").click();
 ```
 
 అంతే.
@@ -92,9 +88,9 @@ Login Button API Response కోసం Wait చేస్తోంది.
 
 API Response
 
-* Today → 2 Seconds
-* Tomorrow → 5 Seconds
-* Another Day → 7 Seconds
+- Today → 2 Seconds
+- Tomorrow → 5 Seconds
+- Another Day → 7 Seconds
 
 Selenium
 
@@ -181,21 +177,19 @@ As a result, we removed most explicit waits, reduced flaky tests, improved execu
 ## 6. Code Example (TypeScript)
 
 ```typescript
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test('Login using Auto Waiting', async ({ page }) => {
+test("Login using Auto Waiting", async ({ page }) => {
+  await page.goto("https://example.com/login");
 
-  await page.goto('https://example.com/login');
+  await page.locator("#username").fill("admin");
 
-  await page.locator('#username').fill('admin');
-
-  await page.locator('#password').fill('admin123');
+  await page.locator("#password").fill("admin123");
 
   // Playwright automatically waits until the button is ready
-  await page.locator('#login').click();
+  await page.locator("#login").click();
 
   await expect(page).toHaveURL(/dashboard/);
-
 });
 ```
 
