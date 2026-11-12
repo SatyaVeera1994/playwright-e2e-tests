@@ -37,19 +37,45 @@ pipeline {
             }
         }
     }
+post {
+    always {
+        script {
+            echo 'Checking Allure results...'
 
-    post {
-        always {
-            script {
-                if (fileExists('allure-results')) {
-                    allure includeProperties: false,
-                           jdk: '',
-                           results: [[path: 'allure-results']],
-                           reportBuildPolicy: 'ALWAYS'
-                } else {
-                    echo 'Allure results directory not found'
-                }
+            bat '''
+                if exist allure-results (
+                    echo Allure results folder found
+                    dir allure-results
+                ) else (
+                    echo Allure results folder NOT found
+                )
+            '''
+
+            if (fileExists('allure-results')) {
+                allure(
+                    includeProperties: false,
+                    jdk: '',
+                    results: [[path: 'allure-results']],
+                    reportBuildPolicy: 'ALWAYS'
+                )
+            } else {
+                echo 'Allure results directory not found'
             }
         }
     }
+}
+    // post {
+    //     always {
+    //         script {
+    //             if (fileExists('allure-results')) {
+    //                 allure includeProperties: false,
+    //                        jdk: '',
+    //                        results: [[path: 'allure-results']],
+    //                        reportBuildPolicy: 'ALWAYS'
+    //             } else {
+    //                 echo 'Allure results directory not found'
+    //             }
+    //         }
+    //     }
+    // }
 }
