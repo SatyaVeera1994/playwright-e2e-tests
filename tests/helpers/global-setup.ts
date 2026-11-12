@@ -1,20 +1,20 @@
-import { type FullConfig } from "@playwright/test";
-import * as fs from "fs";
-import * as path from "path";
+// import { type FullConfig } from "@playwright/test";
+// import * as fs from "fs";
+// import * as path from "path";
 
-export default async function globalSetup(config: FullConfig) {
-  if (process.env.RUNNER?.toUpperCase() === "LOCAL") {
-    console.log(`[INFO]:Deleting allure results folder before test run`);
+// export default async function globalSetup(config: FullConfig) {
+//   if (process.env.RUNNER?.toUpperCase() === "LOCAL") {
+//     console.log(`[INFO]:Deleting allure results folder before test run`);
 
-    //delete allure results
-    const allureresultspath = path.resolve(process.cwd(), "allure-results");
-    console.log(allureresultspath);
-    if (fs.existsSync(allureresultspath)) {
-      fs.rmSync(allureresultspath, { recursive: true, force: true });
-    }
-  }
-  console.log(`[INFO]:Global setup completed`);
-}
+//     //delete allure results
+//     const allureresultspath = path.resolve(process.cwd(), "allure-results");
+//     console.log(allureresultspath);
+//     if (fs.existsSync(allureresultspath)) {
+//       fs.rmSync(allureresultspath, { recursive: true, force: true });
+//     }
+//   }
+//   console.log(`[INFO]:Global setup completed`);
+// }
 
 // const { chromium } = require("@playwright/test");
 

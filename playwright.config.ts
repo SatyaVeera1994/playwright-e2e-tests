@@ -12,7 +12,8 @@ import { defineConfig, devices } from "@playwright/test";
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-export const baseConfig = defineConfig({
+// export const baseConfig = defineConfig({
+export default defineConfig({
   testDir: "./tests",
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -25,7 +26,17 @@ export const baseConfig = defineConfig({
   // globalSetup: require.resolve("./tests/helpers/global-setup.ts"),
   // globalTeardown: require.resolve("./tests/helpers/global-teardown.ts"),
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [["html", { open: "never" }], ["allure-playwright"]],
+  reporter: [
+    ["html", { open: "never" }],
+    [
+      "allure-playwright",
+      {
+        resultsDir: "allure-results",
+        detail: true,
+        suiteTitle: false,
+      },
+    ],
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
