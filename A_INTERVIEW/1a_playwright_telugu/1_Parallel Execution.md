@@ -1,6 +1,6 @@
 # Playwright Configuration & Parallel Execution
 
-Playwright interview preparation kosam ee topic lo two main concepts nerchukundam:
+“Parallel execution means running multiple tests concurrently using worker processes. It reduces overall execution time, especially when tests are independent.”
 
 1. Playwright Configuration — tests ela run avvali, timeout entha undali, browser emiti, reports ela generate avvali ani configure chestham.
 2. Parallel Execution — multiple tests ni same time lo run chesi execution time reduce chestham.

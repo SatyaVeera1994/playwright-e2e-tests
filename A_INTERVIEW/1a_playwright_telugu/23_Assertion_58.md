@@ -1,6 +1,25 @@
-# Playwright Interview Questions — Simple English + Telugu
+# Playwright Interview Questions —
 
-These are important Playwright SDET interview questions with simple answers, differences, and real-time examples.
+Interview answer:
+
+“Playwright assertions are used to verify expected results. Auto-retrying assertions, such as `toBeVisible()` and `toHaveText()`, retry until they pass or time out. Non-retrying assertions, such as `toBe()` and `toEqual()`, check values immediately. We can also use matchers like `expect.arrayContaining()` and `.not` for flexible and negative validations.”
+
+## 2. Non-retrying Assertions
+
+English: These assertions check the value immediately. They do not automatically retry.
+
+తెలుగు: ఈ assertions value‌ను వెంటనే check చేస్తాయి. Condition true అయ్యే వరకు automatically wait చేయవు.
+
+| Assertion        | Simple English                            | తెలుగు అర్థం                    |
+| ---------------- | ----------------------------------------- | ------------------------------- |
+| `toBe()`         | Checks exact value                        | Value అదే ఉందా?                 |
+| `toEqual()`      | Checks equality                           | రెండు values సమానంగా ఉన్నాయా?   |
+| `toContain()`    | Checks whether something exists inside    | లోపల ఆ value ఉందా?              |
+| `toBeTruthy()`   | Checks truthy value                       | Value true లాగా ఉందా?           |
+| `toBeFalsy()`    | Checks falsy value                        | Value false లాగా ఉందా?          |
+| `toBeNull()`     | Checks null                               | Value null‌గా ఉందా?             |
+| `toHaveLength()` | Checks length                             | ఎన్ని characters/items ఉన్నాయి? |
+| `toThrow()`      | Checks whether a function throws an error | Function error ఇస్తుందా?        |
 
 ## 1. Difference between `isVisible()` and `toBeVisible()`
 
@@ -162,26 +181,7 @@ English: An assertion checks whether the actual result matches the expected resu
 
 Example: Login చేసిన తర్వాత Home page కనిపించాలి. కనిపిస్తే test pass అవుతుంది.
 
-## 1. Auto-retrying Assertions
-
-English: Playwright keeps checking until the assertion passes or the timeout is reached.
-
-తెలుగు: Condition true అయ్యే వరకు లేదా timeout పూర్తయ్యే వరకు Playwright మళ్లీ మళ్లీ check చేస్తుంది.
-
-| Assertion        | Simple English       | తెలుగు అర్థం              |
-| ---------------- | -------------------- | ------------------------- |
-| `toBeVisible()`  | Element is visible   | Element కనిపిస్తుందా?     |
-| `toBeHidden()`   | Element is hidden    | Element కనిపించడం లేదా?   |
-| `toBeEnabled()`  | Element is enabled   | Button ఉపయోగించగలమా?      |
-| `toBeDisabled()` | Element is disabled  | Button disabled‌లో ఉందా?  |
-| `toBeChecked()`  | Checkbox is checked  | Checkbox select అయిందా?   |
-| `toHaveText()`   | Checks the text      | సరైన text ఉందా?           |
-| `toHaveValue()`  | Checks input value   | Input‌లో సరైన value ఉందా? |
-| `toHaveCount()`  | Checks element count | ఎన్ని elements ఉన్నాయి?   |
-| `toHaveURL()`    | Checks page URL      | సరైన URL‌లో ఉన్నామా?      |
-| `toHaveTitle()`  | Checks page title    | Page title సరైనదా?        |
-
-### Real-time example
+c
 
 ```
 import { test, expect } from '@playwright/test';

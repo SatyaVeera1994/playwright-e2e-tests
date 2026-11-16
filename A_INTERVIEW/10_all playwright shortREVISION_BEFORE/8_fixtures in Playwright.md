@@ -1,4 +1,4 @@
-9. How do you implement custom fixtures in Playwright?
+## 9. How do you implement custom fixtures in Playwright?
 
 Playwright fixtures provide reusable setup and dependencies to tests. Playwright has built-in fixtures like page, context, and request, and we can create custom fixtures using base.extend(). Fixtures are useful for common setup such as authentication, page objects, and API clients. They also support different scopes like test and worker.
 For UI testing, common built-in fixtures are:

@@ -1,8 +1,8 @@
 # Playwright Test Tagging — Smoke vs Regression
 
-Let’s learn Playwright test tagging in simple English and Telugu with real-time project examples and interview answers.
-
 ## 1. What is test tagging?
+
+“In Playwright, I use tags such as `@smoke`, `@regression`, and `@login` to categorize test cases. I add tags using the test options and execute selected tests with the `--grep` command-line option. For example, `npx playwright test --grep "@smoke"` runs only Smoke tests. This helps us run critical tests quickly after deployments and execute broader Regression tests before releases.”
 
 English: Test tagging means assigning labels to test cases so we can run a specific group of tests when needed.
 

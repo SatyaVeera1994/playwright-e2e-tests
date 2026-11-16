@@ -1,4 +1,13 @@
-# Playwright Hooks — Simple English + Telugu + Real-Time Examples
+# Playwright Hooks —
+
+“Playwright hooks help us execute common setup and cleanup actions during test execution. I use `beforeEach()` to perform setup steps before every test, such as navigating to a page. I use `afterEach()` for actions such as cleaning up test data. This reduces code duplication and improves test maintainability.”
+
+Easy memory trick:
+
+- `beforeAll` → Before all tests in the scope.
+- `beforeEach` → Before every test.
+- `afterEach` → After every test.
+- `afterAll` → After all tests in the scope.
 
 Playwright hooks are used to execute common code before or after tests. They help us avoid repeating the same code in every test case.
 

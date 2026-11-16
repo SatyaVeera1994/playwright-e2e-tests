@@ -1,9 +1,8 @@
 Excellent notes. Continue with these **Architecture & Setup Interview Answers** in the same format.
 
 # Q1. Explain Playwright's Internal Architecture in Depth
- 
-    
-“Playwright uses a persistent WebSocket connection for continuous communication with the browser, whereas Selenium uses HTTP requests for each command.  
+
+“Playwright uses a persistent WebSocket connection for continuous communication with the browser, whereas Selenium uses HTTP requests for each command.
 
 Because of this persistent connection, Playwright can listen to browser events in real time and provide advanced capabilities such as:
 
@@ -16,9 +15,7 @@ Browser Event Monitoring
 Trace Viewer
 Event Listening
 
-
 These features make Playwright faster, more reliable, and easier to use for modern web application testing compared to traditional automation tools.
-
 
 ## 1. Telugu Concept
 
@@ -50,10 +47,10 @@ Playwright Browser తో Continuous Connection maintain చేస్తుం�
 
 అందుకే:
 
-* Auto Waiting
-* Network Interception
-* Trace Viewer
-* Event Listening
+- Auto Waiting
+- Network Interception
+- Trace Viewer
+- Event Listening
 
 సాధ్యమవుతాయి.
 
@@ -113,10 +110,10 @@ Selenium sends a new HTTP request for every command.
 
 Because Playwright maintains a continuous connection, it supports:
 
-* Auto Waiting
-* Network Interception
-* Event Listening
-* Faster Execution
+- Auto Waiting
+- Network Interception
+- Event Listening
+- Faster Execution
 
 The architecture is:
 
@@ -144,14 +141,14 @@ In my projects, this architecture helped us build faster and more reliable autom
 
 In my automation project, we captured:
 
-* Failed API Requests
-* Browser Console Errors
-* Network Responses
+- Failed API Requests
+- Browser Console Errors
+- Network Responses
 
 using Playwright event listeners.
 
 ```typescript
-page.on('requestfailed', request => {
+page.on("requestfailed", (request) => {
   console.log(request.url());
 });
 ```
@@ -163,20 +160,18 @@ This helped identify backend issues quickly during automation execution.
 ## 7. Code Example (TypeScript)
 
 ```typescript
-import { test } from '@playwright/test';
+import { test } from "@playwright/test";
 
-test('Capture Browser Events', async ({ page }) => {
+test("Capture Browser Events", async ({ page }) => {
+  page.on("console", (msg) => {
+    console.log(msg.text());
+  });
 
-    page.on('console', msg => {
-        console.log(msg.text());
-    });
+  page.on("requestfailed", (request) => {
+    console.log("Failed:", request.url());
+  });
 
-    page.on('requestfailed', request => {
-        console.log('Failed:', request.url());
-    });
-
-    await page.goto('https://playwright.dev');
-
+  await page.goto("https://playwright.dev");
 });
 ```
 
