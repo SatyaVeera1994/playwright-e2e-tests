@@ -1,0 +1,807 @@
+# **15 API Testing Interview Questions and Answers**
+
+**For QA Automation Engineer / SDET – Playwright + TypeScript + Postman**
+
+These are important API Testing questions for experienced QA interviews.
+
+For every question, I'll provide:
+
+1. Interview-ready answer in simple English.
+2. Telugu explanation.
+3. Real-time project example.
+4. Playwright / Postman code wherever useful.
+
+## **1. What is API Testing?**
+
+**Interview Answer:**
+
+API Testing is a type of software testing used to verify the functionality, reliability, performance and security of APIs. We validate request methods, request parameters, response status codes, response body, headers and response time.
+
+**Telugu Explanation:**
+
+Frontend UI use cheyakunda, two applications or systems madhya communication jarugutunnappudu API correct ga work avutundha leda ani test cheyadanni API Testing antaru.
+
+**Real-Time Example:**
+
+Suppose we have a Login API.
+
+**Client / Postman**
+
+Sends username and password
+
+POST /login
+
+**API / Backend**
+
+Validates credentials
+
+200 OK
+
+**Response**
+
+Returns token and user details
+
+We validate:
+
+- Status code is 200.
+- Response body contains the expected user details.
+- Authentication token is generated.
+- Response time is within the expected limit.
+
+**Remember:** API Testing = Request + Response + Validation.
+
+## **2. What is REST API?**
+
+**Interview Answer:**
+
+REST stands for Representational State Transfer. REST API is an architectural style that allows different applications to communicate over HTTP using methods like GET, POST, PUT, PATCH and DELETE.
+
+**Telugu Explanation:**
+
+REST API anedi two applications madhya data exchange cheyadaniki use chestaru. Usually HTTP methods and JSON format use chestundi.
+
+**Real-Time Example:**
+
+Suppose we have a user management application.
+
+| Method | Endpoint   | Purpose              |
+| ------ | ---------- | -------------------- |
+| GET    | /users     | Get all users        |
+| POST   | /users     | Create a user        |
+| PUT    | /users/101 | Update complete user |
+| PATCH  | /users/101 | Update partial user  |
+| DELETE | /users/101 | Delete user          |
+
+**Remember:** REST API = Communication using HTTP methods and resources.
+
+## **3. What is GET, POST, PUT, PATCH and DELETE?**
+
+**Interview Answer:**
+
+These are HTTP methods used to perform different operations on resources.
+
+| Method | Purpose                     | Example              |
+| ------ | --------------------------- | -------------------- |
+| GET    | Retrieve data               | Get user details     |
+| POST   | Create a new resource       | Create a user        |
+| PUT    | Replace/update a resource   | Update complete user |
+| PATCH  | Partially update a resource | Update email only    |
+| DELETE | Delete a resource           | Delete a user        |
+
+**Telugu Explanation:**
+
+- GET – Data retrieve cheyadam.
+- POST – New data create cheyadam.
+- PUT – Complete data update/replace cheyadam.
+- PATCH – Particular fields matrame update cheyadam.
+- DELETE – Data delete cheyadam.
+
+**Real-Time Example:**
+
+Consider user details:
+
+```
+{
+  "name": "Satya",
+  "email": "satya@example.com",
+  "city": "Bangalore"
+}
+```
+
+If we use PATCH to update only the city, the other fields remain unchanged.
+
+**Remember:** GET = Read, POST = Create, PUT = Replace, PATCH = Partial Update, DELETE = Remove.
+
+## **4. What are HTTP Status Codes?**
+
+**Interview Answer:**
+
+HTTP Status Codes are three-digit codes returned by the server to indicate the result of an API request.
+
+There are five categories:
+
+| Category | Meaning       | Examples           |
+| -------- | ------------- | ------------------ |
+| 1xx      | Informational | 100                |
+| 2xx      | Success       | 200, 201, 204      |
+| 3xx      | Redirection   | 301, 302           |
+| 4xx      | Client errors | 400, 401, 403, 404 |
+| 5xx      | Server errors | 500, 502, 503      |
+
+**Telugu Explanation:**
+
+Manam API request pampinappudu server response ela undho status code dwara telusukovachu.
+
+**Remember:** 2xx = Success, 4xx = Client Error, 5xx = Server Error.
+
+## **5. Difference between 200, 201, 400, 401, 403, 404 and 500?**
+
+| Status Code | Meaning               | Example                           |
+| ----------- | --------------------- | --------------------------------- |
+| 200         | OK                    | Data retrieved successfully       |
+| 201         | Created               | New user created                  |
+| 400         | Bad Request           | Invalid request data              |
+| 401         | Unauthorized          | Missing or invalid authentication |
+| 403         | Forbidden             | User does not have permission     |
+| 404         | Not Found             | Requested resource doesn't exist  |
+| 500         | Internal Server Error | Unexpected server-side error      |
+
+**Telugu Explanation:**
+
+- 200 – Request success ayyindi.
+- 201 – New resource create ayyindi.
+- 400 – Request lo mistake undhi.
+- 401 – Authentication ledu or invalid.
+- 403 – Login ayina permission ledu.
+- 404 – Requested resource dorakaledu.
+- 500 – Server side lo unexpected error vachindi.
+
+**Real-Time Example:**
+
+Suppose you access a banking API:
+
+- Valid account details → 200.
+- Create new beneficiary → 201.
+- Invalid account format → 400.
+- Missing token → 401.
+- Access restricted account → 403.
+- Account ID not found → 404.
+- Unexpected backend failure → 500.
+
+**Remember:** 401 = Who are you? 403 = You don't have permission.
+
+## **6. What is JSON?**
+
+**Interview Answer:**
+
+JSON stands for JavaScript Object Notation. It is a lightweight data format used to exchange information between clients and servers.
+
+**Telugu Explanation:**
+
+Client and server madhya data exchange cheyadaniki use chese simple data format ni JSON antaru.
+
+**Real-Time Example:**
+
+```
+{
+  "id": 101,
+  "name": "Satya",
+  "role": "QA Engineer",
+  "isActive": true
+}
+```
+
+Here:
+
+- `id` is a number.
+- `name` is a string.
+- `role` is a string.
+- `isActive` is a boolean.
+
+**Remember:** JSON = Key-value pair data format.
+
+## **7. What is Request and Response?**
+
+**Interview Answer:**
+
+A Request is a message sent from the client to the server to perform an operation. A Response is the message returned by the server after processing the request.
+
+**Telugu Explanation:**
+
+- Request: Client nunchi server ki pampinche data.
+- Response: Server nunchi client ki vachche result.
+
+**Real-Time Example:**
+
+When we call a Login API:
+
+**Request:**
+
+```
+POST /api/login
+Content-Type: application/json
+```
+
+```
+{
+  "username": "satya",
+  "password": "Test@123"
+}
+```
+
+**Response:**
+
+```
+HTTP/1.1 200 OK
+```
+
+```
+{
+  "token": "abc123",
+  "message": "Login successful"
+}
+```
+
+**Important Request Components:**
+
+1. Endpoint / URL
+2. HTTP Method
+3. Headers
+4. Query Parameters
+5. Request Body
+6. Authentication
+
+**Important Response Components:**
+
+1. Status Code
+2. Response Body
+3. Response Headers
+4. Response Time
+
+**Remember:** Request = Client to Server. Response = Server to Client.
+
+## **8. What is Bearer Token?**
+
+**Interview Answer:**
+
+A Bearer Token is an authentication token sent in the Authorization header to access protected APIs. The server validates the token before allowing access to the requested resource.
+
+**Telugu Explanation:**
+
+User login ayyaka server oka access token generate chestundi. Aa token ni next protected API requests lo send chestam. Server token valid aa kaadha ani verify chestundi.
+
+**Real-Time Example:**
+
+First, call Login API and get the token.
+
+Then pass the token in the next API request:
+
+```
+GET /api/profile
+Authorization: Bearer abc123
+```
+
+**Playwright Example:**
+
+```
+const response = await request.get('/api/profile', {
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+});
+
+expect(response.status()).toBe(200);
+```
+
+**Remember:** Bearer Token = Access token used for authenticated API requests.
+
+## **9. What is Authentication vs Authorization?**
+
+**Interview Answer:**
+
+Authentication verifies who the user is, whereas Authorization verifies what the authenticated user is allowed to access.
+
+**Telugu Explanation:**
+
+- Authentication: Meeru evaru ani verify cheyadam.
+- Authorization: Meeku ye permissions unnayo verify cheyadam.
+
+**Real-Time Example:**
+
+Consider an application with Admin and Normal User roles.
+
+| Authentication                  | Authorization                       |
+| ------------------------------- | ----------------------------------- |
+| Verifies username and password  | Checks user permissions             |
+| Confirms user identity          | Controls resource access            |
+| Happens before protected access | Happens after identity verification |
+
+Example:
+
+- Admin logs in and can access the Admin Dashboard.
+- Normal User logs in but cannot access the Admin Dashboard.
+- The normal user is authenticated but not authorized.
+
+**Remember:** Authentication = Who are you? Authorization = What can you access?
+
+## **10. How do you perform API Testing using Postman?**
+
+Frequently asked interview question
+
+**Interview Answer:**
+
+I perform API Testing using Postman by sending HTTP requests and validating the response status code, response body, headers, authentication and response time.
+
+**Step-by-Step Process:**
+
+1. **Select HTTP Method**
+
+   Choose GET, POST, PUT, PATCH or DELETE.
+2. **Enter API Endpoint**
+
+   Example: `https://example.com/api/users`
+3. **Add Headers**
+
+   Example: Content-Type: application/json.
+4. **Add Authentication**
+
+   Pass Bearer Token if required.
+5. **Enter Request Body**
+
+   Provide JSON data for POST or PUT requests.
+6. **Click Send**
+
+   Execute the API request.
+7. **Validate Response**
+
+   Verify status code, response body, headers and response time.
+
+**Example Postman Test Script:**
+
+Open the Scripts → Post-response section:
+
+```
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+pm.test("Response contains user name", function () {
+    const response = pm.response.json();
+    pm.expect(response.name).to.eql("Satya");
+});
+
+pm.test("Response time is less than 2000ms", function () {
+    pm.expect(pm.response.responseTime).to.be.below(2000);
+});
+```
+
+**Telugu Explanation:**
+
+Postman lo method select chesi, URL enter chesi, headers and body provide chesi Send click chestam. Response vachaka status code, response data and response time validate chestam.
+
+**Remember:** Method → URL → Headers → Body → Send → Validate.
+
+## **11. How do you automate API Testing using Playwright?**
+
+**Interview Answer:**
+
+In Playwright, I use the APIRequestContext to automate API testing. I send HTTP requests using methods like GET, POST, PUT, PATCH and DELETE, and validate status codes, response body, headers and response time using assertions.
+
+**Telugu Explanation:**
+
+Playwright lo API testing automate cheyadaniki request fixture use chestam. API request send chesi response vachaka expected status code and response data validate chestam.
+
+**Example 1: GET API Testing**
+
+```
+import { test, expect } from '@playwright/test';
+
+test('Get user details', async ({ request }) => {
+
+    const response = await request.get(
+        'https://api.example.com/users/1'
+    );
+
+    expect(response.status()).toBe(200);
+
+    const data = await response.json();
+
+    expect(data.id).toBe(1);
+});
+```
+
+**Example 2: POST API Testing**
+
+```
+test('Create user', async ({ request }) => {
+
+    const response = await request.post(
+        'https://api.example.com/users',
+        {
+            data: {
+                name: 'Satya',
+                job: 'QA Engineer'
+            }
+        }
+    );
+
+    expect(response.status()).toBe(201);
+
+    const data = await response.json();
+
+    expect(data.name).toBe('Satya');
+});
+```
+
+**What are we validating?**
+
+- API status code.
+- Response body.
+- Expected values.
+- Response headers.
+- Response time.
+- Error messages.
+
+**Remember:** Playwright API Testing = Send Request + Validate Response.
+
+## **12. What is API Chaining?**
+
+**Interview Answer:**
+
+API Chaining is a process where the response from one API is used as input for another API. It helps us test end-to-end API workflows.
+
+**Telugu Explanation:**
+
+Oka API response lo vachina data ni next API request lo use cheyadanni API Chaining antaru.
+
+**Real-Time Example:**
+
+Consider an e-commerce application:
+
+**1. Login API**
+
+Returns authentication token
+
+**2. Create Order API**
+
+Uses token and returns order ID
+
+**3. Get Order API**
+
+Uses order ID to fetch order details
+
+**Playwright Example:**
+
+```
+test('API chaining', async ({ request }) => {
+
+    // Step 1: Login
+    const login = await request.post('/api/login', {
+        data: {
+            username: 'satya',
+            password: 'Test@123'
+        }
+    });
+
+    expect(login.status()).toBe(200);
+
+    const loginData = await login.json();
+    const token = loginData.token;
+
+    // Step 2: Create Order
+    const order = await request.post('/api/orders', {
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        data: {
+            productId: 101
+        }
+    });
+
+    expect(order.status()).toBe(201);
+
+    const orderData = await order.json();
+    const orderId = orderData.id;
+
+    // Step 3: Get Order
+    const getOrder = await request.get(
+        `/api/orders/${orderId}`,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+    );
+
+    expect(getOrder.status()).toBe(200);
+});
+```
+
+**Remember:** API Chaining = One API Response → Next API Request.
+
+## **13. What is Negative API Testing?**
+
+**Interview Answer:**
+
+Negative API Testing is performed by sending invalid, missing or unexpected input data to an API to verify whether it handles errors correctly and returns appropriate status codes and error messages.
+
+**Telugu Explanation:**
+
+API ki invalid data pampinchi, application correct error response istundha leda ani check cheyadanni Negative API Testing antaru.
+
+**Real-Time Example:**
+
+Consider a Login API.
+
+| Test Scenario             | Expected Result  |
+| ------------------------- | ---------------- |
+| Invalid username          | Error response   |
+| Invalid password          | 401 Unauthorized |
+| Missing username          | 400 Bad Request  |
+| Empty request body        | 400 Bad Request  |
+| Invalid token             | 401 Unauthorized |
+| Access without permission | 403 Forbidden    |
+
+**Playwright Example:**
+
+```
+test('Negative API testing', async ({ request }) => {
+
+    const response = await request.post('/api/login', {
+        data: {
+            username: 'wronguser',
+            password: 'wrong123'
+        }
+    });
+
+    expect(response.status()).toBe(401);
+
+    const data = await response.json();
+
+    expect(data.message).toBeTruthy();
+});
+```
+
+**Remember:** Negative API Testing = Invalid inputs + Error validation.
+
+## **14. How do you validate Response Time?**
+
+**Interview Answer:**
+
+I validate API response time by measuring how long an API takes to respond after sending a request. I compare the response time against the expected performance requirement.
+
+**Telugu Explanation:**
+
+API request send chesina tarvatha response ravadaniki entha time pattindho measure chesi, requirement prakaram undha leda ani check chestam.
+
+**Real-Time Example:**
+
+Suppose the requirement says that the API should respond within 2 seconds.
+
+- Expected response time: Less than 2000 ms.
+- Actual response time: 500 ms.
+- Result: Pass.
+
+**Playwright Example:**
+
+```
+test('Validate API response time', async ({ request }) => {
+
+    const startTime = Date.now();
+
+    const response = await request.get('/api/users');
+
+    const endTime = Date.now();
+
+    const responseTime = endTime - startTime;
+
+    expect(response.status()).toBe(200);
+
+    console.log('Response Time:', responseTime, 'ms');
+
+    expect(responseTime).toBeLessThan(2000);
+});
+```
+
+**Postman Example:**
+
+```
+pm.test("Response time is below 2 seconds", function () {
+    pm.expect(pm.response.responseTime).to.be.below(2000);
+});
+```
+
+**Remember:** Response Time = End Time − Start Time.
+
+Note: This measures an individual request's observed duration, not complete load or stress performance. For performance testing, use tools such as JMeter.
+
+## **15. How do you validate API Response Schema?**
+
+**Interview Answer:**
+
+API Response Schema Validation is performed to verify whether the API response follows the expected structure, data types, required fields and formats.
+
+**Telugu Explanation:**
+
+API response lo expected fields unnaya, data types correct ga unnaya, required fields missing ayyaya leda ani check cheyadanni Schema Validation antaru.
+
+**Real-Time Example:**
+
+Expected API response:
+
+```
+{
+  "id": 101,
+  "name": "Satya",
+  "email": "satya@example.com",
+  "isActive": true
+}
+```
+
+We validate:
+
+- `id` should be a number.
+- `name` should be a string.
+- `email` should be a string.
+- `isActive` should be a boolean.
+- Required fields should be present.
+
+**Playwright Example – Basic Schema Validation:**
+
+```
+test('Validate response schema', async ({ request }) => {
+
+    const response = await request.get('/api/users/101');
+
+    expect(response.status()).toBe(200);
+
+    const data = await response.json();
+
+    expect(data).toHaveProperty('id');
+    expect(data).toHaveProperty('name');
+    expect(data).toHaveProperty('email');
+    expect(data).toHaveProperty('isActive');
+
+    expect(typeof data.id).toBe('number');
+    expect(typeof data.name).toBe('string');
+    expect(typeof data.email).toBe('string');
+    expect(typeof data.isActive).toBe('boolean');
+});
+```
+
+This is basic structure and type validation. For complete JSON Schema validation, we can use a library like Ajv.
+
+**Remember:** Schema Validation = Structure + Required Fields + Data Types.
+
+# **Quick Revision – All 15 API Testing Questions**
+
+| No. | Topic                           | Easy Memory Point                   |
+| --- | ------------------------------- | ----------------------------------- |
+| 1   | API Testing                     | Request and Response validation     |
+| 2   | REST API                        | HTTP-based communication            |
+| 3   | HTTP Methods                    | GET, POST, PUT, PATCH, DELETE       |
+| 4   | HTTP Status Codes               | Server response codes               |
+| 5   | Status Code Difference          | 200, 201, 400, 401, 403, 404, 500   |
+| 6   | JSON                            | Key-value data format               |
+| 7   | Request and Response            | Client ↔ Server                     |
+| 8   | Bearer Token                    | Authentication token                |
+| 9   | Authentication vs Authorization | Identity vs Permissions             |
+| 10  | Postman                         | Manual API testing                  |
+| 11  | Playwright API                  | Automated API testing               |
+| 12  | API Chaining                    | One API output to another API input |
+| 13  | Negative API Testing            | Invalid input testing               |
+| 14  | Response Time                   | API performance measurement         |
+| 15  | Schema Validation               | Response structure validation       |
+
+# **Important: Real-Time SDET API Interview Questions**
+
+After these 15 basic questions, interviewers may ask practical questions:
+
+1. How do you test an API without a UI?
+2. How do you validate a POST API?
+3. How do you pass authentication tokens?
+4. How do you validate nested JSON objects?
+5. How do you handle dynamic response values?
+6. How do you validate API headers?
+7. How do you test APIs with missing mandatory fields?
+8. How do you perform API chaining?
+9. How do you validate database data against API responses?
+10. How do you integrate API tests into Jenkins?
+11. What is the difference between API Testing and UI Testing?
+12. How do you test an API when the dependent API is failing?
+
+# **Practice Mock Interview**
+
+**API Testing – Mock Interview**
+
+8/8 answered
+
+**1. Which HTTP method is generally used to retrieve data?**
+
+POST
+
+GET
+
+DELETE
+
+Correct!
+
+**2. What is the status code for successfully creating a resource?**
+
+200
+
+201
+
+404
+
+Correct!
+
+**3. What is the meaning of 403?**
+
+Unauthorized
+
+Forbidden
+
+Not Found
+
+Correct!
+
+**4. Which Playwright fixture is used for API testing?**
+
+page
+
+browser
+
+request
+
+Correct!
+
+**5. What is API Chaining?**
+
+Calling only one API
+
+Using one API response in another API request
+
+Deleting multiple APIs
+
+Correct!
+
+**6. What does PATCH do?**
+
+Deletes data
+
+Partially updates data
+
+Retrieves data
+
+Correct!
+
+**7. Which header is commonly used to pass a Bearer Token?**
+
+Content-Type
+
+Authorization
+
+Accept-Language
+
+Correct!
+
+**8. Which tool is commonly used for load testing?**
+
+JMeter
+
+TestRail
+
+VS Code
+
+Correct!
+
+Submit Answers
+
+# **Score: 8/8**
+
+Try Again
+
+**My recommendation:** Give extra practice to Questions 10, 11, 12, 13 and 15. For an SDET with Playwright and TypeScript experience, interviewers often expect you to write API automation code, explain API chaining and validate real API responses.
+
+Next, focus on **API Testing real-time coding programs using Playwright TypeScript**, because knowing definitions alone is not enough for an SDET technical round.
