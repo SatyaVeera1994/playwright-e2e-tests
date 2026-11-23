@@ -1,4 +1,229 @@
-# Q6. How do you run Playwright in parallel and what is Sharding?
+# **How to Run Playwright Tests in Parallel? What is Sharding? What Is the Difference?**
+
+## Q1. How do you run Playwright tests in parallel?##
+
+We can run Playwright tests in parallel by configuring the number of workers in the Playwright configuration file. For example, `workers: 4` allows Playwright to execute multiple tests simultaneously using four workers. This helps reduce execution time.
+
+## Q2. What is Sharding in Playwright?##
+
+Sharding means dividing the complete test suite into multiple groups. Each group is called a shard. We can run these shards independently on different machines or CI/CD pipeline jobs to reduce overall execution time.
+
+## Q3. What is the difference between Parallel Execution and Sharding?##
+
+Parallel execution runs multiple tests simultaneously using workers within a test run. Sharding divides the complete test suite into separate groups and runs them independently. We can also combine both to improve execution speed.
+
+## ##7. Quick Memory Trick\*\*
+
+- **Workers = Parallel Execution**
+- **Shards = Divide Test Suite**
+- **Workers + Shards = Faster CI/CD execution**
+
+## **1. What is Parallel Execution?**
+
+**Simple meaning:** Multiple test cases ni same time lo different workers use chesi execute cheyadam is called Parallel Execution.
+
+Example: Man daggara 8 test cases unnayi. Playwright 4 workers use chesthe, tests multiple workers lo simultaneously run avutayi.
+
+**Parallel execution – 4 workers**
+
+**Worker 1**
+
+Test 1, 5
+
+**Worker 2**
+
+Test 2, 6
+
+**Worker 3**
+
+Test 3, 7
+
+**Worker 4**
+
+Test 4, 8
+
+Illustrative distribution of 8 tests across 4 workers.
+
+### **How to configure parallel execution?**
+
+In `playwright.config.ts`:
+
+```
+import { defineConfig } from '@playwright/test';
+
+export default defineConfig({
+  workers: 4,
+});
+```
+
+Or run using command:
+
+```
+npx playwright test --workers=4
+```
+
+**Explanation:**
+
+- `workers: 4` – 4 worker processes create chestundi.
+- Multiple tests parallel ga execute avutayi.
+- Execution time reduce avvachu.
+
+## **2. What is Sharding?**
+
+**Simple meaning:** Sharding means dividing the complete test suite into multiple independent groups (shards) and running each group separately.
+
+Example: Man daggara 100 test cases unnayi.
+
+We divide them into 4 shards:
+
+**Sharding – 4 independent groups**
+
+**Shard 1**
+
+Tests 1–25
+
+Separate run
+
+**Shard 2**
+
+Tests 26–50
+
+Separate run
+
+**Shard 3**
+
+Tests 51–75
+
+Separate run
+
+**Shard 4**
+
+Tests 76–100
+
+Separate run
+
+Each shard can run on a separate machine or CI/CD pipeline job.
+
+### **How to configure Sharding?**
+
+Playwright command:
+
+```
+npx playwright test --shard=1/4
+```
+
+```
+npx playwright test --shard=2/4
+```
+
+```
+npx playwright test --shard=3/4
+```
+
+```
+npx playwright test --shard=4/4
+```
+
+**Explanation:**
+
+- `1/4` – Run first shard out of 4.
+- `2/4` – Run second shard out of 4.
+- `3/4` – Run third shard out of 4.
+- `4/4` – Run fourth shard out of 4.
+
+Playwright distributes test files among shards. Exact distribution may not be equal by test count or execution time.
+
+## **3. Difference Between Parallel Execution and Sharding**
+
+| Parallel Execution                                | Sharding                                     |
+| ------------------------------------------------- | -------------------------------------------- |
+| Runs multiple tests simultaneously using workers. | Divides the test suite into multiple groups. |
+| Uses worker processes.                            | Uses separate shard runs.                    |
+| Usually within one test run.                      | Can run across multiple machines or CI jobs. |
+| Configured using `workers`.                       | Configured using `--shard`.                  |
+| Example: 4 workers.                               | Example: 4 shards.                           |
+
+## **4. Can We Use Both Together?**
+
+Yes
+
+Yes! We can combine parallel execution and sharding.
+
+Example:
+
+```
+npx playwright test --shard=1/4 --workers=4
+```
+
+Meaning:
+
+- `--shard=1/4` – Execute only the first shard.
+- `--workers=4` – Use 4 workers within that shard.
+
+So, sharding divides the test suite, and parallel execution runs tests simultaneously within each shard.
+
+## **5. Real-Time Project Example – Interview**
+
+Suppose our Playwright project has 100 test cases.
+
+- First, we divide the test suite into 4 shards.
+- Each shard runs as a separate Jenkins pipeline job.
+- Inside each shard, we configure 4 workers.
+- This helps us execute tests faster and reduce overall pipeline execution time.
+
+Actual execution time depends on test duration, machine capacity, and worker availability.
+
+## **6. Interview Answers – Simple English**
+
+**Q1. How do you run Playwright tests in parallel?**
+
+We can run Playwright tests in parallel by configuring the number of workers in the Playwright configuration file. For example, `workers: 4` allows Playwright to execute multiple tests simultaneously using four workers. This helps reduce execution time.
+
+**Q2. What is Sharding in Playwright?**
+
+Sharding means dividing the complete test suite into multiple groups. Each group is called a shard. We can run these shards independently on different machines or CI/CD pipeline jobs to reduce overall execution time.
+
+**Q3. What is the difference between Parallel Execution and Sharding?**
+
+Parallel execution runs multiple tests simultaneously using workers within a test run. Sharding divides the complete test suite into separate groups and runs them independently. We can also combine both to improve execution speed.
+
+## **7. Quick Memory Trick**
+
+- **Workers = Parallel Execution**
+- **Shards = Divide Test Suite**
+- **Workers + Shards = Faster CI/CD execution**
+
+## **8. Test Your Knowledge**
+
+**Q1. Which option is used to configure parallel workers?**
+
+\--shard
+
+\--workers
+
+\--headed
+
+Correct! --workers controls the number of worker processes.
+
+**Q2. Which option divides tests into groups?**
+
+\--shard
+
+\--workers
+
+\--debug
+
+Correct! --shard divides the test suite into independent groups.
+
+**Q3. Can we combine workers and sharding?**
+
+Yes
+
+No
+
+Correct! Yes. Each shard can use multiple workers.
+
+**Score: 3/3**# Q6. How do you run Playwright in parallel and what is Sharding?
 
 ### ✅ English Answer
 

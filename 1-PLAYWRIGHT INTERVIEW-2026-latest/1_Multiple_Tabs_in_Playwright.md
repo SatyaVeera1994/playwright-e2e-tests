@@ -3,6 +3,7 @@
 ## How do you handle Multiple Tabs in Playwright?\*\*
 
 “I handle multiple tabs using the page event on the BrowserContext and popup windows using the popup event on the current page. I wait for the event and capture the new Page object, then perform actions and assertions on the new page.”
+I handle multiple tabs by waiting for the new page event on the browser context. For popup windows, I use the popup event. Then, I switch to the new page and perform actions and validations.
 
 > In Playwright, I handle multiple tabs using `context.waitForEvent('page')`. It waits for the new tab to open, then I switch to the new page, perform the required actions, and return to the parent page if needed.
 

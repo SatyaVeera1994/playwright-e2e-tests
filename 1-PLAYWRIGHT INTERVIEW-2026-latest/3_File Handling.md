@@ -1,8 +1,10 @@
 # File Handling in Playwright — JavaScript
 
+In Playwright, file handling involves uploading files, downloading files, and reading or writing file contents. We use methods like `setInputFiles()` for file uploads and `waitForEvent('download')` to handle file downloads. We can also use Node.js file system methods to read and write files.
+
 Playwright lo file handling ante mainly file upload, file download, and file content read/write cheyadam.
 
-Interview preparation kosam important concepts ni simple examples tho chuddam.
+
 
 ## 1. File Upload
 

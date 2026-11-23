@@ -1,0 +1,272 @@
+# **Overview on Locators with Examples – Part 1 | Playwright Telugu**
+
+## What are Locators in Playwright?\*\*
+
+"Locators are used to identify web elements and perform actions on them. Playwright provides different locator methods like `getByRole()`, `getByText()`, `getByLabel()`, `getByPlaceholder()`, and `getByTestId()`. We use them to interact with elements and perform validations."
+
+Playwright lo user-facing locators like `getByRole()` and `getByLabel()` prefer chestham because they are generally more reliable and readable.
+According to the Playwright documentation you shared, there are **7 main built-in recommended locator methods**.
+
+## **7 Playwright Locator Methods**
+
+| No. | Locator              | Purpose                                 |
+| --- | -------------------- | --------------------------------------- |
+| 1   | `getByRole()`        | Locate by accessibility role and name   |
+| 2   | `getByText()`        | Locate by text content                  |
+| 3   | `getByLabel()`       | Locate form control by associated label |
+| 4   | `getByPlaceholder()` | Locate input by placeholder             |
+| 5   | `getByAltText()`     | Locate element by alternative text      |
+| 6   | `getByTitle()`       | Locate element by title attribute       |
+| 7   | `getByTestId()`      | Locate element by `data-testid`         |
+
+## **Simple examples**
+
+```
+// 1. Role
+page.getByRole("button", { name: "Login" });
+
+// 2. Text
+page.getByText("Welcome");
+
+// 3. Label
+page.getByLabel("Username");
+
+// 4. Placeholder
+page.getByPlaceholder("Enter email");
+
+// 5. Alt text
+page.getByAltText("Company Logo");
+
+// 6. Title
+page.getByTitle("Close");
+
+// 7. Test ID
+page.getByTestId("login-button");
+```
+
+## **Interview Question**
+
+**Q: How many recommended built-in locator methods are available in Playwright?**
+
+**Answer:**
+
+"Playwright provides seven main recommended locator methods: `getByRole()`, `getByText()`, `getByLabel()`, `getByPlaceholder()`, `getByAltText()`, `getByTitle()`, and `getByTestId()`."
+
+**Remember:** These are 7 recommended locator methods, not the total number of locator strategies supported by Playwright.
+**A locator is used to find and interact with web elements like buttons, text boxes, links, checkboxes, and dropdowns.**
+
+Telugu:
+
+Manam application lo Login button click cheyyali, username enter cheyyali, password enter cheyyali ante first aa elements ni identify cheyyali. Elements ni identify cheyyadaniki Locators use chestham.
+
+## **1. Why do we use Locators?**
+
+- Username textbox identify cheyyali.
+- Password textbox identify cheyyali.
+- Login button identify cheyyali.
+- Login button click cheyyali.
+
+Dheenikosam Playwright locators use chestham.
+
+## **2. Important Playwright Locators**
+
+Playwright lo commonly use chese locators:
+
+| Locator              | Purpose                                |
+| -------------------- | -------------------------------------- |
+| `getByRole()`        | Element role batti identify chesthundi |
+| `getByText()`        | Text batti identify chesthundi         |
+| `getByLabel()`       | Label batti identify chesthundi        |
+| `getByPlaceholder()` | Placeholder batti identify chesthundi  |
+| `getByTestId()`      | Test ID batti identify chesthundi      |
+| `locator()`          | CSS selector or XPath use chesthundi   |
+
+## **3.&#x20;**`getByRole()`
+
+Element role and accessible name use chesi element ni identify chestham.
+
+Example HTML:
+
+```
+<button>Login</button>
+```
+
+Playwright:
+
+```
+await page.getByRole("button", { name: "Login" }).click();
+```
+
+Explanation:
+
+- `getByRole()` – Element role batti find chesthundi.
+- `"button"` – Element role.
+- `name: "Login"` – Button name.
+- `.click()` – Button click chesthundi.
+
+## **4.&#x20;**`getByText()`
+
+Element lo unna visible text batti identify chestham.
+
+HTML:
+
+```
+<h1>Welcome to Dashboard</h1>
+```
+
+Playwright:
+
+```
+await expect(
+  page.getByText("Welcome to Dashboard")
+).toBeVisible();
+```
+
+Telugu: Page lo Welcome to Dashboard text kanipisthundo ledo verify chestham.
+
+## **5.&#x20;**`getByLabel()`
+
+Form element ki associated label batti identify chestham.
+
+HTML:
+
+```
+<label for="username">Username</label>
+<input id="username" />
+```
+
+Playwright:
+
+```
+await page.getByLabel("Username").fill("Satya");
+```
+
+Telugu: Username label use chesi textbox ni identify chesi value enter chestham.
+
+## **6.&#x20;**`getByPlaceholder()`
+
+Textbox lo unna placeholder text batti identify chestham.
+
+HTML:
+
+```
+<input placeholder="Enter username" />
+```
+
+Playwright:
+
+```
+await page.getByPlaceholder("Enter username").fill("Satya");
+```
+
+Telugu: Enter username ane placeholder batti textbox identify chestham.
+
+## **7.&#x20;**`getByTestId()`
+
+Application developer HTML element ki test ID provide chestharu.
+
+HTML:
+
+```
+<button data-testid="login-btn">Login</button>
+```
+
+Playwright:
+
+```
+await page.getByTestId("login-btn").click();
+```
+
+Telugu: `data-testid` attribute use chesi element ni identify chestham.
+
+## **8.&#x20;**`locator()`**&#x20;– CSS Selector**
+
+CSS selector use chesi elements ni identify cheyyachu.
+
+HTML:
+
+```
+<input id="username" />
+```
+
+Playwright:
+
+```
+await page.locator("#username").fill("Satya");
+```
+
+Some common CSS selectors:
+
+| Selector              | Meaning                |
+| --------------------- | ---------------------- |
+| `#username`           | ID                     |
+| `.login-btn`          | Class                  |
+| `input`               | Tag name               |
+| `input[name="email"]` | Attribute              |
+| `div button`          | Div lopala unna button |
+
+## **9. Complete real-time example**
+
+```
+import { test, expect } from "@playwright/test";
+
+test("Login functionality", async ({ page }) => {
+
+  await page.goto("https://your-app-url.com");
+
+  // Enter username
+  await page.getByLabel("Username").fill("Satya");
+
+  // Enter password
+  await page.getByPlaceholder("Enter password").fill("Test123");
+
+  // Click login button
+  await page.getByRole("button", { name: "Login" }).click();
+
+  // Verify dashboard
+  await expect(
+    page.getByText("Dashboard")
+  ).toBeVisible();
+
+});
+```
+
+Note: Ivi example locators. Mee application HTML and actual labels batti locators change avuthayi.
+
+## **10. Interview answer**
+
+**Q: What are Locators in Playwright?**
+
+"Locators are used to identify web elements and perform actions on them. Playwright provides different locator methods like `getByRole()`, `getByText()`, `getByLabel()`, `getByPlaceholder()`, and `getByTestId()`. We use them to interact with elements and perform validations."
+
+**Important interview point:** Playwright lo user-facing locators like `getByRole()` and `getByLabel()` prefer chestham because they are generally more reliable and readable.
+
+Official documentation: [Playwright Locators](https://playwright.dev/docs/locators?utm_source=chatgpt.com)
+
+## **Practice – Check your understanding**
+
+**Q1. Which locator identifies an element using its accessible role and name?**
+
+getByText()
+
+getByRole()
+
+getByTestId()
+
+**Q2. Which locator is used to identify a textbox using placeholder text?**
+
+getByPlaceholder()
+
+getByLabel()
+
+getByText()
+
+**Q3. Which locator uses the data-testid attribute?**
+
+getByRole()
+
+locator()
+
+getByTestId()
+
+Check Answers
